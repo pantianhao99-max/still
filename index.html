@@ -209,6 +209,7 @@
         align-items: center;
         justify-content: center;
         padding: 24px;
+        overflow-y: auto;
         transition:
           opacity 420ms ease,
           transform 420ms ease;
@@ -216,6 +217,7 @@
 
       .setup-panel {
         width: min(960px, calc(100vw - 32px));
+        margin: auto;
         border: 1px solid rgba(213, 196, 164, 0.12);
         border-radius: 36px;
         padding: 28px;
@@ -254,7 +256,7 @@
       .setup-copy p {
         margin: 0;
         font-size: 13px;
-        line-height: 1.9;
+        line-height: 1.75;
         color: var(--ink-dim);
       }
 
@@ -267,9 +269,9 @@
       .scene-card {
         position: relative;
         display: grid;
-        gap: 10px;
+        gap: 8px;
         padding: 16px;
-        min-height: 156px;
+        min-height: 148px;
         border-radius: 24px;
         border: 1px solid rgba(213, 196, 164, 0.1);
         background:
@@ -282,6 +284,7 @@
           border-color 280ms ease,
           background 280ms ease,
           opacity 280ms ease;
+        cursor: pointer;
       }
 
       .scene-card::before {
@@ -329,7 +332,7 @@
 
       .scene-card-desc {
         font-size: 12px;
-        line-height: 1.8;
+        line-height: 1.65;
         color: var(--ink-soft);
       }
 
@@ -347,13 +350,13 @@
       .setup-controls {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
-        gap: 18px;
+        gap: 16px;
         align-items: end;
       }
 
       .setup-time-shell {
         display: grid;
-        gap: 10px;
+        gap: 8px;
       }
 
       .setup-time-preview {
@@ -414,11 +417,23 @@
         letter-spacing: 0.16em;
       }
 
+      .experience-ui .control-dock {
+        width: min(560px, calc(100vw - 24px));
+      }
+
       .hud-wrap {
         position: absolute;
         inset: 0;
         z-index: 3;
         pointer-events: none;
+      }
+
+      .top-hud {
+        padding-top: max(20px, env(safe-area-inset-top));
+      }
+
+      .bottom-dock {
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
       }
 
       body[data-view="setup"] .experience-ui {
@@ -600,28 +615,171 @@
         border-color: rgba(255, 255, 255, 0.1);
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 900px) {
         .scene-grid {
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .setup-overlay {
+          align-items: flex-start;
+          padding: 12px;
+        }
+
+        .setup-panel {
+          width: calc(100vw - 24px);
+          padding: 18px 16px;
+          border-radius: 24px;
+          gap: 16px;
+        }
+
+        .setup-head {
+          gap: 10px;
+        }
+
+        .setup-copy h1 {
+          font-size: 1.35rem;
+          line-height: 1.45;
+        }
+
+        .setup-copy p {
+          font-size: 12px;
+          line-height: 1.65;
+        }
+
+        .scene-grid {
+          display: flex;
+          gap: 10px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding-bottom: 4px;
+          margin-inline: -2px;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+
+        .scene-grid::-webkit-scrollbar {
+          display: none;
+        }
+
+        .scene-card {
+          flex: 0 0 78%;
+          min-width: 78%;
+          min-height: 132px;
+          padding: 14px;
+          gap: 6px;
+          scroll-snap-align: start;
+        }
+
+        .scene-card-title {
+          font-size: 16px;
+        }
+
+        .scene-card-subtitle {
+          font-size: 9px;
+        }
+
+        .scene-card-desc {
+          font-size: 11px;
+          line-height: 1.6;
+        }
+
+        .scene-card-badge {
+          font-size: 8px;
+          padding: 4px 8px;
         }
 
         .setup-controls {
           grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .setup-time-preview {
+          font-size: 1.75rem;
+          letter-spacing: 0.16em;
+          padding-left: 0.16em;
+        }
+
+        .enter-button {
+          width: 100%;
+          min-width: 0;
+          height: 48px;
         }
 
         .dock-grid {
           grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .top-hud {
+          padding-top: max(16px, env(safe-area-inset-top));
+        }
+
+        .bottom-dock {
+          padding-bottom: max(12px, env(safe-area-inset-bottom));
+        }
+
+        .hud-shell {
+          gap: 10px;
+        }
+
+        .altar-mark span {
+          display: none;
+        }
+
+        .status-chip {
+          padding: 7px 12px;
+          font-size: 9px;
+        }
+
+        .hint-chip {
+          padding: 10px 12px;
+          font-size: 9px;
+          line-height: 1.6;
+          letter-spacing: 0.08em;
         }
 
         .experience-actions {
           justify-content: center;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         .ignite-button {
           justify-self: center;
+          width: 96px;
+          height: 96px;
+          border-radius: 20px;
+        }
+
+        .press-ring {
+          width: 96px;
+          height: 96px;
+        }
+
+        .ignite-label strong {
+          font-size: 16px;
+        }
+
+        .ignite-label {
+          font-size: 9px;
+        }
+
+        .text-button {
+          height: 40px;
+          padding: 0 14px;
+          font-size: 11px;
+        }
+
+        .experience-ui .control-dock {
+          width: calc(100vw - 20px);
+          padding: 14px;
         }
 
         .timer {
+          font-size: clamp(1.8rem, 10vw, 2.8rem);
           letter-spacing: 0.28em;
           padding-left: 0.28em;
         }
@@ -630,7 +788,7 @@
   </head>
   <body data-state="idle" data-view="setup">
     <div id="app">
-      <canvas id="stage" aria-label="静烛祭坛场景"></canvas>
+      <canvas id="stage" aria-label="静烛场景"></canvas>
       <div id="interaction-layer" aria-hidden="true"></div>
 
       <div id="setup-overlay" class="setup-overlay">
@@ -638,11 +796,11 @@
           <div class="setup-head">
             <div class="altar-mark">
               <strong>静</strong>
-              <span>仪式场</span>
+              <span>场景</span>
             </div>
             <div class="setup-copy">
-              <h1>先选一方场景，再让时间开始燃烧。</h1>
-              <p>当前已完成烛火原型，其余场景位保留给后续模块。</p>
+              <h1>为此刻留一段安静的时间。</h1>
+              <p>先选场景，再定时长。当前开放「烛火」，其余场景会陆续补齐。</p>
             </div>
           </div>
 
@@ -667,19 +825,17 @@
               />
             </div>
 
-            <button id="enter-button" class="enter-button" type="button">
-              进入此刻
-            </button>
+            <button id="enter-button" class="enter-button" type="button">进入</button>
           </div>
         </div>
       </div>
 
       <div class="hud-wrap experience-ui">
-        <div class="absolute inset-x-0 top-0 flex justify-center px-6 pt-7">
+        <div class="top-hud absolute inset-x-0 top-0 flex justify-center px-6">
           <div class="hud-shell relative flex flex-col items-center gap-4">
             <div class="altar-mark">
               <strong>静</strong>
-              <span>静烛坛</span>
+              <span>烛火</span>
             </div>
             <div
               id="timer"
@@ -697,7 +853,7 @@
           </div>
         </div>
 
-        <div class="absolute inset-x-0 bottom-0 flex justify-center px-4 pb-5 sm:px-6 sm:pb-7">
+        <div class="bottom-dock absolute inset-x-0 bottom-0 flex justify-center px-4 sm:px-6">
           <div class="control-dock rounded-[32px] px-4 py-4 sm:px-5 sm:py-5">
             <div class="dock-grid">
               <div class="range-shell">
@@ -705,14 +861,12 @@
                   id="hint"
                   class="hint-chip rounded-full px-4 py-2 text-center text-[10px] font-medium tracking-[0.18em]"
                 >
-                  长按点燃，双击场景熄灭重置，或返回重新选择场景。
+                  长按点燃，双击熄灭。
                 </div>
               </div>
 
               <div class="experience-actions">
-                <button id="return-button" class="text-button" type="button">
-                  重选场景
-                </button>
+                <button id="return-button" class="text-button" type="button">返回场景</button>
                 <button
                   id="ignite-button"
                   class="ignite-button"
@@ -756,7 +910,7 @@
           id: "candle",
           title: "烛火",
           subtitle: "烛坛",
-          description: "蜡与火在石座上缓慢燃尽，适合静坐、纪念与陪伴。",
+          description: "一炷烛火，缓慢燃尽。",
           badge: "当前可用",
           available: true,
         },
@@ -764,7 +918,7 @@
           id: "ice",
           title: "冰融",
           subtitle: "冰境",
-          description: "透明冰块在微光中慢慢消散，适合冷静与放空。",
+          description: "冰面渐退，时间更冷也更轻。",
           badge: "即将开放",
           available: false,
         },
@@ -772,7 +926,7 @@
           id: "incense",
           title: "线香",
           subtitle: "烟缕",
-          description: "一缕细烟向上走，适合更轻、更慢的陪伴感。",
+          description: "一线青烟，向上而去。",
           badge: "即将开放",
           available: false,
         },
@@ -780,7 +934,7 @@
           id: "dew",
           title: "露滴",
           subtitle: "水息",
-          description: "水滴从满到空，适合清晨式的短时沉静。",
+          description: "露意渐散，适合短暂停留。",
           badge: "即将开放",
           available: false,
         },
@@ -788,7 +942,7 @@
           id: "sand",
           title: "流砂",
           subtitle: "沙漏",
-          description: "细砂缓缓坠落，适合更明确的时间边界感。",
+          description: "细砂下落，边界更分明。",
           badge: "即将开放",
           available: false,
         },
@@ -837,10 +991,34 @@
         layoutCandleCount: splitDurationAcrossCandles(DEFAULT_MINUTES).length,
       };
 
+      const cameraRig = {
+        target: new THREE.Vector3(),
+        radius: 0,
+        baseYaw: 0,
+        basePitch: 0,
+      };
+
+      const viewState = {
+        currentYaw: 0,
+        targetYaw: 0,
+        currentPitch: 0,
+        targetPitch: 0,
+      };
+
+      const VIEW_LIMITS = {
+        yaw: 0.42,
+        pitchDown: -0.18,
+        pitchUp: 0.14,
+      };
+
       const interaction = {
         tapPointerId: null,
         tapStartX: 0,
         tapStartY: 0,
+        dragPointerId: null,
+        dragLastX: 0,
+        dragLastY: 0,
+        dragMoved: false,
         holdPointerId: null,
         holdProgress: 0,
         pressTween: null,
@@ -952,23 +1130,12 @@
       const altar = new THREE.Group();
       root.add(altar);
 
-      const concreteTexture = createConcreteTexture(128);
-      concreteTexture.wrapS = THREE.RepeatWrapping;
-      concreteTexture.wrapT = THREE.RepeatWrapping;
-      concreteTexture.repeat.set(3, 2);
-
-      const concreteNormalTexture = createConcreteTexture(128, true);
-      concreteNormalTexture.wrapS = THREE.RepeatWrapping;
-      concreteNormalTexture.wrapT = THREE.RepeatWrapping;
-      concreteNormalTexture.repeat.set(3, 2);
-
-      const baseMaterial = new THREE.MeshStandardMaterial({
-        color: 0x3c342d,
-        roughness: 0.98,
-        metalness: 0.01,
-        roughnessMap: concreteTexture,
-        bumpMap: concreteNormalTexture,
-        bumpScale: 0.06,
+      const baseMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0x705a53,
+        roughness: 0.96,
+        metalness: 0,
+        clearcoat: 0.08,
+        clearcoatRoughness: 0.9,
       });
 
       const base = new THREE.Mesh(createRoundedBaseGeometry(), baseMaterial);
@@ -978,7 +1145,7 @@
 
       const candleMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          uColor: { value: new THREE.Color(0xf1e8dc) },
+          uColor: { value: new THREE.Color(0xe8cfc7) },
           uLightPos: { value: new THREE.Vector3(0, BASE_HEIGHT + 8, 0) },
           uGlow: { value: 0 },
           uTime: { value: 0 },
@@ -1024,14 +1191,14 @@
             float edgeTint = smoothstep(0.4, 1.0, rim);
             float heightTone = mix(0.94, 1.04, vUv.y);
 
-            vec3 warmScatter = vec3(1.0, 0.79, 0.56);
-            vec3 coolEdge = vec3(0.77, 0.91, 1.0);
+            vec3 warmScatter = vec3(0.98, 0.78, 0.66);
+            vec3 coolEdge = vec3(0.93, 0.82, 0.78);
             vec3 baseColor = uColor * heightTone + waxBands;
 
-            vec3 lighting = baseColor * (0.22 + diffuse * 0.42 + wrap * 0.2);
-            lighting += warmScatter * transmittance * (0.42 + uGlow * 0.35);
-            lighting += coolEdge * edgeTint * 0.12 * (0.35 + uGlow * 0.65);
-            lighting += warmScatter * rim * 0.06;
+            vec3 lighting = baseColor * (0.3 + diffuse * 0.34 + wrap * 0.18);
+            lighting += warmScatter * transmittance * (0.36 + uGlow * 0.28);
+            lighting += coolEdge * edgeTint * 0.09 * (0.25 + uGlow * 0.4);
+            lighting += warmScatter * rim * 0.045;
 
             gl_FragColor = vec4(lighting, 1.0);
           }
@@ -1039,31 +1206,48 @@
       });
 
       const plinth = new THREE.Mesh(
-        new THREE.CylinderGeometry(2.95, 3.2, 0.36, 48),
-        new THREE.MeshStandardMaterial({
-          color: 0x1b1714,
-          roughness: 0.9,
-          metalness: 0.03,
+        new THREE.CylinderGeometry(3.3, 3.55, 0.46, 56),
+        new THREE.MeshPhysicalMaterial({
+          color: 0x4f403a,
+          roughness: 0.94,
+          metalness: 0,
+          clearcoat: 0.06,
+          clearcoatRoughness: 0.88,
         })
       );
       plinth.position.y = BASE_HEIGHT + 0.16;
+      plinth.scale.z = 0.92;
       plinth.receiveShadow = true;
       plinth.castShadow = true;
       altar.add(plinth);
 
+      const plinthCushion = new THREE.Mesh(
+        new THREE.SphereGeometry(3.02, 42, 28),
+        new THREE.MeshPhysicalMaterial({
+          color: 0x5d4a44,
+          roughness: 0.98,
+          metalness: 0,
+        })
+      );
+      plinthCushion.position.y = BASE_HEIGHT + 0.38;
+      plinthCushion.scale.set(1, 0.18, 0.84);
+      plinthCushion.receiveShadow = true;
+      plinthCushion.castShadow = true;
+      altar.add(plinthCushion);
+
       const waxPoolMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xe9dfd0,
-        roughness: 0.54,
+        color: 0xd9b6ae,
+        roughness: 0.84,
         metalness: 0,
-        clearcoat: 0.26,
-        clearcoatRoughness: 0.78,
+        clearcoat: 0.12,
+        clearcoatRoughness: 0.94,
         transmission: 0.02,
       });
 
       const wickMaterial = new THREE.MeshStandardMaterial({
-        color: 0x121212,
+        color: 0x594744,
         roughness: 0.92,
-        metalness: 0.04,
+        metalness: 0,
       });
 
       const candleUnits = Array.from({ length: MAX_CANDLES }, (_, index) => createCandleUnit(index));
@@ -1317,6 +1501,7 @@
       const clock = new THREE.Clock();
       const permutation = createPermutationTable(1337);
       const tempLightVector = new THREE.Vector3();
+      const tempCameraVector = new THREE.Vector3();
 
       updateCamera();
       renderSceneCards();
@@ -1345,6 +1530,7 @@
       igniteButtonEl.addEventListener("pointercancel", onIgnitePointerUp);
       returnButtonEl.addEventListener("click", returnToSetup);
       interactionLayer.addEventListener("pointerdown", onScenePointerDown);
+      interactionLayer.addEventListener("pointermove", onScenePointerMove);
       interactionLayer.addEventListener("pointerup", onScenePointerUp);
       interactionLayer.addEventListener("pointercancel", onScenePointerCancel);
       interactionLayer.addEventListener("dblclick", (event) => {
@@ -1388,7 +1574,8 @@
             appState.flameAnchor.z + driftZ
           );
 
-          tempLightVector.set(flame.position.x, flame.position.y + 0.25, flame.position.z);
+          flame.getWorldPosition(tempLightVector);
+          tempLightVector.y += 0.25;
           flameLight.position.copy(tempLightVector);
           flameLight.intensity = 1.8 + flicker * 1.3;
           candleMaterial.uniforms.uLightPos.value.copy(flameLight.position);
@@ -1398,6 +1585,7 @@
           }
         }
 
+        applyCameraView();
         composer.render();
         requestAnimationFrame(render);
       }
@@ -1456,6 +1644,8 @@
 
         clearReturnToIdle();
         updateCandleArrangement(appState.durationMinutes);
+        resetView();
+        updateCamera();
         setView("experience");
         setState(STATES.IDLE);
         gsap.fromTo(
@@ -1483,6 +1673,8 @@
 
         appState.remainingSeconds = appState.durationMinutes * 60;
         appState.totalSeconds = appState.remainingSeconds;
+        resetView();
+        updateCamera();
         setView("setup");
         setState(STATES.IDLE);
         updateHud();
@@ -1490,15 +1682,70 @@
 
       function updateCamera() {
         const aspect = window.innerWidth / window.innerHeight;
-        camera.left = (-FRUSTUM_SIZE * aspect) / 2;
-        camera.right = (FRUSTUM_SIZE * aspect) / 2;
-        camera.top = FRUSTUM_SIZE / 2;
-        camera.bottom = -FRUSTUM_SIZE / 2;
+        const isMobile = window.innerWidth <= 640;
+        const isTablet = window.innerWidth <= 900;
+        const frustum = isMobile ? 19.6 : isTablet ? 17.6 : FRUSTUM_SIZE;
+        let targetY = 3.9;
+
+        camera.left = (-frustum * aspect) / 2;
+        camera.right = (frustum * aspect) / 2;
+        camera.top = frustum / 2;
+        camera.bottom = -frustum / 2;
         camera.near = -40;
         camera.far = 60;
-        camera.position.set(11.1, 10.1, 12.6);
-        camera.lookAt(0, 3.9, 0);
+
+        if (isMobile) {
+          root.position.set(0, -2.35, 0);
+          root.scale.setScalar(0.86);
+          camera.position.set(12.4, 10.8, 14.8);
+          targetY = 1.45;
+        } else if (isTablet) {
+          root.position.set(0, -1.15, 0);
+          root.scale.setScalar(0.93);
+          camera.position.set(11.7, 10.4, 13.4);
+          targetY = 2.9;
+        } else {
+          root.position.set(0, 0, 0);
+          root.scale.setScalar(1);
+          camera.position.set(11.1, 10.1, 12.6);
+          targetY = 3.9;
+        }
+
+        cameraRig.target.set(0, targetY, 0);
+        tempCameraVector.copy(camera.position).sub(cameraRig.target);
+        cameraRig.radius = tempCameraVector.length();
+        cameraRig.baseYaw = Math.atan2(tempCameraVector.x, tempCameraVector.z);
+        cameraRig.basePitch = Math.atan2(
+          tempCameraVector.y,
+          Math.hypot(tempCameraVector.x, tempCameraVector.z)
+        );
+
         camera.updateProjectionMatrix();
+        applyCameraView(true);
+      }
+
+      function resetView() {
+        viewState.currentYaw = 0;
+        viewState.targetYaw = 0;
+        viewState.currentPitch = 0;
+        viewState.targetPitch = 0;
+      }
+
+      function applyCameraView(immediate = false) {
+        const damping = immediate ? 1 : 0.12;
+        viewState.currentYaw = THREE.MathUtils.lerp(viewState.currentYaw, viewState.targetYaw, damping);
+        viewState.currentPitch = THREE.MathUtils.lerp(viewState.currentPitch, viewState.targetPitch, damping);
+
+        const yaw = cameraRig.baseYaw + viewState.currentYaw;
+        const pitch = cameraRig.basePitch + viewState.currentPitch;
+        const horizontalRadius = cameraRig.radius * Math.cos(pitch);
+
+        camera.position.set(
+          cameraRig.target.x + Math.sin(yaw) * horizontalRadius,
+          cameraRig.target.y + Math.sin(pitch) * cameraRig.radius,
+          cameraRig.target.z + Math.cos(yaw) * horizontalRadius
+        );
+        camera.lookAt(cameraRig.target);
       }
 
       function setState(nextState) {
@@ -1507,16 +1754,16 @@
         statusEl.textContent = getStateLabel(nextState);
 
         if (nextState === STATES.IDLE) {
-          hintEl.textContent = "拖动下方时间轴设定时长，长按点燃，双击场景熄灭重置。";
+          hintEl.textContent = "长按点燃，双击熄灭。";
         }
         if (nextState === STATES.SETTING) {
-          hintEl.textContent = "每一炷至多承载三十分钟，时长增加时会自然添一炷。";
+          hintEl.textContent = "长按点燃，双击熄灭。";
         }
         if (nextState === STATES.BURNING) {
-          hintEl.textContent = "双击场景可熄灭此刻火光，回到静置。";
+          hintEl.textContent = "双击熄灭。";
         }
         if (nextState === STATES.FINISHED) {
-          hintEl.textContent = "此刻已圆满。可重新设定时长，或再次点燃。";
+          hintEl.textContent = "已燃尽，可再次点燃。";
         }
 
         igniteButtonEl.disabled = nextState === STATES.BURNING;
@@ -1559,6 +1806,43 @@
         interaction.tapPointerId = event.pointerId;
         interaction.tapStartX = event.clientX;
         interaction.tapStartY = event.clientY;
+        interaction.dragPointerId = event.pointerId;
+        interaction.dragLastX = event.clientX;
+        interaction.dragLastY = event.clientY;
+        interaction.dragMoved = false;
+        interactionLayer.setPointerCapture(event.pointerId);
+      }
+
+      function onScenePointerMove(event) {
+        if (appState.view !== "experience" || event.pointerId !== interaction.dragPointerId) {
+          return;
+        }
+
+        const dx = event.clientX - interaction.dragLastX;
+        const dy = event.clientY - interaction.dragLastY;
+        const totalDx = event.clientX - interaction.tapStartX;
+        const totalDy = event.clientY - interaction.tapStartY;
+
+        if (!interaction.dragMoved && Math.hypot(totalDx, totalDy) > 12) {
+          interaction.dragMoved = true;
+        }
+
+        interaction.dragLastX = event.clientX;
+        interaction.dragLastY = event.clientY;
+
+        const yawDelta = (dx / Math.max(window.innerWidth, 1)) * 1.6;
+        const pitchDelta = (dy / Math.max(window.innerHeight, 1)) * 1.2;
+
+        viewState.targetYaw = THREE.MathUtils.clamp(
+          viewState.targetYaw - yawDelta,
+          -VIEW_LIMITS.yaw,
+          VIEW_LIMITS.yaw
+        );
+        viewState.targetPitch = THREE.MathUtils.clamp(
+          viewState.targetPitch - pitchDelta,
+          VIEW_LIMITS.pitchDown,
+          VIEW_LIMITS.pitchUp
+        );
       }
 
       function onScenePointerUp(event) {
@@ -1570,12 +1854,16 @@
           return;
         }
 
+        if (interactionLayer.hasPointerCapture(event.pointerId)) {
+          interactionLayer.releasePointerCapture(event.pointerId);
+        }
+
         const dx = event.clientX - interaction.tapStartX;
         const dy = event.clientY - interaction.tapStartY;
         const travel = Math.hypot(dx, dy);
         const now = performance.now();
 
-        if (travel < 14) {
+        if (!interaction.dragMoved && travel < 14) {
           const isDoubleTap =
             now - interaction.lastTapTime < 320 &&
             Math.hypot(event.clientX - interaction.lastTapX, event.clientY - interaction.lastTapY) < 28;
@@ -1591,6 +1879,8 @@
         }
 
         interaction.tapPointerId = null;
+        interaction.dragPointerId = null;
+        interaction.dragMoved = false;
       }
 
       function onScenePointerCancel(event) {
@@ -1598,8 +1888,17 @@
           return;
         }
 
+        if (event.pointerId === interaction.dragPointerId && interactionLayer.hasPointerCapture(event.pointerId)) {
+          interactionLayer.releasePointerCapture(event.pointerId);
+        }
+
         if (event.pointerId === interaction.tapPointerId) {
           interaction.tapPointerId = null;
+        }
+
+        if (event.pointerId === interaction.dragPointerId) {
+          interaction.dragPointerId = null;
+          interaction.dragMoved = false;
         }
       }
 
@@ -1860,19 +2159,26 @@
           const segmentMinutes = segments[index] || 0;
           const height = mapCandleMinutesToHeight(segmentMinutes);
           unit.body.scale.set(1, height, 1);
-          unit.body.position.y = BASE_HEIGHT + 0.34 + height * 0.5;
+          unit.body.position.y = BASE_HEIGHT + 0.54 + height * 0.5;
 
-          unit.cap.position.y = BASE_HEIGHT + 0.34 + height;
-          unit.wick.position.y = BASE_HEIGHT + 0.34 + height + 0.22;
-          unit.pool.position.y = BASE_HEIGHT + 0.29;
+          unit.cap.position.y = BASE_HEIGHT + 0.54 + height;
+          unit.wick.position.y = BASE_HEIGHT + 0.54 + height + 0.14;
+          unit.pool.position.y = BASE_HEIGHT + 0.42;
           unit.cap.visible = segmentMinutes > 0.02;
           unit.wick.visible = segmentMinutes > 0.08;
-          unit.drip.visible = segmentMinutes > 2.5;
+          unit.accent.visible = segmentMinutes > 4;
+
+          unit.accent.position.set(
+            pose.x < 0 ? -0.18 : 0.18,
+            BASE_HEIGHT + 0.98 + Math.min(height * 0.2, 0.72),
+            pose.z * 0.1
+          );
+          unit.accent.scale.set(1.2, 0.86, 1);
 
           unit.pool.scale.set(
-            1 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.28,
-            1,
-            1 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.24
+            1 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.22,
+            0.24 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.04,
+            0.96 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.18
           );
         });
 
@@ -1889,7 +2195,9 @@
         flame.position.copy(appState.flameAnchor);
 
         if (appState.state !== STATES.BURNING) {
-          flameLight.position.set(appState.flameAnchor.x, appState.flameAnchor.y + 0.25, appState.flameAnchor.z);
+          flame.getWorldPosition(tempLightVector);
+          tempLightVector.y += 0.25;
+          flameLight.position.copy(tempLightVector);
           candleMaterial.uniforms.uLightPos.value.copy(flameLight.position);
         }
       }
@@ -1917,7 +2225,7 @@
           return "燃烧";
         }
         if (state === STATES.FINISHED) {
-          return "圆满";
+          return "燃尽";
         }
         return state;
       }
@@ -1957,21 +2265,21 @@
 
       function getCandleClusterLayout(count) {
         const layouts = {
-          1: [{ x: 0, z: 0, scale: 1.12, rotation: 0 }],
+          1: [{ x: 0, z: 0, scale: 1.08, rotation: 0 }],
           2: [
-            { x: -0.95, z: 0.08, scale: 1.02, rotation: -0.04 },
-            { x: 0.95, z: -0.08, scale: 1.02, rotation: 0.04 },
+            { x: -0.88, z: 0.08, scale: 0.99, rotation: -0.03 },
+            { x: 0.88, z: -0.08, scale: 0.99, rotation: 0.03 },
           ],
           3: [
-            { x: -1.45, z: 0.12, scale: 0.98, rotation: -0.05 },
-            { x: 0, z: 0, scale: 1.12, rotation: 0 },
-            { x: 1.45, z: -0.12, scale: 0.98, rotation: 0.05 },
+            { x: -1.34, z: 0.12, scale: 0.95, rotation: -0.04 },
+            { x: 0, z: 0, scale: 1.08, rotation: 0 },
+            { x: 1.34, z: -0.12, scale: 0.95, rotation: 0.04 },
           ],
           4: [
-            { x: -2.04, z: 0.18, scale: 0.92, rotation: -0.08 },
-            { x: -0.68, z: -0.03, scale: 1.04, rotation: -0.03 },
-            { x: 0.68, z: -0.03, scale: 1.04, rotation: 0.03 },
-            { x: 2.04, z: 0.18, scale: 0.92, rotation: 0.08 },
+            { x: -1.82, z: 0.14, scale: 0.89, rotation: -0.05 },
+            { x: -0.62, z: -0.04, scale: 1.0, rotation: -0.02 },
+            { x: 0.62, z: -0.04, scale: 1.0, rotation: 0.02 },
+            { x: 1.82, z: 0.14, scale: 0.89, rotation: 0.05 },
           ],
         };
 
@@ -1980,42 +2288,39 @@
 
       function createCandleUnit(index) {
         const group = new THREE.Group();
-        const radius = 0.52 + (index % 2 === 0 ? 0.03 : -0.02);
+        const radius = 0.54 + (index % 2 === 0 ? 0.025 : -0.015);
 
-        const pool = new THREE.Mesh(new THREE.CylinderGeometry(radius * 1.35, radius * 1.45, 0.12, 36), waxPoolMaterial);
+        const pool = new THREE.Mesh(new THREE.SphereGeometry(radius * 1.48, 36, 24), waxPoolMaterial);
         pool.castShadow = true;
         pool.receiveShadow = true;
+        pool.scale.set(1.16, 0.24, 1.02);
         group.add(pool);
 
-        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.94, radius, 1, 56, 1, false), candleMaterial);
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.96, radius, 1, 56, 1, false), candleMaterial);
         body.castShadow = true;
         body.receiveShadow = true;
         group.add(body);
 
-        const cap = new THREE.Mesh(new THREE.SphereGeometry(radius, 42, 30), candleMaterial);
-        cap.scale.y = 0.16;
+        const cap = new THREE.Mesh(new THREE.SphereGeometry(radius * 1.02, 42, 30), candleMaterial);
+        cap.scale.set(1.02, 0.34, 1.02);
         cap.castShadow = true;
         cap.receiveShadow = true;
         group.add(cap);
 
-        const wick = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.05, 0.42, 12), wickMaterial);
+        const wick = new THREE.Mesh(new THREE.CylinderGeometry(0.026, 0.04, 0.26, 12), wickMaterial);
         wick.castShadow = true;
         group.add(wick);
 
-        const drip = new THREE.Mesh(
-          new THREE.CapsuleGeometry(radius * 0.1, 0.38, 3, 8),
-          candleMaterial
-        );
-        drip.position.set(radius * 0.66, BASE_HEIGHT + 1.15, radius * 0.18);
-        drip.rotation.z = -0.22;
-        drip.castShadow = true;
-        group.add(drip);
+        const accent = new THREE.Mesh(new THREE.SphereGeometry(radius * 0.28, 20, 16), waxPoolMaterial);
+        accent.castShadow = true;
+        accent.receiveShadow = true;
+        group.add(accent);
 
-        return { group, pool, body, cap, wick, drip };
+        return { group, pool, body, cap, wick, accent };
       }
 
       function createRoundedBaseGeometry() {
-        const radius = 0.7;
+        const radius = 1.05;
         const shape = new THREE.Shape();
         const x = -BASE_WIDTH / 2;
         const y = -BASE_DEPTH / 2;
@@ -2033,11 +2338,11 @@
         const geometry = new THREE.ExtrudeGeometry(shape, {
           depth: BASE_HEIGHT,
           bevelEnabled: true,
-          bevelSegments: 5,
+          bevelSegments: 7,
           steps: 1,
-          bevelSize: 0.22,
-          bevelThickness: 0.22,
-          curveSegments: 24,
+          bevelSize: 0.38,
+          bevelThickness: 0.32,
+          curveSegments: 32,
         });
 
         geometry.rotateX(-Math.PI / 2);

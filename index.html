@@ -22,15 +22,17 @@
     </script>
     <style>
       :root {
-        --bg-0: #a89b8a;
-        --bg-1: #d4cabd;
-        --bg-2: #ebe3d7;
-        --setup-bg-0: #a89b8a;
-        --setup-bg-1: #d4cabd;
-        --setup-bg-2: #ebe3d7;
+        --setup-bg-solid: #c8bcad;
         --experience-bg-0: #6e6154;
         --experience-bg-1: #938577;
         --experience-bg-2: #b6ab9d;
+        --experience-top-glow: rgba(255, 239, 219, 0.18);
+        --experience-side-glow: rgba(215, 186, 149, 0.12);
+        --experience-depth-shadow: rgba(58, 42, 28, 0.16);
+        --experience-core-halo: rgba(255, 242, 226, 0.1);
+        --experience-base-shadow: rgba(49, 36, 24, 0.12);
+        --experience-sheen: rgba(255, 255, 255, 0.04);
+        --experience-mist: rgba(255, 245, 230, 0.04);
         --paper: rgba(239, 231, 220, 0.62);
         --paper-strong: rgba(247, 241, 232, 0.8);
         --ink: #2d261f;
@@ -56,12 +58,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background:
-          radial-gradient(circle at 50% 2%, rgba(255, 255, 255, 0.42), transparent 24%),
-          radial-gradient(circle at 18% 18%, rgba(236, 222, 203, 0.2), transparent 24%),
-          radial-gradient(circle at 84% 14%, rgba(178, 155, 125, 0.16), transparent 22%),
-          radial-gradient(circle at 50% 84%, rgba(116, 93, 68, 0.12), transparent 32%),
-          linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 36%, var(--bg-0) 100%);
+        background: var(--setup-bg-solid);
         color: var(--ink);
         font-family: "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
         overscroll-behavior: none;
@@ -74,32 +71,30 @@
         content: "";
         position: fixed;
         inset: 0;
-        background:
-          radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.18), transparent 34%),
-          radial-gradient(circle at 50% 68%, rgba(255, 244, 230, 0.12), transparent 28%);
-        opacity: 0.7;
+        background: none;
+        opacity: 0;
         pointer-events: none;
       }
 
       body[data-view="experience"] {
         background:
-          radial-gradient(circle at 50% 8%, rgba(255, 239, 219, 0.18), transparent 20%),
-          radial-gradient(circle at 20% 18%, rgba(215, 186, 149, 0.12), transparent 24%),
-          radial-gradient(circle at 80% 78%, rgba(58, 42, 28, 0.16), transparent 30%),
+          radial-gradient(circle at 50% 8%, var(--experience-top-glow), transparent 20%),
+          radial-gradient(circle at 20% 18%, var(--experience-side-glow), transparent 24%),
+          radial-gradient(circle at 80% 78%, var(--experience-depth-shadow), transparent 30%),
           linear-gradient(180deg, var(--experience-bg-2) 0%, var(--experience-bg-1) 38%, var(--experience-bg-0) 100%);
       }
 
       body[data-view="experience"]::before {
         background:
-          radial-gradient(circle at 50% 42%, rgba(255, 242, 226, 0.1), transparent 30%),
-          radial-gradient(circle at 50% 80%, rgba(49, 36, 24, 0.12), transparent 24%);
+          radial-gradient(circle at 50% 42%, var(--experience-core-halo), transparent 30%),
+          radial-gradient(circle at 50% 80%, var(--experience-base-shadow), transparent 24%);
         opacity: 0.56;
       }
 
       body[data-view="experience"]::after {
         background:
-          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 48%, transparent 100%),
-          linear-gradient(180deg, rgba(255, 245, 230, 0.04), transparent 24%);
+          linear-gradient(90deg, transparent 0%, var(--experience-sheen) 48%, transparent 100%),
+          linear-gradient(180deg, var(--experience-mist), transparent 24%);
         opacity: 0.18;
       }
 
@@ -107,11 +102,9 @@
         content: "";
         position: fixed;
         inset: 0;
-        opacity: 0.26;
+        opacity: 0;
         pointer-events: none;
-        background:
-          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.09) 48%, transparent 100%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 28%);
+        background: none;
       }
 
       #app {
@@ -1010,6 +1003,132 @@
         },
       ];
 
+      const SETUP_ENVIRONMENT = Object.freeze({
+        sceneBackground: 0xc8bcad,
+        fogColor: 0xc8bcad,
+        fogNear: 18,
+        fogFar: 34,
+        floorColor: 0xa89a89,
+        hemiSky: 0xf4ede2,
+        hemiGround: 0x8f7b65,
+        hemiIntensity: 0.62,
+        keyColor: 0xf6ecdf,
+        keyIntensity: 0.2,
+        floorVisible: false,
+      });
+
+      const EXPERIENCE_ENVIRONMENTS = Object.freeze({
+        candle: Object.freeze({
+          pageGradient: ["#6e6154", "#938577", "#b6ab9d"],
+          topGlow: "rgba(255, 239, 219, 0.18)",
+          sideGlow: "rgba(215, 186, 149, 0.12)",
+          depthShadow: "rgba(58, 42, 28, 0.16)",
+          coreHalo: "rgba(255, 242, 226, 0.1)",
+          baseShadow: "rgba(49, 36, 24, 0.12)",
+          sheen: "rgba(255, 255, 255, 0.04)",
+          mist: "rgba(255, 245, 230, 0.04)",
+          sceneBackground: 0x857768,
+          fogColor: 0x908171,
+          fogNear: 12,
+          fogFar: 28,
+          floorColor: 0x7e7061,
+          hemiSky: 0xf2e5d6,
+          hemiGround: 0x655544,
+          hemiIntensity: 0.58,
+          keyColor: 0xf6ebde,
+          keyIntensity: 0.21,
+          floorVisible: true,
+        }),
+        ice: Object.freeze({
+          pageGradient: ["#72818f", "#a5b7c4", "#d9e4eb"],
+          topGlow: "rgba(244, 250, 255, 0.22)",
+          sideGlow: "rgba(199, 220, 235, 0.16)",
+          depthShadow: "rgba(75, 91, 111, 0.14)",
+          coreHalo: "rgba(247, 252, 255, 0.14)",
+          baseShadow: "rgba(82, 97, 118, 0.1)",
+          sheen: "rgba(255, 255, 255, 0.05)",
+          mist: "rgba(232, 243, 255, 0.06)",
+          sceneBackground: 0x9eaeba,
+          fogColor: 0xc7d2db,
+          fogNear: 13,
+          fogFar: 30,
+          floorColor: 0xa6b4bf,
+          hemiSky: 0xf2f8fc,
+          hemiGround: 0x738290,
+          hemiIntensity: 0.6,
+          keyColor: 0xf7fbff,
+          keyIntensity: 0.19,
+          floorVisible: true,
+        }),
+        incense: Object.freeze({
+          pageGradient: ["#62584f", "#8b7b6d", "#b7aa9d"],
+          topGlow: "rgba(255, 238, 218, 0.16)",
+          sideGlow: "rgba(198, 176, 150, 0.11)",
+          depthShadow: "rgba(44, 33, 24, 0.16)",
+          coreHalo: "rgba(255, 243, 230, 0.08)",
+          baseShadow: "rgba(43, 31, 22, 0.14)",
+          sheen: "rgba(255, 255, 255, 0.035)",
+          mist: "rgba(247, 235, 220, 0.035)",
+          sceneBackground: 0x7d7062,
+          fogColor: 0x9b8d7e,
+          fogNear: 11,
+          fogFar: 27,
+          floorColor: 0x77695b,
+          hemiSky: 0xf2e7da,
+          hemiGround: 0x5d4d3e,
+          hemiIntensity: 0.55,
+          keyColor: 0xf6ebdf,
+          keyIntensity: 0.18,
+          floorVisible: true,
+        }),
+        dew: Object.freeze({
+          pageGradient: ["#7a8576", "#a8b29f", "#d8ddd0"],
+          topGlow: "rgba(247, 252, 245, 0.18)",
+          sideGlow: "rgba(210, 226, 206, 0.14)",
+          depthShadow: "rgba(73, 86, 70, 0.12)",
+          coreHalo: "rgba(250, 255, 248, 0.12)",
+          baseShadow: "rgba(65, 79, 63, 0.1)",
+          sheen: "rgba(255, 255, 255, 0.04)",
+          mist: "rgba(242, 249, 239, 0.05)",
+          sceneBackground: 0xa0ab99,
+          fogColor: 0xc7cec0,
+          fogNear: 13,
+          fogFar: 29,
+          floorColor: 0x97a18f,
+          hemiSky: 0xf0f5ee,
+          hemiGround: 0x6f7a68,
+          hemiIntensity: 0.6,
+          keyColor: 0xf8fbf6,
+          keyIntensity: 0.2,
+          floorVisible: true,
+        }),
+        sand: Object.freeze({
+          pageGradient: ["#6a5a49", "#99836d", "#d5c1a7"],
+          topGlow: "rgba(255, 236, 202, 0.16)",
+          sideGlow: "rgba(231, 196, 144, 0.14)",
+          depthShadow: "rgba(69, 48, 28, 0.16)",
+          coreHalo: "rgba(255, 246, 226, 0.09)",
+          baseShadow: "rgba(72, 50, 29, 0.12)",
+          sheen: "rgba(255, 255, 255, 0.035)",
+          mist: "rgba(250, 232, 200, 0.035)",
+          sceneBackground: 0xa68e73,
+          fogColor: 0xc8b08f,
+          fogNear: 12,
+          fogFar: 27,
+          floorColor: 0xa58868,
+          hemiSky: 0xf5ebdc,
+          hemiGround: 0x71563d,
+          hemiIntensity: 0.57,
+          keyColor: 0xf8f0e3,
+          keyIntensity: 0.19,
+          floorVisible: true,
+        }),
+      });
+
+      function getSceneEnvironment(sceneId) {
+        return EXPERIENCE_ENVIRONMENTS[sceneId] || EXPERIENCE_ENVIRONMENTS.candle;
+      }
+
       const DEFAULT_MINUTES = 25;
       const MIN_MINUTES = 5;
       const MAX_MINUTES = 120;
@@ -1136,8 +1255,12 @@
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xc8bcad);
-      scene.fog = new THREE.Fog(0xcfc3b4, 14, 31);
+      scene.background = new THREE.Color(SETUP_ENVIRONMENT.sceneBackground);
+      scene.fog = new THREE.Fog(
+        SETUP_ENVIRONMENT.fogColor,
+        SETUP_ENVIRONMENT.fogNear,
+        SETUP_ENVIRONMENT.fogFar
+      );
 
       const camera = new THREE.OrthographicCamera();
       const FRUSTUM_SIZE = 16;
@@ -1161,7 +1284,7 @@
       const floor = new THREE.Mesh(
         new THREE.PlaneGeometry(50, 50),
         new THREE.MeshStandardMaterial({
-          color: 0xa89a89,
+          color: SETUP_ENVIRONMENT.floorColor,
           roughness: 1,
           metalness: 0,
         })
@@ -1169,12 +1292,17 @@
       floor.rotation.x = -Math.PI / 2;
       floor.position.y = -0.015;
       floor.receiveShadow = true;
+      floor.visible = SETUP_ENVIRONMENT.floorVisible;
       scene.add(floor);
 
-      const hemiLight = new THREE.HemisphereLight(0xf4ede2, 0x8f7b65, 0.68);
+      const hemiLight = new THREE.HemisphereLight(
+        SETUP_ENVIRONMENT.hemiSky,
+        SETUP_ENVIRONMENT.hemiGround,
+        SETUP_ENVIRONMENT.hemiIntensity
+      );
       scene.add(hemiLight);
 
-      const keyLight = new THREE.DirectionalLight(0xf6ecdf, 0.26);
+      const keyLight = new THREE.DirectionalLight(SETUP_ENVIRONMENT.keyColor, SETUP_ENVIRONMENT.keyIntensity);
       keyLight.position.set(6, 15, 12);
       keyLight.castShadow = true;
       keyLight.shadow.mapSize.set(1024, 1024);
@@ -1690,33 +1818,44 @@
         });
       }
 
+      function applyExperiencePageTheme(environment) {
+        document.documentElement.style.setProperty("--experience-bg-0", environment.pageGradient[0]);
+        document.documentElement.style.setProperty("--experience-bg-1", environment.pageGradient[1]);
+        document.documentElement.style.setProperty("--experience-bg-2", environment.pageGradient[2]);
+        document.documentElement.style.setProperty("--experience-top-glow", environment.topGlow);
+        document.documentElement.style.setProperty("--experience-side-glow", environment.sideGlow);
+        document.documentElement.style.setProperty("--experience-depth-shadow", environment.depthShadow);
+        document.documentElement.style.setProperty("--experience-core-halo", environment.coreHalo);
+        document.documentElement.style.setProperty("--experience-base-shadow", environment.baseShadow);
+        document.documentElement.style.setProperty("--experience-sheen", environment.sheen);
+        document.documentElement.style.setProperty("--experience-mist", environment.mist);
+      }
+
+      function applyEnvironment(environment) {
+        scene.background.set(environment.sceneBackground);
+        scene.fog.color.set(environment.fogColor);
+        scene.fog.near = environment.fogNear;
+        scene.fog.far = environment.fogFar;
+        floor.material.color.set(environment.floorColor);
+        floor.visible = environment.floorVisible;
+        hemiLight.color.set(environment.hemiSky);
+        hemiLight.groundColor.set(environment.hemiGround);
+        hemiLight.intensity = environment.hemiIntensity;
+        keyLight.color.set(environment.keyColor);
+        keyLight.intensity = environment.keyIntensity;
+      }
+
       function setView(nextView) {
         appState.view = nextView;
         document.body.dataset.view = nextView;
         altar.visible = nextView === "experience";
 
         if (nextView === "experience") {
-          scene.background.set(0x857768);
-          scene.fog.color.set(0x908171);
-          scene.fog.near = 12;
-          scene.fog.far = 28;
-          floor.material.color.set(0x7e7061);
-          hemiLight.color.set(0xf2e5d6);
-          hemiLight.groundColor.set(0x655544);
-          hemiLight.intensity = 0.58;
-          keyLight.color.set(0xf6ebde);
-          keyLight.intensity = 0.21;
+          const sceneEnvironment = getSceneEnvironment(appState.selectedSceneId);
+          applyExperiencePageTheme(sceneEnvironment);
+          applyEnvironment(sceneEnvironment);
         } else {
-          scene.background.set(0xc8bcad);
-          scene.fog.color.set(0xcfc3b4);
-          scene.fog.near = 14;
-          scene.fog.far = 31;
-          floor.material.color.set(0xa89a89);
-          hemiLight.color.set(0xf4ede2);
-          hemiLight.groundColor.set(0x8f7b65);
-          hemiLight.intensity = 0.68;
-          keyLight.color.set(0xf6ecdf);
-          keyLight.intensity = 0.26;
+          applyEnvironment(SETUP_ENVIRONMENT);
         }
 
         if (nextView === "setup") {

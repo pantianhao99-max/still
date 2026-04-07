@@ -1,0 +1,2285 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>静烛</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --bg-0: #0e0c0a;
+        --bg-1: #1a1410;
+        --paper: rgba(205, 191, 165, 0.1);
+        --paper-strong: rgba(216, 200, 170, 0.16);
+        --ink: #e7dcc7;
+        --ink-soft: rgba(231, 220, 199, 0.72);
+        --ink-dim: rgba(231, 220, 199, 0.42);
+        --seal: #8f2a1d;
+        --seal-soft: rgba(143, 42, 29, 0.18);
+        --ring-circumference: 339.292;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 10%, rgba(214, 170, 101, 0.08), transparent 18%),
+          radial-gradient(circle at 18% 22%, rgba(255, 244, 217, 0.035), transparent 24%),
+          radial-gradient(circle at 80% 18%, rgba(173, 132, 96, 0.045), transparent 20%),
+          linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+        color: var(--ink);
+        font-family: "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+        overscroll-behavior: none;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(circle at 50% 36%, rgba(233, 224, 201, 0.055), transparent 36%),
+          radial-gradient(circle at 50% 36%, transparent 24%, rgba(233, 224, 201, 0.03) 24.5%, transparent 25.5%);
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        opacity: 0.18;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.018) 48%, transparent 100%),
+          radial-gradient(circle at 50% 78%, rgba(255, 245, 223, 0.045), transparent 30%);
+        mix-blend-mode: lighten;
+      }
+
+      #app {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+
+      #stage {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        filter: contrast(1.01) saturate(0.92);
+      }
+
+      #stage:active {
+        cursor: default;
+      }
+
+      .hud-shell {
+        transform: translateY(0);
+      }
+
+      .timer {
+        font-family: "Noto Serif SC", serif;
+        letter-spacing: 0.34em;
+        padding-left: 0.34em;
+        line-height: 1;
+        color: var(--ink);
+        text-shadow: 0 0 18px rgba(255, 215, 146, 0.06);
+        font-variant-numeric: tabular-nums;
+        transition:
+          opacity 380ms ease,
+          transform 380ms ease,
+          text-shadow 380ms ease;
+      }
+
+      .altar-mark {
+        display: grid;
+        gap: 4px;
+        justify-items: center;
+        color: var(--ink-dim);
+      }
+
+      .altar-mark strong {
+        font-family: "Noto Serif SC", serif;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.48em;
+        padding-left: 0.48em;
+      }
+
+      .altar-mark span {
+        font-size: 9px;
+        letter-spacing: 0.28em;
+      }
+
+      .status-chip,
+      .hint-chip {
+        border: 1px solid rgba(211, 193, 161, 0.14);
+        background:
+          linear-gradient(180deg, rgba(53, 42, 33, 0.82), rgba(27, 21, 16, 0.9)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.03) 52%, transparent 100%);
+        box-shadow:
+          0 16px 36px rgba(0, 0, 0, 0.24),
+          inset 0 1px 0 rgba(255, 248, 224, 0.04);
+        transition:
+          opacity 320ms ease,
+          transform 320ms ease,
+          border-color 320ms ease,
+          background 320ms ease;
+      }
+
+      .status-chip {
+        color: var(--ink-soft);
+      }
+
+      .hint-chip {
+        color: var(--ink-dim);
+      }
+
+      .press-ring {
+        position: absolute;
+        inset: 50% auto auto 50%;
+        width: 108px;
+        height: 108px;
+        transform: translate(-50%, -50%) scale(0.94);
+        opacity: 0;
+        transition:
+          opacity 260ms ease,
+          transform 260ms ease;
+        pointer-events: none;
+      }
+
+      .press-ring.is-active {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .press-ring-track {
+        fill: none;
+        stroke: rgba(231, 220, 199, 0.08);
+        stroke-width: 3;
+      }
+
+      .press-ring-progress {
+        fill: none;
+        stroke: rgba(220, 188, 128, 0.84);
+        stroke-width: 3.5;
+        stroke-linecap: round;
+        filter: drop-shadow(0 0 10px rgba(196, 144, 72, 0.22));
+        stroke-dasharray: var(--ring-circumference);
+        stroke-dashoffset: var(--ring-circumference);
+        transition: stroke-dashoffset 50ms linear;
+      }
+
+      #interaction-layer {
+        position: absolute;
+        inset: 0;
+        touch-action: none;
+        z-index: 1;
+      }
+
+      .setup-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        transition:
+          opacity 420ms ease,
+          transform 420ms ease;
+      }
+
+      .setup-panel {
+        width: min(960px, calc(100vw - 32px));
+        border: 1px solid rgba(213, 196, 164, 0.12);
+        border-radius: 36px;
+        padding: 28px;
+        background:
+          linear-gradient(180deg, rgba(31, 24, 18, 0.94), rgba(18, 14, 11, 0.97)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 247, 228, 0.025) 52%, transparent 100%);
+        box-shadow:
+          0 28px 90px rgba(0, 0, 0, 0.28),
+          inset 0 1px 0 rgba(255, 248, 224, 0.04);
+        display: grid;
+        gap: 22px;
+      }
+
+      .setup-head {
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+        text-align: center;
+      }
+
+      .setup-copy {
+        display: grid;
+        gap: 8px;
+        max-width: 560px;
+      }
+
+      .setup-copy h1 {
+        margin: 0;
+        font-family: "Noto Serif SC", serif;
+        font-size: clamp(1.55rem, 3vw, 2.35rem);
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: var(--ink);
+      }
+
+      .setup-copy p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.9;
+        color: var(--ink-dim);
+      }
+
+      .scene-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .scene-card {
+        position: relative;
+        display: grid;
+        gap: 10px;
+        padding: 16px;
+        min-height: 156px;
+        border-radius: 24px;
+        border: 1px solid rgba(213, 196, 164, 0.1);
+        background:
+          linear-gradient(180deg, rgba(56, 43, 33, 0.66), rgba(27, 21, 17, 0.82)),
+          linear-gradient(135deg, rgba(255, 250, 241, 0.03), transparent 48%);
+        color: inherit;
+        text-align: left;
+        transition:
+          transform 280ms ease,
+          border-color 280ms ease,
+          background 280ms ease,
+          opacity 280ms ease;
+      }
+
+      .scene-card::before {
+        content: "";
+        position: absolute;
+        inset: 14px auto auto 14px;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        background: rgba(255, 247, 228, 0.06);
+        box-shadow: inset 0 0 0 1px rgba(255, 248, 224, 0.06);
+      }
+
+      .scene-card:hover:not(:disabled),
+      .scene-card.is-selected {
+        transform: translateY(-2px);
+        border-color: rgba(210, 174, 122, 0.32);
+        background:
+          linear-gradient(180deg, rgba(72, 52, 38, 0.8), rgba(31, 23, 18, 0.9)),
+          linear-gradient(135deg, rgba(255, 248, 236, 0.05), transparent 48%);
+      }
+
+      .scene-card.is-selected::before {
+        background: rgba(201, 164, 111, 0.92);
+        box-shadow: 0 0 0 6px rgba(201, 164, 111, 0.08);
+      }
+
+      .scene-card:disabled {
+        opacity: 0.6;
+      }
+
+      .scene-card-title {
+        margin-top: 20px;
+        font-family: "Noto Serif SC", serif;
+        font-size: 17px;
+        letter-spacing: 0.08em;
+        color: var(--ink);
+      }
+
+      .scene-card-subtitle {
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: var(--ink-dim);
+      }
+
+      .scene-card-desc {
+        font-size: 12px;
+        line-height: 1.8;
+        color: var(--ink-soft);
+      }
+
+      .scene-card-badge {
+        justify-self: start;
+        padding: 5px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(213, 196, 164, 0.1);
+        background: rgba(255, 255, 255, 0.02);
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        color: var(--ink-dim);
+      }
+
+      .setup-controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: end;
+      }
+
+      .setup-time-shell {
+        display: grid;
+        gap: 10px;
+      }
+
+      .setup-time-preview {
+        font-family: "Noto Serif SC", serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        letter-spacing: 0.22em;
+        padding-left: 0.22em;
+        color: var(--ink);
+      }
+
+      .enter-button,
+      .text-button {
+        border: 1px solid rgba(213, 196, 164, 0.12);
+        color: var(--ink);
+        background:
+          linear-gradient(180deg, rgba(55, 42, 32, 0.9), rgba(27, 21, 16, 0.94)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 248, 224, 0.03) 52%, transparent 100%);
+        transition:
+          transform 240ms ease,
+          border-color 240ms ease,
+          background 240ms ease;
+      }
+
+      .enter-button:hover,
+      .text-button:hover {
+        transform: translateY(-1px);
+        border-color: rgba(210, 174, 122, 0.26);
+      }
+
+      .enter-button:disabled,
+      .text-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .enter-button {
+        min-width: 164px;
+        height: 52px;
+        padding: 0 22px;
+        border-radius: 999px;
+        font-family: "Noto Serif SC", serif;
+        font-size: 16px;
+        letter-spacing: 0.12em;
+      }
+
+      .experience-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .text-button {
+        height: 44px;
+        padding: 0 16px;
+        border-radius: 999px;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+      }
+
+      .hud-wrap {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      body[data-view="setup"] .experience-ui {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(14px);
+      }
+
+      body[data-view="experience"] .setup-overlay {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(18px);
+      }
+
+      .control-dock {
+        pointer-events: auto;
+        width: min(720px, calc(100vw - 32px));
+        border: 1px solid rgba(213, 196, 164, 0.12);
+        background:
+          linear-gradient(180deg, rgba(38, 30, 24, 0.92), rgba(21, 17, 13, 0.96)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 245, 224, 0.028) 52%, transparent 100%);
+        box-shadow:
+          0 24px 72px rgba(0, 0, 0, 0.28),
+          inset 0 1px 0 rgba(255, 248, 224, 0.03);
+      }
+
+      .dock-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .range-shell {
+        display: grid;
+        gap: 10px;
+      }
+
+      .range-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: var(--ink-dim);
+      }
+
+      .candle-count {
+        color: rgba(205, 170, 121, 0.94);
+      }
+
+      .duration-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 44px;
+        border-radius: 999px;
+        background:
+          linear-gradient(90deg, rgba(255, 250, 240, 0.035), rgba(193, 158, 110, 0.09)),
+          rgba(255, 255, 255, 0.01);
+        outline: none;
+        border: 1px solid rgba(213, 196, 164, 0.08);
+        padding: 0 10px;
+      }
+
+      .duration-slider::-webkit-slider-runnable-track {
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(231, 220, 199, 0.18), rgba(193, 158, 110, 0.68));
+      }
+
+      .duration-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        margin-top: -7px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 240, 214, 0.3);
+        background:
+          radial-gradient(circle at 35% 35%, rgba(255, 252, 245, 0.9), rgba(219, 192, 144, 0.95) 58%, rgba(160, 122, 78, 0.95));
+        box-shadow: 0 0 0 6px rgba(187, 147, 93, 0.08);
+        cursor: ew-resize;
+      }
+
+      .duration-slider::-moz-range-track {
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(231, 220, 199, 0.18), rgba(193, 158, 110, 0.68));
+      }
+
+      .duration-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border: 1px solid rgba(255, 240, 214, 0.3);
+        border-radius: 50%;
+        background: rgba(209, 180, 131, 1);
+        box-shadow: 0 0 0 6px rgba(187, 147, 93, 0.08);
+        cursor: ew-resize;
+      }
+
+      .ignite-button {
+        position: relative;
+        width: 108px;
+        height: 108px;
+        border-radius: 24px;
+        border: 1px solid rgba(214, 191, 162, 0.08);
+        background:
+          linear-gradient(180deg, rgba(126, 42, 28, 0.94), rgba(101, 31, 20, 0.98)),
+          radial-gradient(circle at 50% 30%, rgba(255, 228, 204, 0.08), transparent 60%);
+        color: #f2e5d4;
+        box-shadow:
+          0 18px 36px rgba(0, 0, 0, 0.26),
+          inset 0 1px 0 rgba(255, 230, 209, 0.08);
+        transition:
+          transform 280ms ease,
+          border-color 280ms ease,
+          background 280ms ease;
+        touch-action: none;
+      }
+
+      .ignite-button.is-arming {
+        transform: scale(0.98);
+        border-color: rgba(235, 210, 175, 0.22);
+        background:
+          linear-gradient(180deg, rgba(149, 53, 35, 0.96), rgba(114, 35, 22, 0.99)),
+          radial-gradient(circle at 50% 30%, rgba(255, 230, 208, 0.12), transparent 60%);
+      }
+
+      .ignite-button:disabled,
+      .duration-slider:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .ignite-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-size: 10px;
+        letter-spacing: 0.28em;
+        color: rgba(247, 235, 222, 0.84);
+      }
+
+      .ignite-label strong {
+        font-family: "Noto Serif SC", serif;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        color: #fff5ea;
+      }
+
+      body[data-state="idle"] .timer {
+        opacity: 0.16;
+        transform: translateY(14px) scale(0.96);
+      }
+
+      body[data-state="setting"] .timer {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        text-shadow: 0 0 22px rgba(214, 170, 101, 0.12);
+      }
+
+      body[data-state="burning"] .timer,
+      body[data-state="finished"] .timer {
+        opacity: 0.96;
+        transform: translateY(0) scale(1);
+      }
+
+      body[data-state="burning"] .status-chip {
+        border-color: rgba(211, 173, 118, 0.18);
+        background: linear-gradient(180deg, rgba(77, 55, 37, 0.88), rgba(31, 23, 17, 0.92));
+      }
+
+      body[data-state="finished"] .status-chip {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      @media (max-width: 640px) {
+        .scene-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .setup-controls {
+          grid-template-columns: 1fr;
+        }
+
+        .dock-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .experience-actions {
+          justify-content: center;
+        }
+
+        .ignite-button {
+          justify-self: center;
+        }
+
+        .timer {
+          letter-spacing: 0.28em;
+          padding-left: 0.28em;
+        }
+      }
+    </style>
+  </head>
+  <body data-state="idle" data-view="setup">
+    <div id="app">
+      <canvas id="stage" aria-label="静烛祭坛场景"></canvas>
+      <div id="interaction-layer" aria-hidden="true"></div>
+
+      <div id="setup-overlay" class="setup-overlay">
+        <div class="setup-panel">
+          <div class="setup-head">
+            <div class="altar-mark">
+              <strong>静</strong>
+              <span>仪式场</span>
+            </div>
+            <div class="setup-copy">
+              <h1>先选一方场景，再让时间开始燃烧。</h1>
+              <p>当前已完成烛火原型，其余场景位保留给后续模块。</p>
+            </div>
+          </div>
+
+          <div id="scene-grid" class="scene-grid"></div>
+
+          <div class="setup-controls">
+            <div class="setup-time-shell">
+              <div class="range-meta">
+                <span>时长</span>
+                <span id="setup-candle-count" class="candle-count">一炷</span>
+              </div>
+              <div id="setup-time-preview" class="setup-time-preview">25:00</div>
+              <input
+                id="setup-duration-slider"
+                class="duration-slider"
+                type="range"
+                min="5"
+                max="120"
+                step="1"
+                value="25"
+                aria-label="设定燃烧时长"
+              />
+            </div>
+
+            <button id="enter-button" class="enter-button" type="button">
+              进入此刻
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hud-wrap experience-ui">
+        <div class="absolute inset-x-0 top-0 flex justify-center px-6 pt-7">
+          <div class="hud-shell relative flex flex-col items-center gap-4">
+            <div class="altar-mark">
+              <strong>静</strong>
+              <span>静烛坛</span>
+            </div>
+            <div
+              id="timer"
+              class="timer text-[clamp(2.4rem,6vw,4.8rem)] font-light"
+            >
+              25:00
+            </div>
+
+            <div
+              id="status"
+              class="status-chip rounded-full px-4 py-2 text-[10px] font-medium tracking-[0.18em]"
+            >
+              静置
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute inset-x-0 bottom-0 flex justify-center px-4 pb-5 sm:px-6 sm:pb-7">
+          <div class="control-dock rounded-[32px] px-4 py-4 sm:px-5 sm:py-5">
+            <div class="dock-grid">
+              <div class="range-shell">
+                <div
+                  id="hint"
+                  class="hint-chip rounded-full px-4 py-2 text-center text-[10px] font-medium tracking-[0.18em]"
+                >
+                  长按点燃，双击场景熄灭重置，或返回重新选择场景。
+                </div>
+              </div>
+
+              <div class="experience-actions">
+                <button id="return-button" class="text-button" type="button">
+                  重选场景
+                </button>
+                <button
+                  id="ignite-button"
+                  class="ignite-button"
+                  type="button"
+                  aria-label="长按点燃静烛祭坛"
+                >
+                  <div id="press-ring" class="press-ring">
+                    <svg viewBox="0 0 120 120" class="h-full w-full">
+                      <circle class="press-ring-track" cx="60" cy="60" r="54"></circle>
+                      <circle id="press-ring-progress" class="press-ring-progress" cx="60" cy="60" r="54"></circle>
+                    </svg>
+                  </div>
+                  <span class="ignite-label">
+                    <strong>点燃</strong>
+                    <span>长按二秒</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module">
+      import * as THREE from "three";
+      import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+      import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+      import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+
+      const { gsap } = window;
+
+      const STATES = Object.freeze({
+        IDLE: "IDLE",
+        SETTING: "SETTING",
+        BURNING: "BURNING",
+        FINISHED: "FINISHED",
+      });
+
+      const SCENE_OPTIONS = [
+        {
+          id: "candle",
+          title: "烛火",
+          subtitle: "烛坛",
+          description: "蜡与火在石座上缓慢燃尽，适合静坐、纪念与陪伴。",
+          badge: "当前可用",
+          available: true,
+        },
+        {
+          id: "ice",
+          title: "冰融",
+          subtitle: "冰境",
+          description: "透明冰块在微光中慢慢消散，适合冷静与放空。",
+          badge: "即将开放",
+          available: false,
+        },
+        {
+          id: "incense",
+          title: "线香",
+          subtitle: "烟缕",
+          description: "一缕细烟向上走，适合更轻、更慢的陪伴感。",
+          badge: "即将开放",
+          available: false,
+        },
+        {
+          id: "dew",
+          title: "露滴",
+          subtitle: "水息",
+          description: "水滴从满到空，适合清晨式的短时沉静。",
+          badge: "即将开放",
+          available: false,
+        },
+        {
+          id: "sand",
+          title: "流砂",
+          subtitle: "沙漏",
+          description: "细砂缓缓坠落，适合更明确的时间边界感。",
+          badge: "即将开放",
+          available: false,
+        },
+      ];
+
+      const DEFAULT_MINUTES = 25;
+      const MIN_MINUTES = 5;
+      const MAX_MINUTES = 120;
+      const CANDLE_CAPACITY_MINUTES = 30;
+      const MAX_CANDLES = Math.ceil(MAX_MINUTES / CANDLE_CAPACITY_MINUTES);
+      const BASE_WIDTH = 10;
+      const BASE_DEPTH = 6;
+      const BASE_HEIGHT = 2;
+      const MAX_CANDLE_HEIGHT = 6.6;
+      const FINISHED_HEIGHT = 0.16;
+      const HOLD_DURATION = 2;
+
+      const timerEl = document.getElementById("timer");
+      const statusEl = document.getElementById("status");
+      const hintEl = document.getElementById("hint");
+      const stage = document.getElementById("stage");
+      const interactionLayer = document.getElementById("interaction-layer");
+      const setupOverlayEl = document.getElementById("setup-overlay");
+      const sceneGridEl = document.getElementById("scene-grid");
+      const pressRingEl = document.getElementById("press-ring");
+      const pressRingProgressEl = document.getElementById("press-ring-progress");
+      const durationSliderEl = document.getElementById("setup-duration-slider");
+      const candleCountEl = document.getElementById("setup-candle-count");
+      const setupTimePreviewEl = document.getElementById("setup-time-preview");
+      const enterButtonEl = document.getElementById("enter-button");
+      const igniteButtonEl = document.getElementById("ignite-button");
+      const returnButtonEl = document.getElementById("return-button");
+
+      const appState = {
+        view: "setup",
+        selectedSceneId: "candle",
+        state: STATES.IDLE,
+        durationMinutes: DEFAULT_MINUTES,
+        totalSeconds: DEFAULT_MINUTES * 60,
+        remainingSeconds: DEFAULT_MINUTES * 60,
+        burningStartedAt: 0,
+        idleReturnHandle: null,
+        flameAnchor: new THREE.Vector3(0, BASE_HEIGHT + 4.8, 0),
+        activeCandleIndex: 0,
+        visibleCandleCount: 1,
+        layoutCandleCount: splitDurationAcrossCandles(DEFAULT_MINUTES).length,
+      };
+
+      const interaction = {
+        tapPointerId: null,
+        tapStartX: 0,
+        tapStartY: 0,
+        holdPointerId: null,
+        holdProgress: 0,
+        pressTween: null,
+        scaleTween: null,
+        lastTapTime: 0,
+        lastTapX: 0,
+        lastTapY: 0,
+        didIgniteFromHold: false,
+      };
+
+      let audioContext = null;
+
+      const audioState = {
+        master: null,
+        crackleSource: null,
+        crackleGain: null,
+        crackleTimer: null,
+        active: false,
+      };
+
+      if (!window.WebGL2RenderingContext) {
+        statusEl.textContent = "NO WEBGL2";
+        hintEl.textContent = "This experience requires a WebGL 2 capable browser.";
+        throw new Error("WebGL 2 is not available.");
+      }
+
+      const gl = stage.getContext("webgl2", {
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
+
+      if (!gl) {
+        statusEl.textContent = "NO CONTEXT";
+        hintEl.textContent = "Failed to create a WebGL 2 rendering context.";
+        throw new Error("Unable to create WebGL 2 context.");
+      }
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: stage,
+        context: gl,
+        antialias: true,
+        alpha: true,
+      });
+
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 0.98;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0f0c09);
+      scene.fog = new THREE.Fog(0x120f0c, 14, 32);
+
+      const camera = new THREE.OrthographicCamera();
+      const FRUSTUM_SIZE = 16;
+
+      const composer = new EffectComposer(renderer);
+      const renderPass = new RenderPass(scene, camera);
+      const bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        1.02,
+        0.8,
+        0.22
+      );
+
+      composer.addPass(renderPass);
+      composer.addPass(bloomPass);
+
+      const root = new THREE.Group();
+      root.position.set(0, 0, 0);
+      scene.add(root);
+
+      const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(50, 50),
+        new THREE.MeshStandardMaterial({
+          color: 0x12100d,
+          roughness: 0.98,
+          metalness: 0,
+        })
+      );
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -0.015;
+      floor.receiveShadow = true;
+      scene.add(floor);
+
+      const hemiLight = new THREE.HemisphereLight(0xf3eadb, 0x110d0b, 0.52);
+      scene.add(hemiLight);
+
+      const keyLight = new THREE.DirectionalLight(0xf7eedf, 0.19);
+      keyLight.position.set(6, 15, 12);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.set(1024, 1024);
+      keyLight.shadow.camera.near = 0.5;
+      keyLight.shadow.camera.far = 40;
+      keyLight.shadow.bias = -0.0005;
+      scene.add(keyLight);
+
+      const flameLight = new THREE.PointLight(0xf2c183, 0, 14, 2.1);
+      flameLight.castShadow = true;
+      flameLight.shadow.mapSize.set(1024, 1024);
+      flameLight.shadow.bias = -0.001;
+      flameLight.visible = false;
+      scene.add(flameLight);
+
+      const altar = new THREE.Group();
+      root.add(altar);
+
+      const concreteTexture = createConcreteTexture(128);
+      concreteTexture.wrapS = THREE.RepeatWrapping;
+      concreteTexture.wrapT = THREE.RepeatWrapping;
+      concreteTexture.repeat.set(3, 2);
+
+      const concreteNormalTexture = createConcreteTexture(128, true);
+      concreteNormalTexture.wrapS = THREE.RepeatWrapping;
+      concreteNormalTexture.wrapT = THREE.RepeatWrapping;
+      concreteNormalTexture.repeat.set(3, 2);
+
+      const baseMaterial = new THREE.MeshStandardMaterial({
+        color: 0x3c342d,
+        roughness: 0.98,
+        metalness: 0.01,
+        roughnessMap: concreteTexture,
+        bumpMap: concreteNormalTexture,
+        bumpScale: 0.06,
+      });
+
+      const base = new THREE.Mesh(createRoundedBaseGeometry(), baseMaterial);
+      base.castShadow = true;
+      base.receiveShadow = true;
+      altar.add(base);
+
+      const candleMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          uColor: { value: new THREE.Color(0xf1e8dc) },
+          uLightPos: { value: new THREE.Vector3(0, BASE_HEIGHT + 8, 0) },
+          uGlow: { value: 0 },
+          uTime: { value: 0 },
+        },
+        vertexShader: `
+          varying vec3 vWorldPos;
+          varying vec3 vNormalW;
+          varying vec2 vUv;
+
+          void main() {
+            vUv = uv;
+            vec4 worldPos = modelMatrix * vec4(position, 1.0);
+            vWorldPos = worldPos.xyz;
+            vNormalW = normalize(mat3(modelMatrix) * normal);
+            gl_Position = projectionMatrix * viewMatrix * worldPos;
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 uColor;
+          uniform vec3 uLightPos;
+          uniform float uGlow;
+          uniform float uTime;
+
+          varying vec3 vWorldPos;
+          varying vec3 vNormalW;
+          varying vec2 vUv;
+
+          float saturate(float x) {
+            return clamp(x, 0.0, 1.0);
+          }
+
+          void main() {
+            vec3 N = normalize(vNormalW);
+            vec3 V = normalize(cameraPosition - vWorldPos);
+            vec3 L = normalize(uLightPos - vWorldPos);
+
+            float diffuse = saturate(dot(N, L));
+            float wrap = saturate((dot(N, L) + 0.58) / 1.58);
+            float rim = pow(1.0 - saturate(dot(N, V)), 2.4);
+            float transmittance = pow(saturate(dot(-N, L)), 1.9) * pow(1.0 - saturate(dot(N, V)), 1.15);
+
+            float waxBands = sin(vWorldPos.y * 3.8 + uTime * 0.45) * 0.009;
+            float edgeTint = smoothstep(0.4, 1.0, rim);
+            float heightTone = mix(0.94, 1.04, vUv.y);
+
+            vec3 warmScatter = vec3(1.0, 0.79, 0.56);
+            vec3 coolEdge = vec3(0.77, 0.91, 1.0);
+            vec3 baseColor = uColor * heightTone + waxBands;
+
+            vec3 lighting = baseColor * (0.22 + diffuse * 0.42 + wrap * 0.2);
+            lighting += warmScatter * transmittance * (0.42 + uGlow * 0.35);
+            lighting += coolEdge * edgeTint * 0.12 * (0.35 + uGlow * 0.65);
+            lighting += warmScatter * rim * 0.06;
+
+            gl_FragColor = vec4(lighting, 1.0);
+          }
+        `,
+      });
+
+      const plinth = new THREE.Mesh(
+        new THREE.CylinderGeometry(2.95, 3.2, 0.36, 48),
+        new THREE.MeshStandardMaterial({
+          color: 0x1b1714,
+          roughness: 0.9,
+          metalness: 0.03,
+        })
+      );
+      plinth.position.y = BASE_HEIGHT + 0.16;
+      plinth.receiveShadow = true;
+      plinth.castShadow = true;
+      altar.add(plinth);
+
+      const waxPoolMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0xe9dfd0,
+        roughness: 0.54,
+        metalness: 0,
+        clearcoat: 0.26,
+        clearcoatRoughness: 0.78,
+        transmission: 0.02,
+      });
+
+      const wickMaterial = new THREE.MeshStandardMaterial({
+        color: 0x121212,
+        roughness: 0.92,
+        metalness: 0.04,
+      });
+
+      const candleUnits = Array.from({ length: MAX_CANDLES }, (_, index) => createCandleUnit(index));
+      candleUnits.forEach((unit) => altar.add(unit.group));
+
+      const flameMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uOpacity: { value: 0 },
+          uFlicker: { value: 0.75 },
+        },
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        vertexShader: `
+          uniform float uTime;
+          uniform float uFlicker;
+
+          varying vec2 vUv;
+          varying float vNoise;
+
+          vec3 mod289(vec3 x) {
+            return x - floor(x * (1.0 / 289.0)) * 289.0;
+          }
+
+          vec4 mod289(vec4 x) {
+            return x - floor(x * (1.0 / 289.0)) * 289.0;
+          }
+
+          vec4 permute(vec4 x) {
+            return mod289(((x * 34.0) + 1.0) * x);
+          }
+
+          vec4 taylorInvSqrt(vec4 r) {
+            return 1.79284291400159 - 0.85373472095314 * r;
+          }
+
+          float snoise(vec3 v) {
+            const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+            const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+
+            vec3 i = floor(v + dot(v, C.yyy));
+            vec3 x0 = v - i + dot(i, C.xxx);
+            vec3 g = step(x0.yzx, x0.xyz);
+            vec3 l = 1.0 - g;
+            vec3 i1 = min(g.xyz, l.zxy);
+            vec3 i2 = max(g.xyz, l.zxy);
+
+            vec3 x1 = x0 - i1 + C.xxx;
+            vec3 x2 = x0 - i2 + C.yyy;
+            vec3 x3 = x0 - D.yyy;
+
+            i = mod289(i);
+            vec4 p = permute(
+              permute(
+                permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) +
+                i.y + vec4(0.0, i1.y, i2.y, 1.0)
+              ) +
+              i.x + vec4(0.0, i1.x, i2.x, 1.0)
+            );
+
+            float n_ = 0.142857142857;
+            vec3 ns = n_ * D.wyz - D.xzx;
+
+            vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+            vec4 x_ = floor(j * ns.z);
+            vec4 y_ = floor(j - 7.0 * x_);
+
+            vec4 x = x_ * ns.x + ns.yyyy;
+            vec4 y = y_ * ns.x + ns.yyyy;
+            vec4 h = 1.0 - abs(x) - abs(y);
+
+            vec4 b0 = vec4(x.xy, y.xy);
+            vec4 b1 = vec4(x.zw, y.zw);
+
+            vec4 s0 = floor(b0) * 2.0 + 1.0;
+            vec4 s1 = floor(b1) * 2.0 + 1.0;
+            vec4 sh = -step(h, vec4(0.0));
+
+            vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+            vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+
+            vec3 p0 = vec3(a0.xy, h.x);
+            vec3 p1 = vec3(a0.zw, h.y);
+            vec3 p2 = vec3(a1.xy, h.z);
+            vec3 p3 = vec3(a1.zw, h.w);
+
+            vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+            p0 *= norm.x;
+            p1 *= norm.y;
+            p2 *= norm.z;
+            p3 *= norm.w;
+
+            vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+            m = m * m;
+            return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
+          }
+
+          void main() {
+            vUv = uv;
+            vec3 pos = position;
+
+            float sway = snoise(vec3(pos.y * 0.9, pos.x * 1.8, uTime * 1.35));
+            float curl = snoise(vec3(pos.y * 1.4 + 7.0, pos.x * 2.3, uTime * 1.9));
+
+            pos.x += sway * 0.16 * (0.18 + uv.y);
+            pos.z += curl * 0.12 * (0.12 + uv.y);
+            pos.y += abs(sway) * 0.08 * uv.y * (0.6 + uFlicker * 0.4);
+
+            vNoise = sway * 0.5 + curl * 0.5;
+
+            vec4 worldPos = modelMatrix * vec4(pos, 1.0);
+            gl_Position = projectionMatrix * viewMatrix * worldPos;
+          }
+        `,
+        fragmentShader: `
+          uniform float uTime;
+          uniform float uOpacity;
+          uniform float uFlicker;
+
+          varying vec2 vUv;
+          varying float vNoise;
+
+          vec3 mod289(vec3 x) {
+            return x - floor(x * (1.0 / 289.0)) * 289.0;
+          }
+
+          vec4 mod289(vec4 x) {
+            return x - floor(x * (1.0 / 289.0)) * 289.0;
+          }
+
+          vec4 permute(vec4 x) {
+            return mod289(((x * 34.0) + 1.0) * x);
+          }
+
+          vec4 taylorInvSqrt(vec4 r) {
+            return 1.79284291400159 - 0.85373472095314 * r;
+          }
+
+          float snoise(vec3 v) {
+            const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+            const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+
+            vec3 i = floor(v + dot(v, C.yyy));
+            vec3 x0 = v - i + dot(i, C.xxx);
+            vec3 g = step(x0.yzx, x0.xyz);
+            vec3 l = 1.0 - g;
+            vec3 i1 = min(g.xyz, l.zxy);
+            vec3 i2 = max(g.xyz, l.zxy);
+
+            vec3 x1 = x0 - i1 + C.xxx;
+            vec3 x2 = x0 - i2 + C.yyy;
+            vec3 x3 = x0 - D.yyy;
+
+            i = mod289(i);
+            vec4 p = permute(
+              permute(
+                permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) +
+                i.y + vec4(0.0, i1.y, i2.y, 1.0)
+              ) +
+              i.x + vec4(0.0, i1.x, i2.x, 1.0)
+            );
+
+            float n_ = 0.142857142857;
+            vec3 ns = n_ * D.wyz - D.xzx;
+
+            vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+            vec4 x_ = floor(j * ns.z);
+            vec4 y_ = floor(j - 7.0 * x_);
+
+            vec4 x = x_ * ns.x + ns.yyyy;
+            vec4 y = y_ * ns.x + ns.yyyy;
+            vec4 h = 1.0 - abs(x) - abs(y);
+
+            vec4 b0 = vec4(x.xy, y.xy);
+            vec4 b1 = vec4(x.zw, y.zw);
+
+            vec4 s0 = floor(b0) * 2.0 + 1.0;
+            vec4 s1 = floor(b1) * 2.0 + 1.0;
+            vec4 sh = -step(h, vec4(0.0));
+
+            vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+            vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+
+            vec3 p0 = vec3(a0.xy, h.x);
+            vec3 p1 = vec3(a0.zw, h.y);
+            vec3 p2 = vec3(a1.xy, h.z);
+            vec3 p3 = vec3(a1.zw, h.w);
+
+            vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+            p0 *= norm.x;
+            p1 *= norm.y;
+            p2 *= norm.z;
+            p3 *= norm.w;
+
+            vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+            m = m * m;
+            return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
+          }
+
+          float saturate(float x) {
+            return clamp(x, 0.0, 1.0);
+          }
+
+          void main() {
+            vec2 uv = vUv;
+            vec2 p = vec2(uv.x * 2.0 - 1.0, uv.y);
+            float bodyWidth = mix(0.42, 0.03, pow(uv.y, 0.72));
+            float turbulence = snoise(vec3(p.x * 1.9, uv.y * 2.6, uTime * 2.25)) * 0.11 * (0.25 + uv.y);
+            float edge = abs(p.x + turbulence + vNoise * 0.18 * (0.1 + uv.y));
+
+            float silhouette = 1.0 - smoothstep(bodyWidth, bodyWidth + 0.13, edge);
+            float foot = smoothstep(0.02, 0.08, uv.y);
+            float tip = 1.0 - smoothstep(0.92, 1.02, uv.y);
+
+            float breakup = snoise(vec3(p.x * 3.2, uv.y * 3.8, uTime * 3.0)) * 0.09;
+            float alpha = silhouette * foot * tip;
+            alpha *= saturate(1.0 - smoothstep(0.0, 0.72, uv.y + breakup * 0.6) + 0.42);
+
+            vec3 blue = vec3(0.0, 0.8, 1.0);
+            vec3 yellow = vec3(1.0, 0.84, 0.0);
+            vec3 amber = vec3(1.0, 0.55, 0.0);
+
+            vec3 color = mix(blue, yellow, smoothstep(0.06, 0.45, uv.y));
+            color = mix(color, amber, smoothstep(0.54, 1.0, uv.y));
+
+            float core = (1.0 - smoothstep(0.0, 0.2, edge)) * smoothstep(0.08, 0.32, uv.y) * (1.0 - smoothstep(0.55, 0.88, uv.y));
+            float halo = pow(1.0 - smoothstep(0.0, 1.1, length(vec2(p.x * 0.9, (uv.y - 0.42) * 1.45))), 2.0);
+
+            color += vec3(1.0, 0.95, 0.82) * core * 0.58;
+            color += vec3(1.0, 0.68, 0.28) * halo * 0.3;
+            color *= 1.05 + uFlicker * 0.18;
+
+            gl_FragColor = vec4(color, (alpha * 0.9 + halo * 0.16) * uOpacity);
+          }
+        `,
+      });
+
+      const flame = new THREE.Group();
+      flame.visible = false;
+      altar.add(flame);
+
+      const flameGeometry = new THREE.PlaneGeometry(1.7, 3.5, 28, 40);
+      const flamePlaneA = new THREE.Mesh(flameGeometry, flameMaterial);
+      const flamePlaneB = new THREE.Mesh(flameGeometry, flameMaterial);
+      flamePlaneB.rotation.y = Math.PI / 2;
+      flame.add(flamePlaneA, flamePlaneB);
+      flame.scale.set(0.01, 0.01, 0.01);
+
+      const clock = new THREE.Clock();
+      const permutation = createPermutationTable(1337);
+      const tempLightVector = new THREE.Vector3();
+
+      updateCamera();
+      renderSceneCards();
+      updateCandleArrangement(appState.durationMinutes);
+      updateHud();
+      setView("setup");
+      setState(STATES.IDLE);
+
+      window.addEventListener("resize", onResize);
+      durationSliderEl.addEventListener("input", onDurationInput);
+      durationSliderEl.addEventListener("pointerdown", () => {
+        if (appState.state !== STATES.BURNING && appState.view === "setup") {
+          setState(STATES.SETTING);
+          clearReturnToIdle();
+        }
+      });
+      durationSliderEl.addEventListener("change", () => {
+        if (appState.state === STATES.SETTING && appState.view === "setup") {
+          scheduleReturnToIdle();
+        }
+      });
+      enterButtonEl.addEventListener("click", enterExperience);
+      igniteButtonEl.addEventListener("pointerdown", onIgnitePointerDown);
+      igniteButtonEl.addEventListener("pointerup", onIgnitePointerUp);
+      igniteButtonEl.addEventListener("pointerleave", onIgnitePointerUp);
+      igniteButtonEl.addEventListener("pointercancel", onIgnitePointerUp);
+      returnButtonEl.addEventListener("click", returnToSetup);
+      interactionLayer.addEventListener("pointerdown", onScenePointerDown);
+      interactionLayer.addEventListener("pointerup", onScenePointerUp);
+      interactionLayer.addEventListener("pointercancel", onScenePointerCancel);
+      interactionLayer.addEventListener("dblclick", (event) => {
+        if (appState.view !== "experience") {
+          return;
+        }
+        event.preventDefault();
+        resetCycle();
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && appState.state === STATES.BURNING) {
+          stopCrackleLoop();
+        } else if (!document.hidden && appState.state === STATES.BURNING) {
+          startCrackleLoop();
+        }
+      });
+
+      render();
+
+      function render() {
+        const elapsed = clock.getElapsedTime();
+        const flicker = appState.state === STATES.BURNING ? perlin1D(permutation, elapsed * 1.9) : 0;
+        const glow = appState.state === STATES.BURNING ? 0.62 + flicker * 0.38 : 0.02;
+
+        candleMaterial.uniforms.uTime.value = elapsed;
+        candleMaterial.uniforms.uGlow.value = glow;
+        flameMaterial.uniforms.uTime.value = elapsed;
+        flameMaterial.uniforms.uFlicker.value = 0.68 + flicker * 0.32;
+
+        if (appState.state === STATES.BURNING) {
+          const elapsedBurn = (performance.now() - appState.burningStartedAt) / 1000;
+          appState.remainingSeconds = Math.max(appState.totalSeconds - elapsedBurn, 0);
+          updateCandleArrangement(Math.max(appState.remainingSeconds / 60, 0.2));
+          updateHud();
+
+          const driftX = Math.sin(elapsed * 2.4) * 0.04 * glow;
+          const driftZ = Math.cos(elapsed * 2.1) * 0.035 * glow;
+          flame.position.set(
+            appState.flameAnchor.x + driftX,
+            appState.flameAnchor.y + Math.abs(Math.sin(elapsed * 3.2)) * 0.05,
+            appState.flameAnchor.z + driftZ
+          );
+
+          tempLightVector.set(flame.position.x, flame.position.y + 0.25, flame.position.z);
+          flameLight.position.copy(tempLightVector);
+          flameLight.intensity = 1.8 + flicker * 1.3;
+          candleMaterial.uniforms.uLightPos.value.copy(flameLight.position);
+
+          if (appState.remainingSeconds <= 0) {
+            finishBurn();
+          }
+        }
+
+        composer.render();
+        requestAnimationFrame(render);
+      }
+
+      function onResize() {
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
+        updateCamera();
+      }
+
+      function renderSceneCards() {
+        sceneGridEl.innerHTML = "";
+
+        SCENE_OPTIONS.forEach((sceneOption) => {
+          const card = document.createElement("button");
+          card.type = "button";
+          card.className = `scene-card${sceneOption.id === appState.selectedSceneId ? " is-selected" : ""}`;
+          card.dataset.sceneId = sceneOption.id;
+          card.disabled = !sceneOption.available;
+          card.innerHTML = `
+            <div class="scene-card-title">${sceneOption.title}</div>
+            <div class="scene-card-subtitle">${sceneOption.subtitle}</div>
+            <div class="scene-card-desc">${sceneOption.description}</div>
+            <div class="scene-card-badge">${sceneOption.badge}</div>
+          `;
+
+          if (sceneOption.available) {
+            card.addEventListener("click", () => {
+              appState.selectedSceneId = sceneOption.id;
+              renderSceneCards();
+            });
+          }
+
+          sceneGridEl.appendChild(card);
+        });
+      }
+
+      function setView(nextView) {
+        appState.view = nextView;
+        document.body.dataset.view = nextView;
+        altar.visible = nextView === "experience";
+
+        if (nextView === "setup") {
+          flame.visible = false;
+          flameLight.visible = false;
+          flameMaterial.uniforms.uOpacity.value = 0;
+          flame.scale.set(0.01, 0.01, 0.01);
+        }
+      }
+
+      function enterExperience() {
+        if (appState.selectedSceneId !== "candle") {
+          return;
+        }
+
+        clearReturnToIdle();
+        updateCandleArrangement(appState.durationMinutes);
+        setView("experience");
+        setState(STATES.IDLE);
+        gsap.fromTo(
+          altar.scale,
+          { x: 0.94, y: 0.94, z: 0.94 },
+          { x: 1, y: 1, z: 1, duration: 0.72, ease: "expo.out" }
+        );
+      }
+
+      function returnToSetup() {
+        cancelHold();
+        clearReturnToIdle();
+
+        if (appState.state === STATES.BURNING) {
+          stopCrackleLoop();
+        }
+
+        flame.visible = false;
+        flameLight.visible = false;
+        flameLight.intensity = 0;
+        flameMaterial.uniforms.uOpacity.value = 0;
+        flame.scale.set(0.01, 0.01, 0.01);
+        interaction.didIgniteFromHold = false;
+        interaction.holdPointerId = null;
+
+        appState.remainingSeconds = appState.durationMinutes * 60;
+        appState.totalSeconds = appState.remainingSeconds;
+        setView("setup");
+        setState(STATES.IDLE);
+        updateHud();
+      }
+
+      function updateCamera() {
+        const aspect = window.innerWidth / window.innerHeight;
+        camera.left = (-FRUSTUM_SIZE * aspect) / 2;
+        camera.right = (FRUSTUM_SIZE * aspect) / 2;
+        camera.top = FRUSTUM_SIZE / 2;
+        camera.bottom = -FRUSTUM_SIZE / 2;
+        camera.near = -40;
+        camera.far = 60;
+        camera.position.set(11.1, 10.1, 12.6);
+        camera.lookAt(0, 3.9, 0);
+        camera.updateProjectionMatrix();
+      }
+
+      function setState(nextState) {
+        appState.state = nextState;
+        document.body.dataset.state = nextState.toLowerCase();
+        statusEl.textContent = getStateLabel(nextState);
+
+        if (nextState === STATES.IDLE) {
+          hintEl.textContent = "拖动下方时间轴设定时长，长按点燃，双击场景熄灭重置。";
+        }
+        if (nextState === STATES.SETTING) {
+          hintEl.textContent = "每一炷至多承载三十分钟，时长增加时会自然添一炷。";
+        }
+        if (nextState === STATES.BURNING) {
+          hintEl.textContent = "双击场景可熄灭此刻火光，回到静置。";
+        }
+        if (nextState === STATES.FINISHED) {
+          hintEl.textContent = "此刻已圆满。可重新设定时长，或再次点燃。";
+        }
+
+        igniteButtonEl.disabled = nextState === STATES.BURNING;
+        returnButtonEl.disabled = nextState === STATES.BURNING;
+        enterButtonEl.disabled = appState.selectedSceneId !== "candle";
+      }
+
+      function updateHud() {
+        const displaySeconds = appState.state === STATES.FINISHED ? 0 : Math.round(appState.remainingSeconds);
+        timerEl.textContent = formatTime(displaySeconds);
+        durationSliderEl.value = String(Math.round(appState.durationMinutes));
+        setupTimePreviewEl.textContent = formatTime(appState.durationMinutes * 60);
+        const candles = splitDurationAcrossCandles(appState.durationMinutes).length;
+        candleCountEl.textContent = formatCandleCount(candles);
+      }
+
+      function scheduleReturnToIdle() {
+        clearTimeout(appState.idleReturnHandle);
+        appState.idleReturnHandle = window.setTimeout(() => {
+          if (appState.state === STATES.SETTING) {
+            setState(STATES.IDLE);
+          }
+        }, 1200);
+      }
+
+      function clearReturnToIdle() {
+        clearTimeout(appState.idleReturnHandle);
+        appState.idleReturnHandle = null;
+      }
+
+      function onScenePointerDown(event) {
+        if (appState.view !== "experience") {
+          return;
+        }
+
+        if (appState.state === STATES.FINISHED) {
+          restorePreparedCycle();
+        }
+
+        interaction.tapPointerId = event.pointerId;
+        interaction.tapStartX = event.clientX;
+        interaction.tapStartY = event.clientY;
+      }
+
+      function onScenePointerUp(event) {
+        if (appState.view !== "experience") {
+          return;
+        }
+
+        if (event.pointerId !== interaction.tapPointerId) {
+          return;
+        }
+
+        const dx = event.clientX - interaction.tapStartX;
+        const dy = event.clientY - interaction.tapStartY;
+        const travel = Math.hypot(dx, dy);
+        const now = performance.now();
+
+        if (travel < 14) {
+          const isDoubleTap =
+            now - interaction.lastTapTime < 320 &&
+            Math.hypot(event.clientX - interaction.lastTapX, event.clientY - interaction.lastTapY) < 28;
+
+          if (isDoubleTap) {
+            resetCycle();
+            interaction.lastTapTime = 0;
+          } else {
+            interaction.lastTapTime = now;
+            interaction.lastTapX = event.clientX;
+            interaction.lastTapY = event.clientY;
+          }
+        }
+
+        interaction.tapPointerId = null;
+      }
+
+      function onScenePointerCancel(event) {
+        if (appState.view !== "experience") {
+          return;
+        }
+
+        if (event.pointerId === interaction.tapPointerId) {
+          interaction.tapPointerId = null;
+        }
+      }
+
+      function onDurationInput(event) {
+        if (appState.view !== "setup" || appState.state === STATES.BURNING) {
+          durationSliderEl.value = String(Math.round(appState.durationMinutes));
+          return;
+        }
+
+        clearReturnToIdle();
+        setDurationMinutes(Number(event.target.value));
+      }
+
+      function onIgnitePointerDown(event) {
+        if (appState.view !== "experience" || appState.state === STATES.BURNING) {
+          return;
+        }
+
+        if (appState.state === STATES.FINISHED) {
+          restorePreparedCycle();
+        }
+
+        ensureAudioContext();
+        interaction.holdPointerId = event.pointerId;
+        interaction.didIgniteFromHold = false;
+        igniteButtonEl.setPointerCapture(event.pointerId);
+        beginHold();
+      }
+
+      function onIgnitePointerUp(event) {
+        if (appState.view !== "experience") {
+          return;
+        }
+
+        if (event.pointerId !== interaction.holdPointerId) {
+          return;
+        }
+
+        if (igniteButtonEl.hasPointerCapture(event.pointerId)) {
+          igniteButtonEl.releasePointerCapture(event.pointerId);
+        }
+
+        if (!interaction.didIgniteFromHold) {
+          cancelHold();
+        }
+
+        interaction.holdPointerId = null;
+      }
+
+      function beginHold() {
+        cancelHold();
+        pressRingEl.classList.add("is-active");
+        igniteButtonEl.classList.add("is-arming");
+        setPressProgress(0);
+
+        interaction.pressTween = gsap.to(interaction, {
+          holdProgress: 1,
+          duration: HOLD_DURATION,
+          ease: "none",
+          onUpdate: () => setPressProgress(interaction.holdProgress),
+          onComplete: () => {
+            if (interaction.holdPointerId !== null && appState.state !== STATES.BURNING) {
+              interaction.didIgniteFromHold = true;
+              ignite();
+            }
+          },
+        });
+
+        interaction.scaleTween = gsap.to(altar.scale, {
+          x: 0.985,
+          y: 1.04,
+          z: 0.985,
+          duration: HOLD_DURATION,
+          ease: "power1.inOut",
+        });
+      }
+
+      function cancelHold() {
+        if (interaction.pressTween) {
+          interaction.pressTween.kill();
+          interaction.pressTween = null;
+        }
+
+        if (interaction.scaleTween) {
+          interaction.scaleTween.kill();
+          interaction.scaleTween = null;
+        }
+
+        interaction.holdProgress = 0;
+        pressRingEl.classList.remove("is-active");
+        igniteButtonEl.classList.remove("is-arming");
+        setPressProgress(0);
+
+        gsap.to(altar.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 0.32,
+          ease: "power2.out",
+        });
+      }
+
+      function ignite() {
+        cancelHold();
+        clearReturnToIdle();
+        ensureAudioContext();
+        interaction.holdPointerId = null;
+
+        flame.visible = true;
+        flameLight.visible = true;
+
+        appState.totalSeconds = appState.durationMinutes * 60;
+        appState.remainingSeconds = appState.totalSeconds;
+        appState.layoutCandleCount = splitDurationAcrossCandles(appState.durationMinutes).length;
+        appState.burningStartedAt = performance.now();
+        updateCandleArrangement(appState.durationMinutes);
+
+        gsap.set(flame.scale, { x: 0.08, y: 0.08, z: 0.08 });
+        gsap.fromTo(
+          flameMaterial.uniforms.uOpacity,
+          { value: 0 },
+          { value: 1, duration: 0.6, ease: "power2.out" }
+        );
+        gsap.to(flame.scale, {
+          x: 0.88,
+          y: 1.08,
+          z: 0.88,
+          duration: 0.82,
+          ease: "expo.out",
+        });
+        gsap.to(altar.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 0.72,
+          ease: "expo.out",
+        });
+
+        playMatchStrike();
+        startCrackleLoop();
+
+        if (navigator.vibrate) {
+          navigator.vibrate(22);
+        }
+
+        setState(STATES.BURNING);
+        updateHud();
+      }
+
+      function finishBurn() {
+        if (appState.state !== STATES.BURNING) {
+          return;
+        }
+
+        appState.remainingSeconds = 0;
+        updateHud();
+        stopCrackleLoop();
+
+        gsap.to(flameMaterial.uniforms.uOpacity, {
+          value: 0,
+          duration: 0.42,
+          ease: "power2.out",
+        });
+        gsap.to(flame.scale, {
+          x: 0.03,
+          y: 0.03,
+          z: 0.03,
+          duration: 0.48,
+          ease: "power3.in",
+          onComplete: () => {
+            flame.visible = false;
+          },
+        });
+        gsap.to(flameLight, {
+          intensity: 0,
+          duration: 0.4,
+          ease: "power2.out",
+          onComplete: () => {
+            flameLight.visible = false;
+          },
+        });
+
+        setState(STATES.FINISHED);
+      }
+
+      function resetCycle() {
+        cancelHold();
+        clearReturnToIdle();
+        stopCrackleLoop();
+        interaction.lastTapTime = 0;
+        interaction.didIgniteFromHold = false;
+
+        gsap.killTweensOf(flameMaterial.uniforms.uOpacity);
+        gsap.killTweensOf(flame.scale);
+        gsap.killTweensOf(flameLight);
+
+        flameMaterial.uniforms.uOpacity.value = 0;
+        flame.scale.set(0.01, 0.01, 0.01);
+        flame.visible = false;
+        flameLight.intensity = 0;
+        flameLight.visible = false;
+
+        appState.totalSeconds = appState.durationMinutes * 60;
+        appState.remainingSeconds = appState.totalSeconds;
+        appState.layoutCandleCount = splitDurationAcrossCandles(appState.durationMinutes).length;
+        updateCandleArrangement(appState.durationMinutes);
+        updateHud();
+        setState(STATES.IDLE);
+      }
+
+      function restorePreparedCycle() {
+        appState.remainingSeconds = appState.durationMinutes * 60;
+        appState.totalSeconds = appState.remainingSeconds;
+        appState.layoutCandleCount = splitDurationAcrossCandles(appState.durationMinutes).length;
+        updateCandleArrangement(appState.durationMinutes);
+        updateHud();
+        setState(STATES.IDLE);
+      }
+
+      function setDurationMinutes(minutes) {
+        appState.durationMinutes = clamp(minutes, MIN_MINUTES, MAX_MINUTES);
+        appState.totalSeconds = appState.durationMinutes * 60;
+        appState.remainingSeconds = appState.totalSeconds;
+        appState.layoutCandleCount = splitDurationAcrossCandles(appState.durationMinutes).length;
+        updateCandleArrangement(appState.durationMinutes);
+        updateHud();
+
+        if (appState.state !== STATES.SETTING) {
+          setState(STATES.SETTING);
+        }
+      }
+
+      function updateCandleArrangement(totalMinutes) {
+        const segments = splitDurationAcrossCandles(totalMinutes);
+        const lockLayout = appState.state === STATES.BURNING || appState.state === STATES.FINISHED;
+        const visibleCount = lockLayout
+          ? Math.max(appState.layoutCandleCount, segments.length, 1)
+          : Math.max(segments.length, 1);
+        const layout = getCandleClusterLayout(visibleCount);
+        const activeIndex = segments.length > 0 ? segments.length - 1 : 0;
+
+        appState.visibleCandleCount = visibleCount;
+        appState.activeCandleIndex = activeIndex;
+
+        candleUnits.forEach((unit, index) => {
+          const isVisible = lockLayout ? index < visibleCount : index < segments.length;
+          const pose = layout[index] || layout[layout.length - 1];
+
+          unit.group.visible = isVisible;
+          if (!isVisible) {
+            return;
+          }
+
+          unit.group.position.set(pose.x, 0, pose.z);
+          unit.group.rotation.y = pose.rotation || 0;
+          unit.group.scale.setScalar(pose.scale);
+
+          const segmentMinutes = segments[index] || 0;
+          const height = mapCandleMinutesToHeight(segmentMinutes);
+          unit.body.scale.set(1, height, 1);
+          unit.body.position.y = BASE_HEIGHT + 0.34 + height * 0.5;
+
+          unit.cap.position.y = BASE_HEIGHT + 0.34 + height;
+          unit.wick.position.y = BASE_HEIGHT + 0.34 + height + 0.22;
+          unit.pool.position.y = BASE_HEIGHT + 0.29;
+          unit.cap.visible = segmentMinutes > 0.02;
+          unit.wick.visible = segmentMinutes > 0.08;
+          unit.drip.visible = segmentMinutes > 2.5;
+
+          unit.pool.scale.set(
+            1 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.28,
+            1,
+            1 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.24
+          );
+        });
+
+        const activeUnit = candleUnits[activeIndex];
+        if (activeUnit && segments.length > 0) {
+          const scale = activeUnit.group.scale.x;
+          appState.flameAnchor.set(
+            activeUnit.group.position.x,
+            activeUnit.wick.position.y * scale + 0.36 * scale,
+            activeUnit.group.position.z
+          );
+        }
+
+        flame.position.copy(appState.flameAnchor);
+
+        if (appState.state !== STATES.BURNING) {
+          flameLight.position.set(appState.flameAnchor.x, appState.flameAnchor.y + 0.25, appState.flameAnchor.z);
+          candleMaterial.uniforms.uLightPos.value.copy(flameLight.position);
+        }
+      }
+
+      function setPressProgress(progress) {
+        const circumference = 339.292;
+        pressRingProgressEl.style.strokeDashoffset = `${circumference * (1 - progress)}`;
+      }
+
+      function formatTime(seconds) {
+        const safeSeconds = Math.max(0, Math.floor(seconds));
+        const mins = Math.floor(safeSeconds / 60);
+        const secs = safeSeconds % 60;
+        return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      }
+
+      function getStateLabel(state) {
+        if (state === STATES.IDLE) {
+          return "静置";
+        }
+        if (state === STATES.SETTING) {
+          return "设定";
+        }
+        if (state === STATES.BURNING) {
+          return "燃烧";
+        }
+        if (state === STATES.FINISHED) {
+          return "圆满";
+        }
+        return state;
+      }
+
+      function formatCandleCount(count) {
+        const numerals = ["零", "一", "二", "三", "四"];
+        const prefix = numerals[count] || String(count);
+        return `${prefix}炷`;
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function mapCandleMinutesToHeight(minutes) {
+        if (minutes <= 0) {
+          return FINISHED_HEIGHT;
+        }
+
+        const t = clamp(minutes, 0, CANDLE_CAPACITY_MINUTES) / CANDLE_CAPACITY_MINUTES;
+        return THREE.MathUtils.lerp(FINISHED_HEIGHT, MAX_CANDLE_HEIGHT, Math.pow(t, 0.68));
+      }
+
+      function splitDurationAcrossCandles(totalMinutes) {
+        const remaining = clamp(totalMinutes, 0, MAX_MINUTES);
+        const segments = [];
+        let rest = remaining;
+
+        while (rest > 0.0001 && segments.length < MAX_CANDLES) {
+          const piece = Math.min(CANDLE_CAPACITY_MINUTES, rest);
+          segments.push(piece);
+          rest -= piece;
+        }
+
+        return segments;
+      }
+
+      function getCandleClusterLayout(count) {
+        const layouts = {
+          1: [{ x: 0, z: 0, scale: 1.12, rotation: 0 }],
+          2: [
+            { x: -0.95, z: 0.08, scale: 1.02, rotation: -0.04 },
+            { x: 0.95, z: -0.08, scale: 1.02, rotation: 0.04 },
+          ],
+          3: [
+            { x: -1.45, z: 0.12, scale: 0.98, rotation: -0.05 },
+            { x: 0, z: 0, scale: 1.12, rotation: 0 },
+            { x: 1.45, z: -0.12, scale: 0.98, rotation: 0.05 },
+          ],
+          4: [
+            { x: -2.04, z: 0.18, scale: 0.92, rotation: -0.08 },
+            { x: -0.68, z: -0.03, scale: 1.04, rotation: -0.03 },
+            { x: 0.68, z: -0.03, scale: 1.04, rotation: 0.03 },
+            { x: 2.04, z: 0.18, scale: 0.92, rotation: 0.08 },
+          ],
+        };
+
+        return layouts[count] || layouts[1];
+      }
+
+      function createCandleUnit(index) {
+        const group = new THREE.Group();
+        const radius = 0.52 + (index % 2 === 0 ? 0.03 : -0.02);
+
+        const pool = new THREE.Mesh(new THREE.CylinderGeometry(radius * 1.35, radius * 1.45, 0.12, 36), waxPoolMaterial);
+        pool.castShadow = true;
+        pool.receiveShadow = true;
+        group.add(pool);
+
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.94, radius, 1, 56, 1, false), candleMaterial);
+        body.castShadow = true;
+        body.receiveShadow = true;
+        group.add(body);
+
+        const cap = new THREE.Mesh(new THREE.SphereGeometry(radius, 42, 30), candleMaterial);
+        cap.scale.y = 0.16;
+        cap.castShadow = true;
+        cap.receiveShadow = true;
+        group.add(cap);
+
+        const wick = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.05, 0.42, 12), wickMaterial);
+        wick.castShadow = true;
+        group.add(wick);
+
+        const drip = new THREE.Mesh(
+          new THREE.CapsuleGeometry(radius * 0.1, 0.38, 3, 8),
+          candleMaterial
+        );
+        drip.position.set(radius * 0.66, BASE_HEIGHT + 1.15, radius * 0.18);
+        drip.rotation.z = -0.22;
+        drip.castShadow = true;
+        group.add(drip);
+
+        return { group, pool, body, cap, wick, drip };
+      }
+
+      function createRoundedBaseGeometry() {
+        const radius = 0.7;
+        const shape = new THREE.Shape();
+        const x = -BASE_WIDTH / 2;
+        const y = -BASE_DEPTH / 2;
+
+        shape.moveTo(x + radius, y);
+        shape.lineTo(x + BASE_WIDTH - radius, y);
+        shape.quadraticCurveTo(x + BASE_WIDTH, y, x + BASE_WIDTH, y + radius);
+        shape.lineTo(x + BASE_WIDTH, y + BASE_DEPTH - radius);
+        shape.quadraticCurveTo(x + BASE_WIDTH, y + BASE_DEPTH, x + BASE_WIDTH - radius, y + BASE_DEPTH);
+        shape.lineTo(x + radius, y + BASE_DEPTH);
+        shape.quadraticCurveTo(x, y + BASE_DEPTH, x, y + BASE_DEPTH - radius);
+        shape.lineTo(x, y + radius);
+        shape.quadraticCurveTo(x, y, x + radius, y);
+
+        const geometry = new THREE.ExtrudeGeometry(shape, {
+          depth: BASE_HEIGHT,
+          bevelEnabled: true,
+          bevelSegments: 5,
+          steps: 1,
+          bevelSize: 0.22,
+          bevelThickness: 0.22,
+          curveSegments: 24,
+        });
+
+        geometry.rotateX(-Math.PI / 2);
+        geometry.translate(0, BASE_HEIGHT * 0.5, 0);
+        return geometry;
+      }
+
+      function createConcreteTexture(size, normalLike = false) {
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size;
+
+        const context2d = canvas.getContext("2d");
+        const imageData = context2d.createImageData(size, size);
+        const data = imageData.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+          const tone = 120 + Math.floor(Math.random() * 56);
+          const speckle = Math.random() > 0.94 ? 30 : 0;
+          const value = normalLike ? tone + speckle : tone - speckle;
+          data[i] = value;
+          data[i + 1] = value;
+          data[i + 2] = value;
+          data[i + 3] = 255;
+        }
+
+        context2d.putImageData(imageData, 0, 0);
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.colorSpace = THREE.NoColorSpace;
+        return texture;
+      }
+
+      function createPermutationTable(seed) {
+        const values = Array.from({ length: 256 }, (_, index) => index);
+        let currentSeed = seed >>> 0;
+
+        const random = () => {
+          currentSeed = (1664525 * currentSeed + 1013904223) >>> 0;
+          return currentSeed / 0xffffffff;
+        };
+
+        for (let i = values.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(random() * (i + 1));
+          [values[i], values[j]] = [values[j], values[i]];
+        }
+
+        const table = new Uint16Array(512);
+        for (let i = 0; i < 512; i += 1) {
+          table[i] = values[i & 255];
+        }
+
+        return table;
+      }
+
+      function fade(t) {
+        return t * t * t * (t * (t * 6 - 15) + 10);
+      }
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function grad(hash, x) {
+        return (hash & 1) === 0 ? x : -x;
+      }
+
+      function perlin1D(table, x) {
+        const xi = Math.floor(x) & 255;
+        const xf = x - Math.floor(x);
+        const u = fade(xf);
+
+        const a = table[xi];
+        const b = table[xi + 1];
+
+        const value = lerp(grad(a, xf), grad(b, xf - 1), u);
+        return (value + 1) * 0.5;
+      }
+
+      function ensureAudioContext() {
+        if (!audioContext) {
+          const AudioCtor = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtor) {
+            return null;
+          }
+
+          audioContext = new AudioCtor();
+          audioState.master = audioContext.createGain();
+          audioState.master.gain.value = 0.38;
+          audioState.master.connect(audioContext.destination);
+        }
+
+        if (audioContext.state === "suspended") {
+          audioContext.resume();
+        }
+
+        return audioContext;
+      }
+
+      function createNoiseBuffer(durationSeconds) {
+        if (!audioContext) {
+          return null;
+        }
+
+        const sampleCount = Math.floor(audioContext.sampleRate * durationSeconds);
+        const buffer = audioContext.createBuffer(1, sampleCount, audioContext.sampleRate);
+        const data = buffer.getChannelData(0);
+
+        for (let i = 0; i < sampleCount; i += 1) {
+          const falloff = 1 - i / sampleCount;
+          data[i] = (Math.random() * 2 - 1) * (0.65 + falloff * 0.35);
+        }
+
+        return buffer;
+      }
+
+      function playMatchStrike() {
+        if (!ensureAudioContext()) {
+          return;
+        }
+
+        const now = audioContext.currentTime;
+
+        const noiseSource = audioContext.createBufferSource();
+        noiseSource.buffer = createNoiseBuffer(0.42);
+
+        const bandpass = audioContext.createBiquadFilter();
+        bandpass.type = "bandpass";
+        bandpass.frequency.setValueAtTime(2600, now);
+        bandpass.frequency.exponentialRampToValueAtTime(760, now + 0.28);
+        bandpass.Q.value = 1.2;
+
+        const noiseGain = audioContext.createGain();
+        noiseGain.gain.setValueAtTime(0.0001, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.14, now + 0.02);
+        noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+
+        noiseSource.connect(bandpass).connect(noiseGain).connect(audioState.master);
+        noiseSource.start(now);
+        noiseSource.stop(now + 0.38);
+
+        const tone = audioContext.createOscillator();
+        tone.type = "triangle";
+        tone.frequency.setValueAtTime(840, now);
+        tone.frequency.exponentialRampToValueAtTime(190, now + 0.34);
+
+        const toneGain = audioContext.createGain();
+        toneGain.gain.setValueAtTime(0.0001, now);
+        toneGain.gain.exponentialRampToValueAtTime(0.045, now + 0.03);
+        toneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.36);
+
+        tone.connect(toneGain).connect(audioState.master);
+        tone.start(now);
+        tone.stop(now + 0.38);
+      }
+
+      function startCrackleLoop() {
+        if (!ensureAudioContext()) {
+          return;
+        }
+
+        stopCrackleLoop();
+        const now = audioContext.currentTime;
+
+        const source = audioContext.createBufferSource();
+        source.buffer = createNoiseBuffer(2.4);
+        source.loop = true;
+
+        const highpass = audioContext.createBiquadFilter();
+        highpass.type = "highpass";
+        highpass.frequency.value = 140;
+
+        const lowpass = audioContext.createBiquadFilter();
+        lowpass.type = "lowpass";
+        lowpass.frequency.value = 1600;
+
+        const gain = audioContext.createGain();
+        gain.gain.value = 0.012;
+
+        source.connect(highpass).connect(lowpass).connect(gain).connect(audioState.master);
+        source.start(now);
+
+        audioState.crackleSource = source;
+        audioState.crackleGain = gain;
+        audioState.active = true;
+        scheduleCrackleBurst();
+      }
+
+      function stopCrackleLoop() {
+        audioState.active = false;
+
+        if (audioState.crackleTimer) {
+          clearTimeout(audioState.crackleTimer);
+          audioState.crackleTimer = null;
+        }
+
+        if (audioState.crackleSource) {
+          try {
+            audioState.crackleSource.stop();
+          } catch (error) {
+            // noop
+          }
+          audioState.crackleSource.disconnect();
+          audioState.crackleSource = null;
+        }
+
+        audioState.crackleGain = null;
+      }
+
+      function scheduleCrackleBurst() {
+        if (!audioState.active) {
+          return;
+        }
+
+        const delay = 180 + Math.random() * 520;
+        audioState.crackleTimer = window.setTimeout(() => {
+          emitCrackleBurst();
+          scheduleCrackleBurst();
+        }, delay);
+      }
+
+      function emitCrackleBurst() {
+        if (!audioContext || !audioState.active) {
+          return;
+        }
+
+        const now = audioContext.currentTime;
+        const source = audioContext.createBufferSource();
+        source.buffer = createNoiseBuffer(0.09);
+
+        const highpass = audioContext.createBiquadFilter();
+        highpass.type = "highpass";
+        highpass.frequency.value = 1800 + Math.random() * 2400;
+
+        const gain = audioContext.createGain();
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.028 + Math.random() * 0.035, now + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+
+        source.connect(highpass).connect(gain).connect(audioState.master);
+        source.start(now);
+        source.stop(now + 0.09);
+      }
+    </script>
+  </body>
+</html>

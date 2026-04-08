@@ -131,7 +131,7 @@
 
       .hud-shell {
         transform: translateY(0);
-        gap: 8px;
+        gap: 6px;
       }
 
       .timer {
@@ -189,8 +189,8 @@
 
       .status-chip {
         color: var(--ink-soft);
-        min-height: 28px;
-        padding: 5px 12px;
+        min-height: 26px;
+        padding: 4px 10px;
       }
 
       .hint-chip {
@@ -247,20 +247,20 @@
       body[data-view="experience"][data-scene="candle"] .text-button {
         border-color: rgba(255, 243, 223, 0.12);
         box-shadow:
-          0 12px 24px rgba(74, 103, 132, 0.1),
+          0 10px 18px rgba(74, 103, 132, 0.08),
           inset 0 1px 0 rgba(255, 255, 255, 0.16);
       }
 
       body[data-view="experience"][data-scene="candle"] .status-chip {
         color: rgba(244, 248, 249, 0.94);
         background:
-          linear-gradient(180deg, rgba(114, 140, 164, 0.78), rgba(86, 108, 134, 0.72)),
+          linear-gradient(180deg, rgba(113, 138, 160, 0.64), rgba(84, 104, 128, 0.58)),
           linear-gradient(90deg, transparent 0%, rgba(255, 245, 223, 0.12) 52%, transparent 100%);
       }
 
       body[data-view="experience"][data-scene="candle"] .control-dock {
         background:
-          linear-gradient(180deg, rgba(113, 140, 159, 0.54), rgba(80, 103, 124, 0.5)),
+          linear-gradient(180deg, rgba(104, 128, 147, 0.4), rgba(73, 93, 112, 0.34)),
           linear-gradient(90deg, transparent 0%, rgba(255, 248, 232, 0.14) 52%, transparent 100%);
       }
 
@@ -581,22 +581,22 @@
       .experience-actions {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         flex-wrap: wrap;
         justify-content: flex-end;
       }
 
       .text-button {
-        min-width: 136px;
-        height: 44px;
-        padding: 0 18px;
-        border-radius: 13px;
-        font-size: 11px;
+        min-width: 126px;
+        height: 40px;
+        padding: 0 16px;
+        border-radius: 12px;
+        font-size: 10px;
         letter-spacing: 0.06em;
       }
 
       .experience-ui .control-dock {
-        width: min(560px, calc(100vw - 24px));
+        width: min(500px, calc(100vw - 30px));
       }
 
       .hud-wrap {
@@ -607,11 +607,11 @@
       }
 
       .top-hud {
-        padding-top: max(14px, env(safe-area-inset-top));
+        padding-top: max(10px, env(safe-area-inset-top));
       }
 
       .bottom-dock {
-        padding-bottom: max(14px, env(safe-area-inset-bottom));
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
       }
 
       body[data-view="setup"] .experience-ui {
@@ -628,14 +628,14 @@
 
       .control-dock {
         pointer-events: auto;
-        width: min(520px, calc(100vw - 26px));
+        width: min(476px, calc(100vw - 30px));
         border: 1px solid rgba(100, 127, 151, 0.14);
         background:
-          linear-gradient(180deg, rgba(239, 246, 247, 0.48), rgba(215, 229, 236, 0.34)),
+          linear-gradient(180deg, rgba(239, 246, 247, 0.4), rgba(215, 229, 236, 0.24)),
           linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.22) 52%, transparent 100%);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(8px);
         box-shadow:
-          0 12px 24px rgba(81, 110, 138, 0.08),
+          0 10px 18px rgba(81, 110, 138, 0.06),
           inset 0 1px 0 rgba(255, 255, 255, 0.22);
       }
 
@@ -643,7 +643,7 @@
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
-        gap: 18px;
+        gap: 12px;
       }
 
       .range-shell {
@@ -721,17 +721,17 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        width: 156px;
-        height: 48px;
-        padding: 0 18px 0 54px;
-        border-radius: 14px;
+        width: 146px;
+        height: 44px;
+        padding: 0 16px 0 50px;
+        border-radius: 12px;
         border: 1px solid rgba(103, 131, 154, 0.14);
         background:
           linear-gradient(180deg, rgba(94, 131, 168, 0.96), rgba(73, 101, 140, 0.98)),
           linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 52%, transparent 100%);
         color: #f5fbff;
         box-shadow:
-          0 18px 28px rgba(72, 101, 140, 0.2),
+          0 12px 20px rgba(72, 101, 140, 0.14),
           inset 0 1px 0 rgba(255, 255, 255, 0.12);
         transition:
           transform 280ms ease,
@@ -886,15 +886,15 @@
         }
 
         .top-hud {
-          padding-top: max(10px, env(safe-area-inset-top));
+          padding-top: max(8px, env(safe-area-inset-top));
         }
 
         .bottom-dock {
-          padding-bottom: max(10px, env(safe-area-inset-bottom));
+          padding-bottom: max(8px, env(safe-area-inset-bottom));
         }
 
         .hud-shell {
-          gap: 10px;
+          gap: 8px;
         }
 
         .altar-mark span {
@@ -916,15 +916,15 @@
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
           width: 100%;
-          gap: 10px;
+          gap: 8px;
         }
 
         .ignite-button {
           justify-self: stretch;
           width: 100%;
           max-width: none;
-          height: 46px;
-          border-radius: 14px;
+          height: 42px;
+          border-radius: 12px;
         }
 
         .press-ring {
@@ -944,14 +944,14 @@
         .text-button {
           min-width: 0;
           width: 100%;
-          height: 46px;
-          padding: 0 14px;
-          font-size: 11px;
+          height: 42px;
+          padding: 0 12px;
+          font-size: 10px;
         }
 
         .experience-ui .control-dock {
-          width: calc(100vw - 20px);
-          padding: 10px 12px;
+          width: calc(100vw - 26px);
+          padding: 8px 10px;
         }
 
         .timer {
@@ -1039,7 +1039,7 @@
         </div>
 
         <div class="bottom-dock absolute inset-x-0 bottom-0 flex justify-center px-4 sm:px-6">
-          <div class="control-dock rounded-[32px] px-4 py-4 sm:px-5 sm:py-5">
+          <div class="control-dock rounded-[24px] px-3 py-3 sm:px-4 sm:py-4">
             <div class="dock-grid">
               <div class="range-shell">
                 <div
@@ -1285,7 +1285,7 @@
       const BASE_WIDTH = 6.8;
       const BASE_DEPTH = 5.2;
       const BASE_HEIGHT = 1.08;
-      const MAX_CANDLE_HEIGHT = 4.08;
+      const MAX_CANDLE_HEIGHT = 3.62;
       const FINISHED_HEIGHT = 0.16;
       const HOLD_DURATION = 2;
 
@@ -1474,7 +1474,7 @@
       candleWorld.add(altar);
 
       const baseMaterial = new THREE.MeshStandardMaterial({
-        color: 0xd79473,
+        color: 0xcf9d7b,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
@@ -1486,7 +1486,7 @@
         flatShading: true,
       });
       const accentMaterial = new THREE.MeshStandardMaterial({
-        color: 0x7184a8,
+        color: 0x7a8faa,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
@@ -1510,20 +1510,20 @@
         flatShading: true,
       });
       const oceanMaterial = new THREE.MeshStandardMaterial({
-        color: 0x73b5ba,
+        color: 0x7dbdc0,
         roughness: 0.92,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.84,
+        opacity: 0.8,
       });
       const oceanDeepMaterial = new THREE.MeshStandardMaterial({
-        color: 0x486f87,
+        color: 0x5b8091,
         roughness: 1,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.86,
+        opacity: 0.66,
       });
       const foamMaterial = new THREE.MeshStandardMaterial({
         color: 0xf5e5cf,
@@ -1534,12 +1534,12 @@
         opacity: 0.24,
       });
       const horizonMaterial = new THREE.MeshStandardMaterial({
-        color: 0x6a8390,
+        color: 0x7993a0,
         roughness: 1,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.24,
+        opacity: 0.14,
       });
       const focusHaloMaterial = new THREE.MeshBasicMaterial({
         color: 0xf2caa0,
@@ -1550,51 +1550,51 @@
       const oceanGroup = new THREE.Group();
       candleWorld.add(oceanGroup);
 
-      const oceanBase = new THREE.Mesh(new THREE.CylinderGeometry(19.4, 20.8, 0.16, 6), oceanDeepMaterial);
-      oceanBase.position.y = -1.58;
+      const oceanBase = new THREE.Mesh(new THREE.CylinderGeometry(22.6, 24.2, 0.08, 6), oceanDeepMaterial);
+      oceanBase.position.y = -1.72;
       oceanBase.receiveShadow = true;
       oceanGroup.add(oceanBase);
 
-      const oceanSurfaceA = new THREE.Mesh(new THREE.CylinderGeometry(17.6, 18.6, 0.05, 6), oceanMaterial);
-      oceanSurfaceA.position.y = -1.4;
+      const oceanSurfaceA = new THREE.Mesh(new THREE.CylinderGeometry(20.4, 21.6, 0.05, 6), oceanMaterial);
+      oceanSurfaceA.position.y = -1.48;
       oceanSurfaceA.rotation.y = Math.PI * 0.08;
       oceanGroup.add(oceanSurfaceA);
 
-      const oceanSurfaceB = new THREE.Mesh(new THREE.CylinderGeometry(16.2, 17.2, 0.04, 6), oceanDeepMaterial);
-      oceanSurfaceB.position.y = -1.32;
+      const oceanSurfaceB = new THREE.Mesh(new THREE.CylinderGeometry(18.8, 20.0, 0.04, 6), oceanMaterial);
+      oceanSurfaceB.position.y = -1.4;
       oceanSurfaceB.rotation.y = Math.PI * 0.14;
       oceanGroup.add(oceanSurfaceB);
 
-      const islandRock = new THREE.Mesh(new THREE.CylinderGeometry(4.86, 6.08, 1.38, 6), islandRockMaterial);
-      islandRock.position.set(0, -0.82, 0.26);
+      const islandRock = new THREE.Mesh(new THREE.CylinderGeometry(4.08, 5.28, 1.18, 6), islandRockMaterial);
+      islandRock.position.set(0, -0.86, 0.22);
       islandRock.castShadow = true;
       islandRock.receiveShadow = true;
       candleWorld.add(islandRock);
 
-      const islandTop = new THREE.Mesh(new THREE.CylinderGeometry(3.56, 4.08, 0.52, 6), islandTopMaterial);
-      islandTop.position.set(0, -0.24, 0.16);
+      const islandTop = new THREE.Mesh(new THREE.CylinderGeometry(2.92, 3.46, 0.42, 6), islandTopMaterial);
+      islandTop.position.set(0, -0.3, 0.08);
       islandTop.castShadow = true;
       islandTop.receiveShadow = true;
       candleWorld.add(islandTop);
 
-      const islandSpur = new THREE.Mesh(new THREE.BoxGeometry(2.56, 0.22, 1.22), islandTopMaterial);
-      islandSpur.position.set(-1.12, -0.12, 2.04);
+      const islandSpur = new THREE.Mesh(new THREE.BoxGeometry(1.94, 0.18, 0.92), islandTopMaterial);
+      islandSpur.position.set(-0.92, -0.18, 1.84);
       islandSpur.rotation.y = Math.PI * 0.14;
       islandSpur.castShadow = true;
       islandSpur.receiveShadow = true;
       candleWorld.add(islandSpur);
 
-      const shoreline = new THREE.Mesh(new THREE.TorusGeometry(4.2, 0.07, 4, 6), foamMaterial.clone());
+      const shoreline = new THREE.Mesh(new THREE.TorusGeometry(3.72, 0.06, 4, 6), foamMaterial.clone());
       shoreline.rotation.x = Math.PI / 2;
       shoreline.rotation.z = Math.PI * 0.06;
-      shoreline.position.set(0, -1.12, 0.18);
+      shoreline.position.set(0, -1.16, 0.1);
       candleWorld.add(shoreline);
 
-      const outerFoam = new THREE.Mesh(new THREE.TorusGeometry(5.72, 0.06, 4, 6), foamMaterial.clone());
+      const outerFoam = new THREE.Mesh(new THREE.TorusGeometry(4.84, 0.05, 4, 6), foamMaterial.clone());
       outerFoam.rotation.x = Math.PI / 2;
       outerFoam.rotation.z = -Math.PI * 0.03;
-      outerFoam.position.set(0, -1.26, 0.04);
-      outerFoam.scale.set(1.04, 0.92, 1);
+      outerFoam.position.set(0, -1.28, -0.02);
+      outerFoam.scale.set(1.02, 0.92, 1);
       candleWorld.add(outerFoam);
 
       const seaScene = {
@@ -1606,9 +1606,9 @@
       };
 
       const horizonIslands = [
-        { x: -15.4, y: -1.42, z: -18.8, scale: [4.8, 0.22, 2.1], rot: -0.06 },
-        { x: 15.8, y: -1.48, z: -17.6, scale: [5.6, 0.26, 2.5], rot: 0.05 },
-        { x: 0.8, y: -1.58, z: -22.8, scale: [8.8, 0.16, 3.1], rot: 0.02 },
+        { x: -18.8, y: -2.04, z: -28.4, scale: [6.8, 0.12, 2.2], rot: -0.04 },
+        { x: 18.6, y: -2.1, z: -27.2, scale: [8.2, 0.14, 2.6], rot: 0.04 },
+        { x: 1.2, y: -2.18, z: -34.6, scale: [12.2, 0.09, 3.2], rot: 0.02 },
       ];
 
       horizonIslands.forEach((pose) => {
@@ -1620,8 +1620,8 @@
       });
 
       const rockClusterPositions = [
-        { x: -2.94, y: -0.22, z: 1.86, scale: [0.26, 0.14, 0.2] },
-        { x: 2.84, y: -0.2, z: 1.52, scale: [0.22, 0.12, 0.18] },
+        { x: -2.48, y: -0.32, z: 1.68, scale: [0.18, 0.1, 0.14] },
+        { x: 2.36, y: -0.28, z: 1.38, scale: [0.16, 0.09, 0.12] },
       ];
 
       rockClusterPositions.forEach((pose) => {
@@ -1638,18 +1638,18 @@
       base.castShadow = true;
       base.receiveShadow = true;
       altar.add(base);
-      altar.position.set(0.12, 0, 0.18);
+      altar.position.set(0.08, 0, 0.12);
       altar.rotation.y = -Math.PI * 0.08;
 
-      const lowerTerrace = new THREE.Mesh(new THREE.CylinderGeometry(2.18, 2.52, 0.22, 6), terraceMaterial);
-      lowerTerrace.position.set(0, BASE_HEIGHT + 0.12, 0.14);
+      const lowerTerrace = new THREE.Mesh(new THREE.CylinderGeometry(1.84, 2.18, 0.18, 6), terraceMaterial);
+      lowerTerrace.position.set(0, BASE_HEIGHT + 0.1, 0.12);
       lowerTerrace.rotation.y = Math.PI / 6;
       lowerTerrace.castShadow = true;
       lowerTerrace.receiveShadow = true;
       altar.add(lowerTerrace);
 
-      const upperTerrace = new THREE.Mesh(new THREE.CylinderGeometry(1.18, 1.42, 0.2, 6), bridgeMaterial);
-      upperTerrace.position.set(0, BASE_HEIGHT + 0.34, 0.02);
+      const upperTerrace = new THREE.Mesh(new THREE.CylinderGeometry(0.94, 1.18, 0.18, 6), bridgeMaterial);
+      upperTerrace.position.set(0, BASE_HEIGHT + 0.28, 0.02);
       upperTerrace.rotation.y = Math.PI / 6;
       upperTerrace.castShadow = true;
       upperTerrace.receiveShadow = true;
@@ -1660,71 +1660,71 @@
       focusHalo.position.set(0, BASE_HEIGHT + 0.45, 0);
       altar.add(focusHalo);
 
-      const bridgeDeck = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 3.58), bridgeMaterial);
-      bridgeDeck.position.set(0, BASE_HEIGHT + 0.5, 1.08);
+      const bridgeDeck = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.1, 2.96), bridgeMaterial);
+      bridgeDeck.position.set(-0.06, BASE_HEIGHT + 0.42, 0.96);
       bridgeDeck.castShadow = true;
       bridgeDeck.receiveShadow = true;
       altar.add(bridgeDeck);
 
-      const frontLanding = new THREE.Mesh(new THREE.CylinderGeometry(0.82, 0.98, 0.14, 6), terraceMaterial);
-      frontLanding.position.set(0, BASE_HEIGHT + 0.44, 2.74);
+      const frontLanding = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.76, 0.12, 6), terraceMaterial);
+      frontLanding.position.set(-0.14, BASE_HEIGHT + 0.36, 2.34);
       frontLanding.rotation.y = Math.PI / 6;
       frontLanding.castShadow = true;
       frontLanding.receiveShadow = true;
       altar.add(frontLanding);
 
-      const stairLeft = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.12, 0.54), accentMaterial);
-      stairLeft.position.set(-0.58, BASE_HEIGHT + 0.18, 1.98);
+      const stairLeft = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.1, 0.42), accentMaterial);
+      stairLeft.position.set(-0.5, BASE_HEIGHT + 0.14, 1.72);
       stairLeft.rotation.y = Math.PI * 0.25;
       stairLeft.castShadow = true;
       stairLeft.receiveShadow = true;
       altar.add(stairLeft);
 
-      const stairRight = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.12, 0.54), accentMaterial);
-      stairRight.position.set(0.58, BASE_HEIGHT + 0.18, 1.98);
+      const stairRight = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.1, 0.42), accentMaterial);
+      stairRight.position.set(0.38, BASE_HEIGHT + 0.14, 1.62);
       stairRight.rotation.y = -Math.PI * 0.25;
       stairRight.castShadow = true;
       stairRight.receiveShadow = true;
       altar.add(stairRight);
 
-      const gateLeft = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.84, 0.18), accentMaterial);
-      gateLeft.position.set(-0.38, BASE_HEIGHT + 0.86, -0.44);
+      const gateLeft = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.68, 0.14), bridgeMaterial);
+      gateLeft.position.set(-0.28, BASE_HEIGHT + 0.74, -0.3);
       gateLeft.castShadow = true;
       gateLeft.receiveShadow = true;
       altar.add(gateLeft);
 
-      const gateRight = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.84, 0.18), accentMaterial);
-      gateRight.position.set(0.38, BASE_HEIGHT + 0.86, -0.44);
+      const gateRight = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.68, 0.14), bridgeMaterial);
+      gateRight.position.set(0.28, BASE_HEIGHT + 0.74, -0.3);
       gateRight.castShadow = true;
       gateRight.receiveShadow = true;
       altar.add(gateRight);
 
-      const gateLintel = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.12, 0.18), terraceMaterial);
-      gateLintel.position.set(0, BASE_HEIGHT + 1.28, -0.44);
+      const gateLintel = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.1, 0.14), terraceMaterial);
+      gateLintel.position.set(0, BASE_HEIGHT + 1.08, -0.3);
       gateLintel.castShadow = true;
       gateLintel.receiveShadow = true;
       altar.add(gateLintel);
 
-      const sideTower = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.26, 0.42), accentMaterial);
-      sideTower.position.set(-1.16, BASE_HEIGHT + 0.86, 0.28);
+      const sideTower = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.92, 0.28), accentMaterial);
+      sideTower.position.set(-0.84, BASE_HEIGHT + 0.66, 0.12);
       sideTower.castShadow = true;
       sideTower.receiveShadow = true;
       altar.add(sideTower);
 
-      const sideTowerCap = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.14, 0.62), terraceMaterial);
-      sideTowerCap.position.set(-1.16, BASE_HEIGHT + 1.56, 0.28);
+      const sideTowerCap = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.1, 0.42), terraceMaterial);
+      sideTowerCap.position.set(-0.84, BASE_HEIGHT + 1.18, 0.12);
       sideTowerCap.castShadow = true;
       sideTowerCap.receiveShadow = true;
       altar.add(sideTowerCap);
 
-      const cantileverBeam = new THREE.Mesh(new THREE.BoxGeometry(1.08, 0.1, 0.18), accentMaterial);
-      cantileverBeam.position.set(-0.64, BASE_HEIGHT + 1.38, 0.28);
+      const cantileverBeam = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.08, 0.14), accentMaterial);
+      cantileverBeam.position.set(-0.46, BASE_HEIGHT + 1.02, 0.12);
       cantileverBeam.castShadow = true;
       cantileverBeam.receiveShadow = true;
       altar.add(cantileverBeam);
 
-      const rearMarker = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.82, 0.18), bridgeMaterial);
-      rearMarker.position.set(1.04, BASE_HEIGHT + 0.68, -0.58);
+      const rearMarker = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.62, 0.14), bridgeMaterial);
+      rearMarker.position.set(0.8, BASE_HEIGHT + 0.56, -0.42);
       rearMarker.castShadow = true;
       rearMarker.receiveShadow = true;
       altar.add(rearMarker);
@@ -2335,20 +2335,20 @@
         camera.far = 60;
 
         if (isMobile) {
-          root.position.set(0, -0.92, 0);
-          root.scale.setScalar(1.08);
-          camera.position.set(10.2, 8.2, 11.6);
-          targetY = 1.84;
+          root.position.set(0, -0.38, 0);
+          root.scale.setScalar(1.16);
+          camera.position.set(9.4, 7.8, 10.7);
+          targetY = 1.62;
         } else if (isTablet) {
-          root.position.set(0, -0.36, 0);
-          root.scale.setScalar(1.08);
-          camera.position.set(9.8, 8.7, 11.0);
-          targetY = 2.32;
+          root.position.set(0, -0.02, 0);
+          root.scale.setScalar(1.14);
+          camera.position.set(9.1, 7.9, 10.1);
+          targetY = 2.04;
         } else {
-          root.position.set(0, 0.08, 0);
-          root.scale.setScalar(1.1);
-          camera.position.set(9.2, 8.2, 10.0);
-          targetY = 2.58;
+          root.position.set(0, 0.28, 0);
+          root.scale.setScalar(1.16);
+          camera.position.set(8.7, 7.8, 9.2);
+          targetY = 2.24;
         }
 
         cameraRig.target.set(0, targetY, 0);
@@ -2895,7 +2895,7 @@
           return;
         }
 
-        seaScene.oceanSurfaceA.position.y = -1.4 + Math.sin(elapsed * 0.44) * 0.016;
+        seaScene.oceanSurfaceA.position.y = -1.48 + Math.sin(elapsed * 0.44) * 0.012;
         seaScene.oceanSurfaceA.rotation.y = Math.PI * 0.08 + Math.sin(elapsed * 0.14) * 0.025;
         seaScene.oceanSurfaceA.scale.set(
           1 + Math.sin(elapsed * 0.36) * 0.008,
@@ -2903,7 +2903,7 @@
           1 + Math.cos(elapsed * 0.28) * 0.012
         );
 
-        seaScene.oceanSurfaceB.position.y = -1.32 + Math.cos(elapsed * 0.48) * 0.012;
+        seaScene.oceanSurfaceB.position.y = -1.4 + Math.cos(elapsed * 0.48) * 0.01;
         seaScene.oceanSurfaceB.rotation.y = Math.PI * 0.14 - Math.sin(elapsed * 0.12) * 0.022;
         seaScene.oceanSurfaceB.scale.set(
           1 + Math.cos(elapsed * 0.26) * 0.008,
@@ -2911,8 +2911,8 @@
           1 + Math.sin(elapsed * 0.24) * 0.008
         );
 
-        seaScene.shoreline.material.opacity = 0.14 + Math.sin(elapsed * 0.6) * 0.018;
-        seaScene.outerFoam.material.opacity = 0.08 + Math.cos(elapsed * 0.54) * 0.012;
+        seaScene.shoreline.material.opacity = 0.1 + Math.sin(elapsed * 0.6) * 0.012;
+        seaScene.outerFoam.material.opacity = 0.06 + Math.cos(elapsed * 0.54) * 0.01;
       }
 
       function updateCaretaker(elapsed) {
@@ -3020,21 +3020,21 @@
 
       function getCandleClusterLayout(count) {
         const layouts = {
-          1: [{ x: 0, z: 0.02, scale: 0.96, rotation: 0 }],
+          1: [{ x: 0, z: 0.04, scale: 0.94, rotation: 0 }],
           2: [
-            { x: -0.52, z: 0.06, scale: 0.88, rotation: -0.03 },
-            { x: 0.52, z: -0.02, scale: 0.88, rotation: 0.03 },
+            { x: -0.46, z: 0.08, scale: 0.84, rotation: -0.03 },
+            { x: 0.46, z: 0, scale: 0.84, rotation: 0.03 },
           ],
           3: [
-            { x: -0.74, z: 0.08, scale: 0.82, rotation: -0.04 },
-            { x: 0, z: 0.02, scale: 0.92, rotation: 0 },
-            { x: 0.74, z: -0.04, scale: 0.82, rotation: 0.04 },
+            { x: -0.62, z: 0.08, scale: 0.78, rotation: -0.04 },
+            { x: 0, z: 0.02, scale: 0.88, rotation: 0 },
+            { x: 0.62, z: -0.02, scale: 0.78, rotation: 0.04 },
           ],
           4: [
-            { x: -0.94, z: 0.1, scale: 0.76, rotation: -0.05 },
-            { x: -0.3, z: 0, scale: 0.86, rotation: -0.02 },
-            { x: 0.3, z: 0, scale: 0.86, rotation: 0.02 },
-            { x: 0.94, z: 0.1, scale: 0.76, rotation: 0.05 },
+            { x: -0.82, z: 0.1, scale: 0.72, rotation: -0.05 },
+            { x: -0.26, z: 0.02, scale: 0.82, rotation: -0.02 },
+            { x: 0.26, z: 0.02, scale: 0.82, rotation: 0.02 },
+            { x: 0.82, z: 0.1, scale: 0.72, rotation: 0.05 },
           ],
         };
 
@@ -3043,27 +3043,27 @@
 
       function createCandleUnit(index) {
         const group = new THREE.Group();
-        const radius = 0.39 + (index % 2 === 0 ? 0.018 : -0.01);
+        const radius = 0.34 + (index % 2 === 0 ? 0.014 : -0.008);
 
-        const pool = new THREE.Mesh(new THREE.CylinderGeometry(radius * 1.1, radius * 1.2, 0.14, 4), waxPoolMaterial);
+        const pool = new THREE.Mesh(new THREE.CylinderGeometry(radius * 1.06, radius * 1.16, 0.12, 4), waxPoolMaterial);
         pool.rotation.y = Math.PI * 0.25;
         pool.castShadow = true;
         pool.receiveShadow = true;
         group.add(pool);
 
-        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.62, radius * 0.76, 1, 4, 1, false), candleMaterial);
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.6, radius * 0.72, 1, 4, 1, false), candleMaterial);
         body.rotation.y = Math.PI * 0.25;
         body.castShadow = true;
         body.receiveShadow = true;
         group.add(body);
 
-        const cap = new THREE.Mesh(new THREE.ConeGeometry(radius * 0.44, 0.22, 4), candleMaterial);
+        const cap = new THREE.Mesh(new THREE.ConeGeometry(radius * 0.4, 0.18, 4), candleMaterial);
         cap.rotation.y = Math.PI * 0.25;
         cap.castShadow = true;
         cap.receiveShadow = true;
         group.add(cap);
 
-        const wick = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.15, 0.04), wickMaterial);
+        const wick = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.13, 0.035), wickMaterial);
         wick.castShadow = true;
         group.add(wick);
 
@@ -3204,7 +3204,7 @@
       }
 
       function createRoundedBaseGeometry() {
-        const geometry = new THREE.CylinderGeometry(BASE_WIDTH * 0.4, BASE_WIDTH * 0.48, BASE_HEIGHT, 6, 1, false);
+        const geometry = new THREE.CylinderGeometry(BASE_WIDTH * 0.32, BASE_WIDTH * 0.4, BASE_HEIGHT, 6, 1, false);
         geometry.rotateY(Math.PI / 6);
         geometry.translate(0, BASE_HEIGHT * 0.5, 0);
         return geometry;

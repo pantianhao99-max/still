@@ -1151,28 +1151,28 @@
 
       const EXPERIENCE_ENVIRONMENTS = Object.freeze({
         candle: Object.freeze({
-          pageGradient: ["#183149", "#2f6079", "#9cc0c7"],
-          topGlow: "rgba(255, 214, 156, 0.12)",
-          sideGlow: "rgba(117, 179, 199, 0.12)",
-          depthShadow: "rgba(17, 42, 67, 0.28)",
-          coreHalo: "rgba(255, 236, 200, 0.08)",
-          baseShadow: "rgba(18, 35, 58, 0.18)",
-          sheen: "rgba(255, 255, 255, 0.035)",
-          mist: "rgba(228, 244, 248, 0.025)",
-          sceneBackground: 0x3d758c,
-          fogColor: 0x7eaab1,
-          fogNear: 20,
-          fogFar: 54,
-          floorColor: 0x31566a,
-          hemiSky: 0xe7d3ac,
-          hemiGround: 0x29465d,
-          hemiIntensity: 0.38,
-          keyColor: 0xffd0a0,
-          keyIntensity: 0.12,
+          pageGradient: ["#2a4f67", "#6294a8", "#d9d8c8"],
+          topGlow: "rgba(255, 210, 156, 0.1)",
+          sideGlow: "rgba(155, 205, 214, 0.1)",
+          depthShadow: "rgba(47, 72, 103, 0.18)",
+          coreHalo: "rgba(255, 241, 213, 0.06)",
+          baseShadow: "rgba(40, 59, 88, 0.12)",
+          sheen: "rgba(255, 255, 255, 0.028)",
+          mist: "rgba(236, 244, 241, 0.02)",
+          sceneBackground: 0x78a0aa,
+          fogColor: 0xb5c8c4,
+          fogNear: 24,
+          fogFar: 60,
+          floorColor: 0x5b7f92,
+          hemiSky: 0xf0dfbc,
+          hemiGround: 0x4f677f,
+          hemiIntensity: 0.42,
+          keyColor: 0xf7c79d,
+          keyIntensity: 0.1,
           floorVisible: false,
-          exposure: 0.64,
-          stageBrightness: 0.82,
-          stageSaturation: 1.02,
+          exposure: 0.7,
+          stageBrightness: 0.86,
+          stageSaturation: 0.96,
         }),
         ice: Object.freeze({
           pageGradient: ["#72818f", "#a5b7c4", "#d9e4eb"],
@@ -1473,108 +1473,107 @@
       candleWorld.add(altar);
 
       const baseMaterial = new THREE.MeshStandardMaterial({
-        color: 0xa97558,
+        color: 0xc7886b,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const terraceMaterial = new THREE.MeshStandardMaterial({
-        color: 0xc3d1cc,
+        color: 0xe8dcc5,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const accentMaterial = new THREE.MeshStandardMaterial({
-        color: 0x5e7488,
+        color: 0x647396,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const bridgeMaterial = new THREE.MeshStandardMaterial({
-        color: 0x748d9b,
+        color: 0x9db8b0,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const islandRockMaterial = new THREE.MeshStandardMaterial({
-        color: 0x5f6b63,
+        color: 0x8d8b97,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const islandTopMaterial = new THREE.MeshStandardMaterial({
-        color: 0xaab39c,
+        color: 0xd6cfb5,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const oceanMaterial = new THREE.MeshStandardMaterial({
-        color: 0x2d6780,
+        color: 0x6eb3ba,
         roughness: 0.92,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.94,
+        opacity: 0.9,
       });
       const oceanDeepMaterial = new THREE.MeshStandardMaterial({
-        color: 0x1d4257,
+        color: 0x46788f,
         roughness: 1,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.92,
+        opacity: 0.88,
       });
       const foamMaterial = new THREE.MeshStandardMaterial({
-        color: 0xbfe4e6,
+        color: 0xf5e5cf,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.44,
+        opacity: 0.24,
       });
 
       const oceanGroup = new THREE.Group();
       candleWorld.add(oceanGroup);
 
-      const oceanBase = new THREE.Mesh(new THREE.CylinderGeometry(18, 19.6, 0.26, 10), oceanDeepMaterial);
-      oceanBase.position.y = -1.54;
+      const oceanBase = new THREE.Mesh(new THREE.CylinderGeometry(18, 19.6, 0.18, 8), oceanDeepMaterial);
+      oceanBase.position.y = -1.46;
       oceanBase.receiveShadow = true;
       oceanGroup.add(oceanBase);
 
-      const oceanSurfaceA = new THREE.Mesh(new THREE.CylinderGeometry(17.2, 18.2, 0.08, 10), oceanMaterial);
-      oceanSurfaceA.position.y = -1.34;
+      const oceanSurfaceA = new THREE.Mesh(new THREE.CylinderGeometry(17, 18, 0.06, 8), oceanMaterial);
+      oceanSurfaceA.position.y = -1.3;
       oceanSurfaceA.rotation.y = Math.PI * 0.08;
       oceanGroup.add(oceanSurfaceA);
 
-      const oceanSurfaceB = new THREE.Mesh(new THREE.CylinderGeometry(16.4, 17.4, 0.06, 10), oceanDeepMaterial);
-      oceanSurfaceB.position.y = -1.26;
+      const oceanSurfaceB = new THREE.Mesh(new THREE.CylinderGeometry(15.6, 16.6, 0.05, 8), oceanDeepMaterial);
+      oceanSurfaceB.position.y = -1.22;
       oceanSurfaceB.rotation.y = Math.PI * 0.14;
       oceanGroup.add(oceanSurfaceB);
 
-      const islandRock = new THREE.Mesh(new THREE.OctahedronGeometry(4.7, 0), islandRockMaterial);
-      islandRock.position.set(0, -0.72, 0.18);
-      islandRock.scale.set(1.18, 0.54, 1.02);
+      const islandRock = new THREE.Mesh(new THREE.CylinderGeometry(5.46, 6.18, 1.48, 6), islandRockMaterial);
+      islandRock.position.set(0, -0.66, 0.18);
       islandRock.castShadow = true;
       islandRock.receiveShadow = true;
       candleWorld.add(islandRock);
 
-      const islandTop = new THREE.Mesh(new THREE.CylinderGeometry(4.42, 4.9, 0.88, 8), islandTopMaterial);
-      islandTop.position.set(0, -0.44, 0.12);
+      const islandTop = new THREE.Mesh(new THREE.CylinderGeometry(4.18, 4.58, 0.58, 6), islandTopMaterial);
+      islandTop.position.set(0, -0.22, 0.12);
       islandTop.castShadow = true;
       islandTop.receiveShadow = true;
       candleWorld.add(islandTop);
 
-      const shoreline = new THREE.Mesh(new THREE.TorusGeometry(4.72, 0.14, 4, 10), foamMaterial.clone());
+      const shoreline = new THREE.Mesh(new THREE.TorusGeometry(4.76, 0.1, 4, 6), foamMaterial.clone());
       shoreline.rotation.x = Math.PI / 2;
       shoreline.rotation.z = Math.PI * 0.06;
-      shoreline.position.set(0, -1.23, 0.08);
+      shoreline.position.set(0, -1.18, 0.08);
       candleWorld.add(shoreline);
 
-      const outerFoam = new THREE.Mesh(new THREE.TorusGeometry(6.1, 0.1, 4, 10), foamMaterial.clone());
+      const outerFoam = new THREE.Mesh(new THREE.TorusGeometry(6.36, 0.08, 4, 6), foamMaterial.clone());
       outerFoam.rotation.x = Math.PI / 2;
       outerFoam.rotation.z = -Math.PI * 0.03;
-      outerFoam.position.set(0, -1.3, -0.14);
-      outerFoam.scale.set(1.06, 0.94, 1);
+      outerFoam.position.set(0, -1.24, -0.14);
+      outerFoam.scale.set(1.03, 0.95, 1);
       candleWorld.add(outerFoam);
 
       const seaScene = {
@@ -1586,13 +1585,12 @@
       };
 
       const rockClusterPositions = [
-        { x: -3.4, y: -0.52, z: 1.82, scale: [0.54, 0.34, 0.5] },
-        { x: 3.12, y: -0.56, z: 1.46, scale: [0.44, 0.28, 0.42] },
-        { x: -2.56, y: -0.48, z: -1.68, scale: [0.36, 0.24, 0.34] },
+        { x: -3.12, y: -0.24, z: 1.64, scale: [0.34, 0.22, 0.3] },
+        { x: 2.94, y: -0.26, z: 1.28, scale: [0.28, 0.18, 0.26] },
       ];
 
       rockClusterPositions.forEach((pose) => {
-        const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(0.68, 0), islandRockMaterial);
+        const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(0.54, 0), islandRockMaterial);
         rock.position.set(pose.x, pose.y, pose.z);
         rock.scale.set(pose.scale[0], pose.scale[1], pose.scale[2]);
         rock.rotation.set(0.1, pose.x * 0.18, -0.08);
@@ -1606,59 +1604,59 @@
       base.receiveShadow = true;
       altar.add(base);
 
-      const lowerTerrace = new THREE.Mesh(new THREE.BoxGeometry(5.3, 0.48, 5.1), terraceMaterial);
-      lowerTerrace.position.y = BASE_HEIGHT + 0.3;
+      const lowerTerrace = new THREE.Mesh(new THREE.BoxGeometry(4.62, 0.36, 4.46), terraceMaterial);
+      lowerTerrace.position.y = BASE_HEIGHT + 0.18;
       lowerTerrace.castShadow = true;
       lowerTerrace.receiveShadow = true;
       altar.add(lowerTerrace);
 
-      const upperTerrace = new THREE.Mesh(new THREE.BoxGeometry(2.84, 0.34, 2.96), bridgeMaterial);
-      upperTerrace.position.y = BASE_HEIGHT + 0.72;
+      const upperTerrace = new THREE.Mesh(new THREE.BoxGeometry(2.36, 0.28, 2.64), bridgeMaterial);
+      upperTerrace.position.y = BASE_HEIGHT + 0.54;
       upperTerrace.castShadow = true;
       upperTerrace.receiveShadow = true;
       altar.add(upperTerrace);
 
-      const bridgeDeck = new THREE.Mesh(new THREE.BoxGeometry(1.28, 0.16, 3.48), bridgeMaterial);
-      bridgeDeck.position.set(0, BASE_HEIGHT + 0.92, 0.18);
+      const bridgeDeck = new THREE.Mesh(new THREE.BoxGeometry(1.02, 0.14, 2.76), bridgeMaterial);
+      bridgeDeck.position.set(0, BASE_HEIGHT + 0.74, 0.14);
       bridgeDeck.castShadow = true;
       bridgeDeck.receiveShadow = true;
       altar.add(bridgeDeck);
 
-      const stairLeft = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.22, 1.02), accentMaterial);
-      stairLeft.position.set(-1.08, BASE_HEIGHT + 0.32, -0.7);
+      const stairLeft = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.18, 0.88), accentMaterial);
+      stairLeft.position.set(-0.92, BASE_HEIGHT + 0.22, -0.52);
       stairLeft.rotation.y = Math.PI * 0.25;
       stairLeft.castShadow = true;
       stairLeft.receiveShadow = true;
       altar.add(stairLeft);
 
-      const stairRight = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.22, 1.02), accentMaterial);
-      stairRight.position.set(1.08, BASE_HEIGHT + 0.32, 0.7);
+      const stairRight = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.18, 0.88), accentMaterial);
+      stairRight.position.set(0.92, BASE_HEIGHT + 0.22, 0.52);
       stairRight.rotation.y = -Math.PI * 0.25;
       stairRight.castShadow = true;
       stairRight.receiveShadow = true;
       altar.add(stairRight);
 
-      const gateLeft = new THREE.Mesh(new THREE.BoxGeometry(0.26, 1.12, 0.26), accentMaterial);
-      gateLeft.position.set(-0.58, BASE_HEIGHT + 1.28, -0.84);
+      const gateLeft = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.92, 0.22), accentMaterial);
+      gateLeft.position.set(-0.46, BASE_HEIGHT + 1.06, -0.66);
       gateLeft.castShadow = true;
       gateLeft.receiveShadow = true;
       altar.add(gateLeft);
 
-      const gateRight = new THREE.Mesh(new THREE.BoxGeometry(0.26, 1.12, 0.26), accentMaterial);
-      gateRight.position.set(0.58, BASE_HEIGHT + 1.28, -0.84);
+      const gateRight = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.92, 0.22), accentMaterial);
+      gateRight.position.set(0.46, BASE_HEIGHT + 1.06, -0.66);
       gateRight.castShadow = true;
       gateRight.receiveShadow = true;
       altar.add(gateRight);
 
-      const gateLintel = new THREE.Mesh(new THREE.BoxGeometry(1.32, 0.18, 0.28), terraceMaterial);
-      gateLintel.position.set(0, BASE_HEIGHT + 1.88, -0.84);
+      const gateLintel = new THREE.Mesh(new THREE.BoxGeometry(1.02, 0.14, 0.22), terraceMaterial);
+      gateLintel.position.set(0, BASE_HEIGHT + 1.58, -0.66);
       gateLintel.castShadow = true;
       gateLintel.receiveShadow = true;
       altar.add(gateLintel);
 
       const candleMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          uColor: { value: new THREE.Color(0xeadfc9) },
+          uColor: { value: new THREE.Color(0xf4e7d6) },
           uLightPos: { value: new THREE.Vector3(0, BASE_HEIGHT + 8, 0) },
           uGlow: { value: 0 },
           uTime: { value: 0 },
@@ -1718,14 +1716,14 @@
       });
 
       const waxPoolMaterial = new THREE.MeshStandardMaterial({
-        color: 0xe6dac2,
+        color: 0xf3e5d3,
         roughness: 0.96,
         metalness: 0,
         flatShading: true,
       });
 
       const wickMaterial = new THREE.MeshStandardMaterial({
-        color: 0x4f6a87,
+        color: 0x4c5166,
         roughness: 0.96,
         metalness: 0,
         flatShading: true,
@@ -1737,19 +1735,19 @@
         flatShading: true,
       });
       const caretakerBodyMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf7e7cf,
+        color: 0xf4eadc,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const caretakerCloakMaterial = new THREE.MeshStandardMaterial({
-        color: 0xc87457,
+        color: 0xd2655c,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const caretakerToolMaterial = new THREE.MeshStandardMaterial({
-        color: 0xe2b485,
+        color: 0xd9c29a,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
@@ -2821,24 +2819,24 @@
           return;
         }
 
-        seaScene.oceanSurfaceA.position.y = -1.34 + Math.sin(elapsed * 0.54) * 0.035;
-        seaScene.oceanSurfaceA.rotation.y = Math.PI * 0.08 + Math.sin(elapsed * 0.18) * 0.04;
+        seaScene.oceanSurfaceA.position.y = -1.3 + Math.sin(elapsed * 0.44) * 0.022;
+        seaScene.oceanSurfaceA.rotation.y = Math.PI * 0.08 + Math.sin(elapsed * 0.14) * 0.025;
         seaScene.oceanSurfaceA.scale.set(
-          1 + Math.sin(elapsed * 0.42) * 0.012,
+          1 + Math.sin(elapsed * 0.36) * 0.008,
           1,
-          1 + Math.cos(elapsed * 0.36) * 0.018
+          1 + Math.cos(elapsed * 0.28) * 0.012
         );
 
-        seaScene.oceanSurfaceB.position.y = -1.26 + Math.cos(elapsed * 0.62) * 0.028;
-        seaScene.oceanSurfaceB.rotation.y = Math.PI * 0.14 - Math.sin(elapsed * 0.16) * 0.03;
+        seaScene.oceanSurfaceB.position.y = -1.22 + Math.cos(elapsed * 0.48) * 0.018;
+        seaScene.oceanSurfaceB.rotation.y = Math.PI * 0.14 - Math.sin(elapsed * 0.12) * 0.022;
         seaScene.oceanSurfaceB.scale.set(
-          1 + Math.cos(elapsed * 0.34) * 0.014,
+          1 + Math.cos(elapsed * 0.26) * 0.008,
           1,
-          1 + Math.sin(elapsed * 0.28) * 0.014
+          1 + Math.sin(elapsed * 0.24) * 0.008
         );
 
-        seaScene.shoreline.material.opacity = 0.34 + Math.sin(elapsed * 0.9) * 0.06;
-        seaScene.outerFoam.material.opacity = 0.2 + Math.cos(elapsed * 0.74) * 0.04;
+        seaScene.shoreline.material.opacity = 0.2 + Math.sin(elapsed * 0.6) * 0.03;
+        seaScene.outerFoam.material.opacity = 0.12 + Math.cos(elapsed * 0.54) * 0.02;
       }
 
       function updateCaretaker(elapsed) {

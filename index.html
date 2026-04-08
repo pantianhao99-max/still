@@ -205,70 +205,69 @@
 
       body[data-view="experience"][data-scene="candle"] {
         background:
-          radial-gradient(circle at 50% 8%, rgba(255, 216, 162, 0.12), transparent 15%),
-          radial-gradient(circle at 22% 20%, rgba(150, 188, 197, 0.08), transparent 20%),
-          radial-gradient(circle at 84% 78%, rgba(62, 84, 118, 0.08), transparent 24%),
-          linear-gradient(180deg, #d0d4c9 0%, #89abb1 42%, #4d6d84 100%);
+          radial-gradient(circle at 50% 20%, rgba(255, 227, 178, 0.2), transparent 18%),
+          radial-gradient(circle at 50% 72%, rgba(225, 207, 184, 0.18), transparent 26%),
+          linear-gradient(180deg, #f6f2ea 0%, #f1ece3 58%, #ebe4d8 100%);
       }
 
       body[data-view="experience"][data-scene="candle"]::before {
         background:
-          radial-gradient(circle at 50% 34%, rgba(255, 234, 196, 0.1), transparent 22%),
-          radial-gradient(circle at 50% 82%, rgba(47, 66, 95, 0.16), transparent 24%);
-        opacity: 0.54;
+          radial-gradient(circle at 50% 42%, rgba(255, 236, 208, 0.18), transparent 22%),
+          radial-gradient(circle at 50% 84%, rgba(201, 180, 154, 0.1), transparent 22%);
+        opacity: 0.72;
       }
 
       body[data-view="experience"][data-scene="candle"]::after {
         background:
-          linear-gradient(90deg, transparent 0%, rgba(255, 244, 229, 0.05) 48%, transparent 100%),
-          linear-gradient(180deg, rgba(243, 252, 255, 0.04), transparent 22%);
-        opacity: 0.08;
+          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.24) 48%, transparent 100%),
+          linear-gradient(180deg, rgba(255, 248, 239, 0.2), transparent 26%);
+        opacity: 0.12;
       }
 
       body[data-view="experience"][data-scene="candle"] .timer,
       body[data-view="experience"][data-scene="candle"] .altar-mark strong,
       body[data-view="experience"][data-scene="candle"] .text-button {
-        color: #f5f8f8;
+        color: #8a7f72;
       }
 
       body[data-view="experience"][data-scene="candle"] .timer {
-        text-shadow: 0 12px 24px rgba(37, 58, 84, 0.18);
+        text-shadow: 0 10px 24px rgba(232, 214, 189, 0.48);
       }
 
       body[data-view="experience"][data-scene="candle"] .altar-mark,
       body[data-view="experience"][data-scene="candle"] .hint-chip,
       body[data-view="experience"][data-scene="candle"] .range-meta,
       body[data-view="experience"][data-scene="candle"] .ignite-label {
-        color: rgba(241, 247, 248, 0.78);
+        color: rgba(150, 136, 120, 0.8);
       }
 
       body[data-view="experience"][data-scene="candle"] .status-chip,
       body[data-view="experience"][data-scene="candle"] .control-dock,
       body[data-view="experience"][data-scene="candle"] .text-button {
-        border-color: rgba(255, 243, 223, 0.12);
+        border-color: rgba(194, 176, 156, 0.18);
         box-shadow:
-          0 10px 18px rgba(74, 103, 132, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.16);
+          0 14px 28px rgba(205, 187, 164, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.56);
       }
 
       body[data-view="experience"][data-scene="candle"] .status-chip {
-        color: rgba(244, 248, 249, 0.94);
+        color: rgba(141, 125, 108, 0.92);
         background:
-          linear-gradient(180deg, rgba(113, 138, 160, 0.64), rgba(84, 104, 128, 0.58)),
-          linear-gradient(90deg, transparent 0%, rgba(255, 245, 223, 0.12) 52%, transparent 100%);
+          linear-gradient(180deg, rgba(255, 249, 242, 0.92), rgba(242, 232, 220, 0.86)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.26) 52%, transparent 100%);
       }
 
       body[data-view="experience"][data-scene="candle"] .control-dock {
         background:
-          linear-gradient(180deg, rgba(104, 128, 147, 0.4), rgba(73, 93, 112, 0.34)),
-          linear-gradient(90deg, transparent 0%, rgba(255, 248, 232, 0.14) 52%, transparent 100%);
+          linear-gradient(180deg, rgba(255, 252, 247, 0.72), rgba(241, 232, 221, 0.58)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.26) 52%, transparent 100%);
       }
 
       body[data-view="experience"][data-scene="candle"] .text-button {
         background:
-          linear-gradient(180deg, rgba(88, 121, 151, 0.98), rgba(69, 95, 129, 0.94)),
-          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.12) 52%, transparent 100%);
-        color: rgba(244, 248, 249, 0.96);
+          linear-gradient(180deg, rgba(255, 253, 250, 0.96), rgba(241, 234, 225, 0.92)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.22) 52%, transparent 100%);
+        color: rgba(136, 123, 108, 0.96);
       }
 
       .press-ring {
@@ -1078,6 +1077,7 @@
     <script type="module">
       import * as THREE from "three";
       import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+      import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
       import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
       import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 
@@ -1152,28 +1152,28 @@
 
       const EXPERIENCE_ENVIRONMENTS = Object.freeze({
         candle: Object.freeze({
-          pageGradient: ["#355a72", "#79a4af", "#ddd7c4"],
-          topGlow: "rgba(255, 216, 164, 0.12)",
-          sideGlow: "rgba(167, 203, 208, 0.08)",
-          depthShadow: "rgba(43, 68, 96, 0.16)",
-          coreHalo: "rgba(255, 239, 205, 0.08)",
-          baseShadow: "rgba(37, 55, 80, 0.1)",
-          sheen: "rgba(255, 255, 255, 0.02)",
-          mist: "rgba(236, 244, 241, 0.018)",
-          sceneBackground: 0x80aab2,
-          fogColor: 0xbccfca,
-          fogNear: 24,
-          fogFar: 64,
-          floorColor: 0x64849a,
-          hemiSky: 0xf3e4c4,
-          hemiGround: 0x536b7f,
-          hemiIntensity: 0.4,
-          keyColor: 0xf9caa1,
-          keyIntensity: 0.08,
-          floorVisible: false,
-          exposure: 0.72,
-          stageBrightness: 0.88,
-          stageSaturation: 0.94,
+          pageGradient: ["#efe7dc", "#f5f0e8", "#fbfaf7"],
+          topGlow: "rgba(255, 214, 154, 0.18)",
+          sideGlow: "rgba(255, 245, 231, 0.18)",
+          depthShadow: "rgba(211, 191, 167, 0.12)",
+          coreHalo: "rgba(255, 231, 193, 0.12)",
+          baseShadow: "rgba(205, 182, 156, 0.08)",
+          sheen: "rgba(255, 255, 255, 0.1)",
+          mist: "rgba(255, 250, 242, 0.08)",
+          sceneBackground: 0xf6f2ea,
+          fogColor: 0xf2ece3,
+          fogNear: 16,
+          fogFar: 34,
+          floorColor: 0xf1ebe1,
+          hemiSky: 0xfffcf8,
+          hemiGround: 0xe8ddd0,
+          hemiIntensity: 0.92,
+          keyColor: 0xffe3bd,
+          keyIntensity: 0.46,
+          floorVisible: true,
+          exposure: 1.02,
+          stageBrightness: 1,
+          stageSaturation: 0.88,
         }),
         ice: Object.freeze({
           pageGradient: ["#72818f", "#a5b7c4", "#d9e4eb"],
@@ -1417,9 +1417,9 @@
       const renderPass = new RenderPass(scene, camera);
       const bloomPass = new UnrealBloomPass(
         new THREE.Vector2(window.innerWidth, window.innerHeight),
-        0.16,
-        0.28,
-        0.84
+        0.12,
+        0.18,
+        0.92
       );
 
       composer.addPass(renderPass);
@@ -1474,260 +1474,157 @@
       candleWorld.add(altar);
 
       const baseMaterial = new THREE.MeshStandardMaterial({
-        color: 0xcf9d7b,
-        roughness: 0.98,
+        color: 0xf8f3ec,
+        roughness: 0.96,
         metalness: 0,
-        flatShading: true,
+        flatShading: false,
       });
       const terraceMaterial = new THREE.MeshStandardMaterial({
-        color: 0xeee0c8,
-        roughness: 1,
+        color: 0xf4eee6,
+        roughness: 0.98,
         metalness: 0,
-        flatShading: true,
+        flatShading: false,
       });
       const accentMaterial = new THREE.MeshStandardMaterial({
-        color: 0x7a8faa,
+        color: 0xe7ddd0,
         roughness: 0.98,
         metalness: 0,
-        flatShading: true,
+        flatShading: false,
       });
       const bridgeMaterial = new THREE.MeshStandardMaterial({
-        color: 0xa6c3ba,
-        roughness: 1,
-        metalness: 0,
-        flatShading: true,
-      });
-      const islandRockMaterial = new THREE.MeshStandardMaterial({
-        color: 0x8f8798,
-        roughness: 1,
-        metalness: 0,
-        flatShading: true,
-      });
-      const islandTopMaterial = new THREE.MeshStandardMaterial({
-        color: 0xe1d9c2,
-        roughness: 1,
-        metalness: 0,
-        flatShading: true,
-      });
-      const oceanMaterial = new THREE.MeshStandardMaterial({
-        color: 0x7dbdc0,
-        roughness: 0.92,
-        metalness: 0,
-        flatShading: true,
-        transparent: true,
-        opacity: 0.8,
-      });
-      const oceanDeepMaterial = new THREE.MeshStandardMaterial({
-        color: 0x5b8091,
-        roughness: 1,
-        metalness: 0,
-        flatShading: true,
-        transparent: true,
-        opacity: 0.66,
-      });
-      const foamMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf5e5cf,
+        color: 0xf0e5d7,
         roughness: 0.98,
         metalness: 0,
-        flatShading: true,
+        flatShading: false,
+      });
+      const islandRockMaterial = new THREE.MeshStandardMaterial({
+        color: 0xdfd3c4,
+        roughness: 1,
+        metalness: 0,
+        flatShading: false,
+      });
+      const islandTopMaterial = new THREE.MeshStandardMaterial({
+        color: 0xfff9f3,
+        roughness: 1,
+        metalness: 0,
+        flatShading: false,
+      });
+      const oceanMaterial = new THREE.MeshStandardMaterial({
+        color: 0xf4e7d5,
+        roughness: 1,
+        metalness: 0,
+        flatShading: false,
         transparent: true,
         opacity: 0.24,
       });
-      const horizonMaterial = new THREE.MeshStandardMaterial({
-        color: 0x7993a0,
+      const oceanDeepMaterial = new THREE.MeshStandardMaterial({
+        color: 0xe8dacb,
         roughness: 1,
         metalness: 0,
-        flatShading: true,
+        flatShading: false,
         transparent: true,
-        opacity: 0.14,
+        opacity: 0.16,
       });
-      const focusHaloMaterial = new THREE.MeshBasicMaterial({
-        color: 0xf2caa0,
+      const foamMaterial = new THREE.MeshStandardMaterial({
+        color: 0xfff7ee,
+        roughness: 0.98,
+        metalness: 0,
+        flatShading: false,
+        transparent: true,
+        opacity: 0.28,
+      });
+      const horizonMaterial = new THREE.MeshStandardMaterial({
+        color: 0xf5eee4,
+        roughness: 1,
+        metalness: 0,
+        flatShading: false,
         transparent: true,
         opacity: 0.08,
       });
-
-      const oceanGroup = new THREE.Group();
-      candleWorld.add(oceanGroup);
-
-      const oceanBase = new THREE.Mesh(new THREE.CylinderGeometry(22.6, 24.2, 0.08, 6), oceanDeepMaterial);
-      oceanBase.position.y = -1.72;
-      oceanBase.receiveShadow = true;
-      oceanGroup.add(oceanBase);
-
-      const oceanSurfaceA = new THREE.Mesh(new THREE.CylinderGeometry(20.4, 21.6, 0.05, 6), oceanMaterial);
-      oceanSurfaceA.position.y = -1.48;
-      oceanSurfaceA.rotation.y = Math.PI * 0.08;
-      oceanGroup.add(oceanSurfaceA);
-
-      const oceanSurfaceB = new THREE.Mesh(new THREE.CylinderGeometry(18.8, 20.0, 0.04, 6), oceanMaterial);
-      oceanSurfaceB.position.y = -1.4;
-      oceanSurfaceB.rotation.y = Math.PI * 0.14;
-      oceanGroup.add(oceanSurfaceB);
-
-      const islandRock = new THREE.Mesh(new THREE.CylinderGeometry(4.08, 5.28, 1.18, 6), islandRockMaterial);
-      islandRock.position.set(0, -0.86, 0.22);
-      islandRock.castShadow = true;
-      islandRock.receiveShadow = true;
-      candleWorld.add(islandRock);
-
-      const islandTop = new THREE.Mesh(new THREE.CylinderGeometry(2.92, 3.46, 0.42, 6), islandTopMaterial);
-      islandTop.position.set(0, -0.3, 0.08);
-      islandTop.castShadow = true;
-      islandTop.receiveShadow = true;
-      candleWorld.add(islandTop);
-
-      const islandSpur = new THREE.Mesh(new THREE.BoxGeometry(1.94, 0.18, 0.92), islandTopMaterial);
-      islandSpur.position.set(-0.92, -0.18, 1.84);
-      islandSpur.rotation.y = Math.PI * 0.14;
-      islandSpur.castShadow = true;
-      islandSpur.receiveShadow = true;
-      candleWorld.add(islandSpur);
-
-      const shoreline = new THREE.Mesh(new THREE.TorusGeometry(3.72, 0.06, 4, 6), foamMaterial.clone());
-      shoreline.rotation.x = Math.PI / 2;
-      shoreline.rotation.z = Math.PI * 0.06;
-      shoreline.position.set(0, -1.16, 0.1);
-      candleWorld.add(shoreline);
-
-      const outerFoam = new THREE.Mesh(new THREE.TorusGeometry(4.84, 0.05, 4, 6), foamMaterial.clone());
-      outerFoam.rotation.x = Math.PI / 2;
-      outerFoam.rotation.z = -Math.PI * 0.03;
-      outerFoam.position.set(0, -1.28, -0.02);
-      outerFoam.scale.set(1.02, 0.92, 1);
-      candleWorld.add(outerFoam);
-
-      const seaScene = {
-        group: candleWorld,
-        oceanSurfaceA,
-        oceanSurfaceB,
-        shoreline,
-        outerFoam,
-      };
-
-      const horizonIslands = [
-        { x: -18.8, y: -2.04, z: -28.4, scale: [6.8, 0.12, 2.2], rot: -0.04 },
-        { x: 18.6, y: -2.1, z: -27.2, scale: [8.2, 0.14, 2.6], rot: 0.04 },
-        { x: 1.2, y: -2.18, z: -34.6, scale: [12.2, 0.09, 3.2], rot: 0.02 },
-      ];
-
-      horizonIslands.forEach((pose) => {
-        const island = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.6, 1, 6), horizonMaterial);
-        island.position.set(pose.x, pose.y, pose.z);
-        island.scale.set(pose.scale[0], pose.scale[1], pose.scale[2]);
-        island.rotation.y = pose.rot;
-        candleWorld.add(island);
+      const focusHaloMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffddb0,
+        transparent: true,
+        opacity: 0.14,
+      });
+      const windowFrameMaterial = new THREE.MeshStandardMaterial({
+        color: 0xf4e9db,
+        roughness: 0.96,
+        metalness: 0,
+        flatShading: false,
+      });
+      const windowGlowMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffe3ba,
+        transparent: true,
+        opacity: 0.9,
+      });
+      const figureSkinMaterial = new THREE.MeshStandardMaterial({
+        color: 0xf0d2bc,
+        roughness: 0.98,
+        metalness: 0,
+        flatShading: false,
+      });
+      const figureClothWarmMaterial = new THREE.MeshStandardMaterial({
+        color: 0xd88f6a,
+        roughness: 0.98,
+        metalness: 0,
+        flatShading: false,
+      });
+      const figureClothCoolMaterial = new THREE.MeshStandardMaterial({
+        color: 0x9aa6b4,
+        roughness: 0.98,
+        metalness: 0,
+        flatShading: false,
+      });
+      const figureClothCreamMaterial = new THREE.MeshStandardMaterial({
+        color: 0xd8ceb9,
+        roughness: 0.98,
+        metalness: 0,
+        flatShading: false,
+      });
+      const wickCoreMaterial = new THREE.MeshStandardMaterial({
+        color: 0x5b4137,
+        roughness: 1,
+        metalness: 0,
+        flatShading: false,
       });
 
-      const rockClusterPositions = [
-        { x: -2.48, y: -0.32, z: 1.68, scale: [0.18, 0.1, 0.14] },
-        { x: 2.36, y: -0.28, z: 1.38, scale: [0.16, 0.09, 0.12] },
-      ];
+      const stageShadow = new THREE.Mesh(
+        new THREE.CircleGeometry(3.2, 40),
+        new THREE.MeshBasicMaterial({ color: 0xd9cabc, transparent: true, opacity: 0.22 })
+      );
+      stageShadow.rotation.x = -Math.PI / 2;
+      stageShadow.position.y = 0.01;
+      stageShadow.scale.set(1.14, 1, 0.9);
+      candleWorld.add(stageShadow);
 
-      rockClusterPositions.forEach((pose) => {
-        const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(0.54, 0), islandRockMaterial);
-        rock.position.set(pose.x, pose.y, pose.z);
-        rock.scale.set(pose.scale[0], pose.scale[1], pose.scale[2]);
-        rock.rotation.set(0.1, pose.x * 0.18, -0.08);
-        rock.castShadow = true;
-        rock.receiveShadow = true;
-        candleWorld.add(rock);
-      });
+      const stageAura = new THREE.Mesh(
+        new THREE.CircleGeometry(2.08, 36),
+        new THREE.MeshBasicMaterial({ color: 0xffe0b7, transparent: true, opacity: 0.12 })
+      );
+      stageAura.rotation.x = -Math.PI / 2;
+      stageAura.position.y = 0.12;
+      altar.add(stageAura);
 
-      const base = new THREE.Mesh(createRoundedBaseGeometry(), baseMaterial);
+      const base = new THREE.Mesh(new RoundedBoxGeometry(3.18, 0.22, 3.18, 8, 0.22), terraceMaterial);
+      base.position.y = 0.11;
       base.castShadow = true;
       base.receiveShadow = true;
       altar.add(base);
-      altar.position.set(0.08, 0, 0.12);
-      altar.rotation.y = -Math.PI * 0.08;
 
-      const lowerTerrace = new THREE.Mesh(new THREE.CylinderGeometry(1.84, 2.18, 0.18, 6), terraceMaterial);
-      lowerTerrace.position.set(0, BASE_HEIGHT + 0.1, 0.12);
-      lowerTerrace.rotation.y = Math.PI / 6;
-      lowerTerrace.castShadow = true;
-      lowerTerrace.receiveShadow = true;
-      altar.add(lowerTerrace);
+      const plinth = new THREE.Mesh(new RoundedBoxGeometry(2.32, 0.12, 2.32, 8, 0.14), bridgeMaterial);
+      plinth.position.y = 0.28;
+      plinth.castShadow = true;
+      plinth.receiveShadow = true;
+      altar.add(plinth);
 
-      const upperTerrace = new THREE.Mesh(new THREE.CylinderGeometry(0.94, 1.18, 0.18, 6), bridgeMaterial);
-      upperTerrace.position.set(0, BASE_HEIGHT + 0.28, 0.02);
-      upperTerrace.rotation.y = Math.PI / 6;
-      upperTerrace.castShadow = true;
-      upperTerrace.receiveShadow = true;
-      altar.add(upperTerrace);
+      altar.position.set(0, 0, 0);
+      altar.rotation.y = Math.PI * 0.18;
 
-      const focusHalo = new THREE.Mesh(new THREE.CircleGeometry(0.62, 6), focusHaloMaterial);
-      focusHalo.rotation.x = -Math.PI / 2;
-      focusHalo.position.set(0, BASE_HEIGHT + 0.45, 0);
-      altar.add(focusHalo);
-
-      const bridgeDeck = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.1, 2.96), bridgeMaterial);
-      bridgeDeck.position.set(-0.06, BASE_HEIGHT + 0.42, 0.96);
-      bridgeDeck.castShadow = true;
-      bridgeDeck.receiveShadow = true;
-      altar.add(bridgeDeck);
-
-      const frontLanding = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.76, 0.12, 6), terraceMaterial);
-      frontLanding.position.set(-0.14, BASE_HEIGHT + 0.36, 2.34);
-      frontLanding.rotation.y = Math.PI / 6;
-      frontLanding.castShadow = true;
-      frontLanding.receiveShadow = true;
-      altar.add(frontLanding);
-
-      const stairLeft = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.1, 0.42), accentMaterial);
-      stairLeft.position.set(-0.5, BASE_HEIGHT + 0.14, 1.72);
-      stairLeft.rotation.y = Math.PI * 0.25;
-      stairLeft.castShadow = true;
-      stairLeft.receiveShadow = true;
-      altar.add(stairLeft);
-
-      const stairRight = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.1, 0.42), accentMaterial);
-      stairRight.position.set(0.38, BASE_HEIGHT + 0.14, 1.62);
-      stairRight.rotation.y = -Math.PI * 0.25;
-      stairRight.castShadow = true;
-      stairRight.receiveShadow = true;
-      altar.add(stairRight);
-
-      const gateLeft = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.68, 0.14), bridgeMaterial);
-      gateLeft.position.set(-0.28, BASE_HEIGHT + 0.74, -0.3);
-      gateLeft.castShadow = true;
-      gateLeft.receiveShadow = true;
-      altar.add(gateLeft);
-
-      const gateRight = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.68, 0.14), bridgeMaterial);
-      gateRight.position.set(0.28, BASE_HEIGHT + 0.74, -0.3);
-      gateRight.castShadow = true;
-      gateRight.receiveShadow = true;
-      altar.add(gateRight);
-
-      const gateLintel = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.1, 0.14), terraceMaterial);
-      gateLintel.position.set(0, BASE_HEIGHT + 1.08, -0.3);
-      gateLintel.castShadow = true;
-      gateLintel.receiveShadow = true;
-      altar.add(gateLintel);
-
-      const sideTower = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.92, 0.28), accentMaterial);
-      sideTower.position.set(-0.84, BASE_HEIGHT + 0.66, 0.12);
-      sideTower.castShadow = true;
-      sideTower.receiveShadow = true;
-      altar.add(sideTower);
-
-      const sideTowerCap = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.1, 0.42), terraceMaterial);
-      sideTowerCap.position.set(-0.84, BASE_HEIGHT + 1.18, 0.12);
-      sideTowerCap.castShadow = true;
-      sideTowerCap.receiveShadow = true;
-      altar.add(sideTowerCap);
-
-      const cantileverBeam = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.08, 0.14), accentMaterial);
-      cantileverBeam.position.set(-0.46, BASE_HEIGHT + 1.02, 0.12);
-      cantileverBeam.castShadow = true;
-      cantileverBeam.receiveShadow = true;
-      altar.add(cantileverBeam);
-
-      const rearMarker = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.62, 0.14), bridgeMaterial);
-      rearMarker.position.set(0.8, BASE_HEIGHT + 0.56, -0.42);
-      rearMarker.castShadow = true;
-      rearMarker.receiveShadow = true;
-      altar.add(rearMarker);
+      const seaScene = {
+        group: candleWorld,
+        stageAura,
+        stageShadow,
+      };
 
       const candleMaterial = new THREE.ShaderMaterial({
         uniforms: {
@@ -1791,45 +1688,22 @@
       });
 
       const waxPoolMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf3e5d3,
-        roughness: 0.96,
+        color: 0xfff7ee,
+        roughness: 0.9,
         metalness: 0,
-        flatShading: true,
+        flatShading: false,
       });
 
-      const wickMaterial = new THREE.MeshStandardMaterial({
-        color: 0x4c5166,
-        roughness: 0.96,
-        metalness: 0,
-        flatShading: true,
-      });
       const waxDripMaterial = new THREE.MeshStandardMaterial({
-        color: 0xefe2ca,
-        roughness: 0.94,
+        color: 0xfff3e3,
+        roughness: 0.9,
         metalness: 0,
-        flatShading: true,
-      });
-      const caretakerBodyMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf6ebd2,
-        roughness: 0.98,
-        metalness: 0,
-        flatShading: true,
-      });
-      const caretakerCloakMaterial = new THREE.MeshStandardMaterial({
-        color: 0xd45f57,
-        roughness: 1,
-        metalness: 0,
-        flatShading: true,
-      });
-      const caretakerToolMaterial = new THREE.MeshStandardMaterial({
-        color: 0xd9c29a,
-        roughness: 0.98,
-        metalness: 0,
-        flatShading: true,
+        flatShading: false,
       });
 
       const candleUnits = Array.from({ length: MAX_CANDLES }, (_, index) => createCandleUnit(index));
       candleUnits.forEach((unit) => altar.add(unit.group));
+      const interiorFigures = candleUnits.flatMap((unit) => unit.figures);
 
       const flameMaterial = new THREE.ShaderMaterial({
         uniforms: {
@@ -2069,16 +1943,12 @@
       flame.visible = false;
       altar.add(flame);
 
-      const flameGeometry = new THREE.PlaneGeometry(0.62, 1.28, 8, 12);
+      const flameGeometry = new THREE.PlaneGeometry(0.42, 0.96, 8, 12);
       const flamePlaneA = new THREE.Mesh(flameGeometry, flameMaterial);
       const flamePlaneB = new THREE.Mesh(flameGeometry, flameMaterial);
       flamePlaneB.rotation.y = Math.PI / 2;
       flame.add(flamePlaneA, flamePlaneB);
       flame.scale.set(0.01, 0.01, 0.01);
-
-      const caretaker = createCaretaker();
-      caretaker.group.visible = false;
-      candleWorld.add(caretaker.group);
 
       const clock = new THREE.Clock();
       const permutation = createPermutationTable(1337);
@@ -2167,7 +2037,7 @@
           flame.getWorldPosition(tempLightVector);
           tempLightVector.y += 0.25;
           flameLight.position.copy(tempLightVector);
-          flameLight.intensity = 0.38 + flicker * 0.16;
+          flameLight.intensity = 0.26 + flicker * 0.12;
           candleMaterial.uniforms.uLightPos.value.copy(flameLight.position);
 
           if (appState.remainingSeconds <= 0) {
@@ -2324,7 +2194,7 @@
         const aspect = window.innerWidth / window.innerHeight;
         const isMobile = window.innerWidth <= 640;
         const isTablet = window.innerWidth <= 900;
-        const frustum = isMobile ? 15.4 : isTablet ? 14.8 : 14.4;
+        const frustum = isMobile ? 9.2 : isTablet ? 10.4 : 11.2;
         let targetY = 3.9;
 
         camera.left = (-frustum * aspect) / 2;
@@ -2335,20 +2205,20 @@
         camera.far = 60;
 
         if (isMobile) {
-          root.position.set(0, -0.38, 0);
-          root.scale.setScalar(1.16);
-          camera.position.set(9.4, 7.8, 10.7);
-          targetY = 1.62;
+          root.position.set(0, -0.24, 0);
+          root.scale.setScalar(1);
+          camera.position.set(5.8, 5.2, 6.6);
+          targetY = 1.66;
         } else if (isTablet) {
-          root.position.set(0, -0.02, 0);
-          root.scale.setScalar(1.14);
-          camera.position.set(9.1, 7.9, 10.1);
-          targetY = 2.04;
+          root.position.set(0, -0.08, 0);
+          root.scale.setScalar(1);
+          camera.position.set(6.2, 5.4, 7.1);
+          targetY = 1.78;
         } else {
-          root.position.set(0, 0.28, 0);
-          root.scale.setScalar(1.16);
-          camera.position.set(8.7, 7.8, 9.2);
-          targetY = 2.24;
+          root.position.set(0, 0.02, 0);
+          root.scale.setScalar(1);
+          camera.position.set(6.5, 5.6, 7.5);
+          targetY = 1.94;
         }
 
         cameraRig.target.set(0, targetY, 0);
@@ -2671,9 +2541,9 @@
           { value: 1, duration: 0.6, ease: "power2.out" }
         );
         gsap.to(flame.scale, {
-          x: 0.88,
-          y: 1.08,
-          z: 0.88,
+          x: 0.74,
+          y: 0.9,
+          z: 0.74,
           duration: 0.82,
           ease: "expo.out",
         });
@@ -2805,32 +2675,43 @@
           unit.group.scale.setScalar(pose.scale);
 
           const segmentMinutes = segments[index] || 0;
-          const height = mapCandleMinutesToHeight(segmentMinutes);
-          unit.body.scale.set(1, height, 1);
-          unit.body.position.y = BASE_HEIGHT + 1.18 + height * 0.5;
+          const fill = clamp(segmentMinutes / CANDLE_CAPACITY_MINUTES, 0, 1);
+          const houseScaleY = THREE.MathUtils.lerp(0.42, 1, Math.pow(fill, 0.72));
 
-          unit.cap.position.y = BASE_HEIGHT + 1.18 + height + 0.14;
-          unit.wick.position.y = BASE_HEIGHT + 1.18 + height + 0.3;
-          unit.pool.position.y = BASE_HEIGHT + 0.96;
+          unit.house.position.y = 0.22;
+          unit.house.scale.set(1, houseScaleY, 1);
+          unit.body.scale.set(1, 1, 1);
+          unit.body.position.y = 0.81;
+          unit.roofLeft.position.set(-0.34, 1.78, 0);
+          unit.roofRight.position.set(0.34, 1.78, 0);
+          unit.roofCore.position.y = 1.98;
+          unit.chimney.position.set(0.02, 2.12, -0.04);
+          unit.wick.position.set(0.02, 2.24, 0);
           unit.cap.visible = segmentMinutes > 0.02;
           unit.wick.visible = segmentMinutes > 0.08;
-          unit.accent.visible = false;
-
+          unit.cap.position.set(0, 2.06, 0);
+          unit.cap.scale.setScalar(THREE.MathUtils.lerp(0.74, 1.02, fill));
+          unit.pool.position.y = 0.12;
           unit.pool.scale.set(
-            1 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.16,
+            THREE.MathUtils.lerp(0.92, 1.08, fill),
             1,
-            1 + Math.min(segmentMinutes / CANDLE_CAPACITY_MINUTES, 1) * 0.16
+            THREE.MathUtils.lerp(0.92, 1.08, fill)
           );
+          unit.accent.visible = false;
+          unit.innerLight.intensity = appState.state === STATES.BURNING ? 0.78 + fill * 0.28 : 0.46 + fill * 0.12;
+          unit.innerLight.distance = 3.2;
+          unit.windowGlow.forEach((pane) => {
+            pane.material.opacity = appState.state === STATES.BURNING ? 0.96 : 0.8;
+          });
         });
 
         const activeUnit = candleUnits[activeIndex];
         if (activeUnit && segments.length > 0) {
-          const scale = activeUnit.group.scale.x;
-          appState.flameAnchor.set(
-            activeUnit.group.position.x,
-            activeUnit.wick.position.y * scale + 0.22 * scale,
-            activeUnit.group.position.z
-          );
+          activeUnit.wick.updateWorldMatrix(true, false);
+          tempLightVector.setFromMatrixPosition(activeUnit.wick.matrixWorld);
+          altar.worldToLocal(tempLightVector);
+          appState.flameAnchor.copy(tempLightVector);
+          appState.flameAnchor.y += 0.16;
         }
 
         flame.position.copy(appState.flameAnchor);
@@ -2844,48 +2725,7 @@
       }
 
       function updateWaxDrips(elapsed) {
-        const burnRatio = appState.totalSeconds > 0
-          ? clamp(1 - appState.remainingSeconds / appState.totalSeconds, 0, 1)
-          : 0;
-        const shouldShow = appState.view === "experience" && (appState.state === STATES.BURNING || appState.state === STATES.FINISHED);
-
-        candleUnits.forEach((unit, index) => {
-          unit.drips.forEach((drip) => {
-            if (!shouldShow || !unit.group.visible) {
-              drip.group.visible = false;
-              return;
-            }
-
-            let intensity = 0;
-            if (appState.state === STATES.FINISHED) {
-              intensity = 0.64;
-            } else if (index === appState.activeCandleIndex) {
-              intensity = 0.16 + burnRatio * 1.05;
-            } else if (index < appState.activeCandleIndex) {
-              intensity = 0.42;
-            } else {
-              intensity = 0.08 + burnRatio * 0.08;
-            }
-
-            const extent = Math.max(0, intensity - drip.delay);
-            if (extent <= 0.015) {
-              drip.group.visible = false;
-              return;
-            }
-
-            const pulse = Math.sin(elapsed * drip.speed + drip.phase) * 0.04;
-            const length = 0.22 + extent * 0.62 + pulse;
-            const bead = 0.72 + extent * 0.54 + pulse * 0.4;
-            const bodyTop = unit.body.position.y + unit.body.scale.y * 0.5 - drip.topInset;
-
-            drip.group.visible = true;
-            drip.group.position.set(drip.x, bodyTop, drip.z);
-            drip.stem.scale.set(1, Math.max(0.08, length), 1);
-            drip.stem.position.y = -length * 0.2;
-            drip.drop.scale.setScalar(Math.max(0.4, bead));
-            drip.drop.position.y = -length * 0.42 - 0.05;
-          });
-        });
+        return;
       }
 
       function updateSeaScene(elapsed) {
@@ -2895,66 +2735,34 @@
           return;
         }
 
-        seaScene.oceanSurfaceA.position.y = -1.48 + Math.sin(elapsed * 0.44) * 0.012;
-        seaScene.oceanSurfaceA.rotation.y = Math.PI * 0.08 + Math.sin(elapsed * 0.14) * 0.025;
-        seaScene.oceanSurfaceA.scale.set(
-          1 + Math.sin(elapsed * 0.36) * 0.008,
-          1,
-          1 + Math.cos(elapsed * 0.28) * 0.012
-        );
-
-        seaScene.oceanSurfaceB.position.y = -1.4 + Math.cos(elapsed * 0.48) * 0.01;
-        seaScene.oceanSurfaceB.rotation.y = Math.PI * 0.14 - Math.sin(elapsed * 0.12) * 0.022;
-        seaScene.oceanSurfaceB.scale.set(
-          1 + Math.cos(elapsed * 0.26) * 0.008,
-          1,
-          1 + Math.sin(elapsed * 0.24) * 0.008
-        );
-
-        seaScene.shoreline.material.opacity = 0.1 + Math.sin(elapsed * 0.6) * 0.012;
-        seaScene.outerFoam.material.opacity = 0.06 + Math.cos(elapsed * 0.54) * 0.01;
+        seaScene.stageAura.scale.setScalar(1 + Math.sin(elapsed * 0.46) * 0.02);
+        seaScene.stageAura.material.opacity =
+          appState.state === STATES.BURNING ? 0.16 + Math.sin(elapsed * 1.4) * 0.02 : 0.1;
+        seaScene.stageShadow.material.opacity = 0.18 + Math.cos(elapsed * 0.32) * 0.02;
       }
 
       function updateCaretaker(elapsed) {
-        const active =
-          appState.view === "experience" &&
-          (appState.state === STATES.BURNING || appState.state === STATES.FINISHED);
-        caretaker.group.visible = active;
-        if (!active) {
+        if (appState.view !== "experience" || appState.selectedSceneId !== "candle") {
           return;
         }
+        const active = appState.state === STATES.BURNING || appState.state === STATES.FINISHED || appState.state === STATES.IDLE;
 
-        const route = caretaker.route;
-        const totalSegments = route.length;
-        const scaled = ((elapsed * 0.058) % 1) * totalSegments;
-        const segmentIndex = Math.floor(scaled) % totalSegments;
-        const nextIndex = (segmentIndex + 1) % totalSegments;
-        const localT = scaled - segmentIndex;
-        const easedT = localT * localT * (3 - 2 * localT);
-        const current = route[segmentIndex];
-        const next = route[nextIndex];
+        interiorFigures.forEach((figure) => {
+          figure.group.visible = active && figure.unit.group.visible;
+          if (!figure.group.visible) {
+            return;
+          }
 
-        caretaker.group.position.set(
-          THREE.MathUtils.lerp(current.x, next.x, easedT),
-          BASE_HEIGHT + 0.58 + Math.abs(Math.sin(elapsed * 5.8)) * 0.022,
-          THREE.MathUtils.lerp(current.z, next.z, easedT)
-        );
-
-        tempCaretakerVector.set(next.x - current.x, 0, next.z - current.z);
-        caretaker.group.rotation.y = Math.atan2(tempCaretakerVector.x, tempCaretakerVector.z);
-
-        const stride = Math.sin(elapsed * 5.6);
-        const choreBlend = Math.max(0, Math.sin(elapsed * 1.34 + 0.8)) * 0.72;
-
-        caretaker.body.rotation.z = stride * 0.04 + choreBlend * 0.08;
-        caretaker.head.rotation.y = Math.sin(elapsed * 1.6) * 0.18;
-        caretaker.armLeft.rotation.x = stride * 0.55;
-        caretaker.armRight.rotation.x = -stride * 0.3 + choreBlend * 0.9;
-        caretaker.armRight.rotation.z = -0.18 - choreBlend * 0.22;
-        caretaker.legLeft.rotation.x = -stride * 0.48;
-        caretaker.legRight.rotation.x = stride * 0.48;
-        caretaker.tool.rotation.z = 0.52 + choreBlend * 0.38;
-        caretaker.tool.rotation.x = Math.sin(elapsed * 3.2) * 0.08;
+          const sway = Math.sin(elapsed * figure.speed + figure.phase);
+          const breathe = Math.sin(elapsed * (figure.speed * 0.5) + figure.phase) * 0.02;
+          figure.group.position.y = figure.baseY + breathe;
+          figure.head.rotation.z = sway * 0.06;
+          figure.torso.rotation.z = figure.mode === "lean" ? sway * 0.08 : sway * 0.03;
+          figure.armLeft.rotation.x = figure.mode === "read" ? -0.82 + sway * 0.04 : -0.36 + sway * 0.1;
+          figure.armRight.rotation.x = figure.mode === "sit" ? -0.52 + sway * 0.04 : -0.26 - sway * 0.08;
+          figure.legLeft.rotation.x = figure.mode === "sit" ? -0.78 + sway * 0.05 : -0.18;
+          figure.legRight.rotation.x = figure.mode === "sit" ? -0.62 - sway * 0.05 : -0.08;
+        });
       }
 
       function setPressProgress(progress) {
@@ -3020,21 +2828,21 @@
 
       function getCandleClusterLayout(count) {
         const layouts = {
-          1: [{ x: 0, z: 0.04, scale: 0.94, rotation: 0 }],
+          1: [{ x: 0, z: 0.02, scale: 0.98, rotation: 0 }],
           2: [
-            { x: -0.46, z: 0.08, scale: 0.84, rotation: -0.03 },
-            { x: 0.46, z: 0, scale: 0.84, rotation: 0.03 },
+            { x: -0.92, z: 0.04, scale: 0.66, rotation: -0.04 },
+            { x: 0.92, z: 0.02, scale: 0.66, rotation: 0.04 },
           ],
           3: [
-            { x: -0.62, z: 0.08, scale: 0.78, rotation: -0.04 },
-            { x: 0, z: 0.02, scale: 0.88, rotation: 0 },
-            { x: 0.62, z: -0.02, scale: 0.78, rotation: 0.04 },
+            { x: -1.08, z: 0.12, scale: 0.56, rotation: -0.05 },
+            { x: 0, z: -0.04, scale: 0.74, rotation: 0 },
+            { x: 1.08, z: 0.08, scale: 0.56, rotation: 0.05 },
           ],
           4: [
-            { x: -0.82, z: 0.1, scale: 0.72, rotation: -0.05 },
-            { x: -0.26, z: 0.02, scale: 0.82, rotation: -0.02 },
-            { x: 0.26, z: 0.02, scale: 0.82, rotation: 0.02 },
-            { x: 0.82, z: 0.1, scale: 0.72, rotation: 0.05 },
+            { x: -1.22, z: 0.14, scale: 0.48, rotation: -0.06 },
+            { x: -0.42, z: -0.02, scale: 0.62, rotation: -0.02 },
+            { x: 0.42, z: -0.02, scale: 0.62, rotation: 0.02 },
+            { x: 1.22, z: 0.14, scale: 0.48, rotation: 0.06 },
           ],
         };
 
@@ -3043,164 +2851,217 @@
 
       function createCandleUnit(index) {
         const group = new THREE.Group();
-        const radius = 0.34 + (index % 2 === 0 ? 0.014 : -0.008);
+        const house = new THREE.Group();
+        group.add(house);
 
-        const pool = new THREE.Mesh(new THREE.CylinderGeometry(radius * 1.06, radius * 1.16, 0.12, 4), waxPoolMaterial);
-        pool.rotation.y = Math.PI * 0.25;
+        const pool = new THREE.Mesh(new RoundedBoxGeometry(1.9, 0.1, 1.9, 6, 0.16), waxPoolMaterial);
+        pool.position.y = 0.12;
         pool.castShadow = true;
         pool.receiveShadow = true;
-        group.add(pool);
+        house.add(pool);
 
-        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.6, radius * 0.72, 1, 4, 1, false), candleMaterial);
-        body.rotation.y = Math.PI * 0.25;
+        const body = new THREE.Mesh(new RoundedBoxGeometry(1.56, 1.62, 1.56, 8, 0.22), candleMaterial);
+        body.position.y = 0.81;
         body.castShadow = true;
         body.receiveShadow = true;
-        group.add(body);
+        house.add(body);
 
-        const cap = new THREE.Mesh(new THREE.ConeGeometry(radius * 0.4, 0.18, 4), candleMaterial);
-        cap.rotation.y = Math.PI * 0.25;
-        cap.castShadow = true;
-        cap.receiveShadow = true;
-        group.add(cap);
+        const roofLeft = new THREE.Mesh(new THREE.BoxGeometry(0.96, 0.18, 1.68), candleMaterial);
+        roofLeft.position.set(-0.34, 1.78, 0);
+        roofLeft.rotation.z = Math.PI * 0.25;
+        roofLeft.castShadow = true;
+        roofLeft.receiveShadow = true;
+        house.add(roofLeft);
 
-        const wick = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.13, 0.035), wickMaterial);
+        const roofRight = new THREE.Mesh(new THREE.BoxGeometry(0.96, 0.18, 1.68), candleMaterial);
+        roofRight.position.set(0.34, 1.78, 0);
+        roofRight.rotation.z = -Math.PI * 0.25;
+        roofRight.castShadow = true;
+        roofRight.receiveShadow = true;
+        house.add(roofRight);
+
+        const roofCore = new THREE.Mesh(new RoundedBoxGeometry(0.22, 0.16, 1.58, 4, 0.06), candleMaterial);
+        roofCore.position.y = 1.98;
+        roofCore.castShadow = true;
+        roofCore.receiveShadow = true;
+        house.add(roofCore);
+
+        const chimney = new THREE.Mesh(new RoundedBoxGeometry(0.14, 0.26, 0.14, 4, 0.04), windowFrameMaterial);
+        chimney.position.set(0.02, 2.12, -0.04);
+        chimney.castShadow = true;
+        chimney.receiveShadow = true;
+        house.add(chimney);
+
+        const wick = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.2, 0.045), wickCoreMaterial);
+        wick.position.y = 2.24;
         wick.castShadow = true;
-        group.add(wick);
+        house.add(wick);
 
-        const accent = new THREE.Mesh(new THREE.BoxGeometry(radius * 0.54, radius * 0.18, radius * 0.54), accentMaterial);
-        accent.castShadow = true;
-        accent.receiveShadow = true;
-        accent.rotation.y = Math.PI * 0.25;
-        group.add(accent);
+        const cap = new THREE.Mesh(
+          new THREE.OctahedronGeometry(0.1, 0),
+          new THREE.MeshBasicMaterial({ color: 0xffddb0, transparent: true, opacity: 0.18 })
+        );
+        cap.position.y = 2.06;
+        house.add(cap);
 
-        const dripSeeds = [
-          { x: radius * 0.62, z: radius * 0.18, delay: 0.02, phase: 0.4, speed: 2.6, topInset: 0.12 },
-          { x: -radius * 0.56, z: -radius * 0.12, delay: 0.18, phase: 1.6, speed: 2.1, topInset: 0.24 },
-          { x: radius * 0.18, z: -radius * 0.6, delay: 0.3, phase: 2.4, speed: 2.8, topInset: 0.2 },
+        const accent = new THREE.Mesh(new RoundedBoxGeometry(0.3, 0.06, 0.64, 4, 0.04), accentMaterial);
+        accent.position.set(0, 0.22, 0);
+        house.add(accent);
+
+        const innerLight = new THREE.PointLight(0xffd8a8, 0.58, 3.2, 2.4);
+        innerLight.position.set(0, 0.96, 0);
+        house.add(innerLight);
+
+        const figures = [];
+        const windowGlow = [];
+
+        const windowSpecs = [
+          { position: [-0.34, 0.78, 0.8], rotationY: 0, mode: "read", cloth: figureClothCoolMaterial },
+          { position: [0.26, 0.8, 0.8], rotationY: 0, mode: "sit", cloth: figureClothCreamMaterial, sill: true },
+          { position: [0.8, 0.78, -0.32], rotationY: -Math.PI / 2, mode: "lean", cloth: figureClothWarmMaterial },
+          { position: [0.8, 0.8, 0.3], rotationY: -Math.PI / 2, mode: "read", cloth: figureClothCoolMaterial },
         ];
-        const drips = dripSeeds.map((seed) => {
-          const dripGroup = new THREE.Group();
-          dripGroup.visible = false;
 
-          const stem = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.08, radius * 0.05, 0.32, 5), waxDripMaterial);
-          stem.castShadow = true;
-          stem.receiveShadow = true;
-          dripGroup.add(stem);
-
-          const drop = new THREE.Mesh(new THREE.OctahedronGeometry(radius * 0.13, 0), waxDripMaterial);
-          drop.castShadow = true;
-          drop.receiveShadow = true;
-          dripGroup.add(drop);
-
-          group.add(dripGroup);
-
-          return {
-            group: dripGroup,
-            stem,
-            drop,
-            x: seed.x,
-            z: seed.z,
-            delay: seed.delay,
-            phase: seed.phase,
-            speed: seed.speed,
-            topInset: seed.topInset,
-          };
+        windowSpecs.forEach((spec) => {
+          const windowUnit = createHouseWindow(spec.mode, spec.cloth, spec.sill);
+          windowUnit.group.position.set(spec.position[0], spec.position[1], spec.position[2]);
+          windowUnit.group.rotation.y = spec.rotationY;
+          house.add(windowUnit.group);
+          windowGlow.push(windowUnit.glow);
+          windowUnit.figure.unit = { group };
+          figures.push(windowUnit.figure);
         });
 
-        return { group, pool, body, cap, wick, accent, drips };
+        const attic = new THREE.Mesh(new RoundedBoxGeometry(0.22, 0.22, 0.06, 4, 0.04), windowFrameMaterial);
+        attic.position.set(-0.34, 1.34, 0.8);
+        house.add(attic);
+        const atticGlow = new THREE.Mesh(
+          new RoundedBoxGeometry(0.16, 0.16, 0.02, 4, 0.03),
+          windowGlowMaterial.clone()
+        );
+        atticGlow.position.set(-0.34, 1.34, 0.83);
+        house.add(atticGlow);
+        windowGlow.push(atticGlow);
+
+        return {
+          group,
+          house,
+          pool,
+          body,
+          roofLeft,
+          roofRight,
+          roofCore,
+          chimney,
+          cap,
+          wick,
+          accent,
+          innerLight,
+          windowGlow,
+          figures,
+          drips: [],
+        };
+      }
+
+      function createHouseWindow(mode, clothMaterial, addSill = false) {
+        const group = new THREE.Group();
+
+        const recess = new THREE.Mesh(new RoundedBoxGeometry(0.5, 0.66, 0.14, 4, 0.08), bridgeMaterial);
+        recess.position.z = 0.02;
+        group.add(recess);
+
+        const glow = new THREE.Mesh(
+          new RoundedBoxGeometry(0.38, 0.54, 0.02, 4, 0.06),
+          windowGlowMaterial.clone()
+        );
+        glow.position.set(0, 0, 0.06);
+        group.add(glow);
+
+        if (addSill) {
+          const sill = new THREE.Mesh(new RoundedBoxGeometry(0.46, 0.08, 0.18, 4, 0.04), windowFrameMaterial);
+          sill.position.set(0, -0.26, 0.12);
+          sill.castShadow = true;
+          sill.receiveShadow = true;
+          group.add(sill);
+        }
+
+        const figure = createMiniFigure(mode, clothMaterial);
+        figure.group.position.set(0, -0.06, 0.04);
+        figure.baseY = figure.group.position.y;
+        group.add(figure.group);
+
+        return { group, glow, figure };
+      }
+
+      function createMiniFigure(mode, clothMaterial) {
+        const group = new THREE.Group();
+        const torso = new THREE.Mesh(new RoundedBoxGeometry(0.16, 0.22, 0.12, 4, 0.03), clothMaterial);
+        torso.position.y = 0.16;
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), figureSkinMaterial);
+        head.position.y = 0.34;
+
+        const armLeft = new THREE.Group();
+        armLeft.position.set(-0.08, 0.2, 0);
+        const armLeftMesh = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.16, 0.05), clothMaterial);
+        armLeftMesh.position.y = -0.08;
+        armLeft.add(armLeftMesh);
+
+        const armRight = new THREE.Group();
+        armRight.position.set(0.08, 0.2, 0);
+        const armRightMesh = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.16, 0.05), clothMaterial);
+        armRightMesh.position.y = -0.08;
+        armRight.add(armRightMesh);
+
+        const legLeft = new THREE.Group();
+        legLeft.position.set(-0.04, 0.04, 0);
+        const legLeftMesh = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.18, 0.05), clothMaterial);
+        legLeftMesh.position.y = -0.1;
+        legLeft.add(legLeftMesh);
+
+        const legRight = new THREE.Group();
+        legRight.position.set(0.04, 0.04, 0);
+        const legRightMesh = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.18, 0.05), clothMaterial);
+        legRightMesh.position.y = -0.1;
+        legRight.add(legRightMesh);
+
+        group.add(torso, head, armLeft, armRight, legLeft, legRight);
+
+        if (mode === "sit") {
+          armLeft.rotation.x = -0.42;
+          armRight.rotation.x = -0.36;
+          legLeft.rotation.x = -0.76;
+          legRight.rotation.x = -0.68;
+        } else if (mode === "read") {
+          const book = new THREE.Mesh(new RoundedBoxGeometry(0.14, 0.05, 0.1, 4, 0.02), accentMaterial);
+          book.position.set(0.02, 0.1, 0.08);
+          book.rotation.x = -0.5;
+          group.add(book);
+          armLeft.rotation.x = -0.74;
+          armRight.rotation.x = -0.58;
+        } else if (mode === "lean") {
+          torso.rotation.z = -0.18;
+          head.position.x = -0.02;
+          armLeft.rotation.x = -0.2;
+          armRight.rotation.x = 0.18;
+        }
+
+        return {
+          group,
+          head,
+          torso,
+          armLeft,
+          armRight,
+          legLeft,
+          legRight,
+          baseY: group.position.y,
+          mode,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.9 + Math.random() * 0.5,
+          unit: null,
+        };
       }
 
       function createCaretaker() {
-        const group = new THREE.Group();
-        group.scale.setScalar(0.78);
-
-        const body = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.58, 0.3), caretakerBodyMaterial);
-        body.position.y = 0.46;
-        body.castShadow = true;
-        body.receiveShadow = true;
-        group.add(body);
-
-        const cloak = new THREE.Mesh(new THREE.ConeGeometry(0.34, 0.78, 4), caretakerCloakMaterial);
-        cloak.position.y = 0.34;
-        cloak.rotation.y = Math.PI * 0.25;
-        cloak.castShadow = true;
-        cloak.receiveShadow = true;
-        group.add(cloak);
-
-        const head = new THREE.Mesh(new THREE.OctahedronGeometry(0.17, 0), caretakerBodyMaterial);
-        head.position.y = 0.88;
-        head.castShadow = true;
-        head.receiveShadow = true;
-        group.add(head);
-
-        const armLeft = new THREE.Group();
-        armLeft.position.set(-0.18, 0.6, 0);
-        const armLeftMesh = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.42, 0.1), caretakerBodyMaterial);
-        armLeftMesh.position.y = -0.18;
-        armLeftMesh.castShadow = true;
-        armLeftMesh.receiveShadow = true;
-        armLeft.add(armLeftMesh);
-        group.add(armLeft);
-
-        const armRight = new THREE.Group();
-        armRight.position.set(0.18, 0.6, 0);
-        const armRightMesh = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.42, 0.1), caretakerBodyMaterial);
-        armRightMesh.position.y = -0.18;
-        armRightMesh.castShadow = true;
-        armRightMesh.receiveShadow = true;
-        armRight.add(armRightMesh);
-        group.add(armRight);
-
-        const legLeft = new THREE.Group();
-        legLeft.position.set(-0.09, 0.22, 0);
-        const legLeftMesh = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.36, 0.11), caretakerCloakMaterial);
-        legLeftMesh.position.y = -0.14;
-        legLeftMesh.castShadow = true;
-        legLeftMesh.receiveShadow = true;
-        legLeft.add(legLeftMesh);
-        group.add(legLeft);
-
-        const legRight = new THREE.Group();
-        legRight.position.set(0.09, 0.22, 0);
-        const legRightMesh = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.36, 0.11), caretakerCloakMaterial);
-        legRightMesh.position.y = -0.14;
-        legRightMesh.castShadow = true;
-        legRightMesh.receiveShadow = true;
-        legRight.add(legRightMesh);
-        group.add(legRight);
-
-        const tool = new THREE.Group();
-        tool.position.set(0.22, 0.34, 0.02);
-        const toolPole = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.76, 0.05), caretakerToolMaterial);
-        toolPole.position.y = -0.18;
-        toolPole.castShadow = true;
-        toolPole.receiveShadow = true;
-        tool.add(toolPole);
-        const toolHead = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.08, 0.12), accentMaterial);
-        toolHead.position.set(0.06, -0.54, 0);
-        toolHead.castShadow = true;
-        toolHead.receiveShadow = true;
-        tool.add(toolHead);
-        group.add(tool);
-
-        const shadow = new THREE.Mesh(
-          new THREE.CircleGeometry(0.36, 10),
-          new THREE.MeshBasicMaterial({ color: 0x183149, transparent: true, opacity: 0.22 })
-        );
-        shadow.rotation.x = -Math.PI / 2;
-        shadow.position.y = 0.01;
-        group.add(shadow);
-
-        const route = [
-          { x: -0.86, z: 3.28 },
-          { x: 0.82, z: 3.28 },
-          { x: 0.76, z: 2.56 },
-          { x: 0.22, z: 1.92 },
-          { x: -0.52, z: 1.98 },
-          { x: -0.9, z: 2.6 },
-        ];
-
-        return { group, body, head, armLeft, armRight, legLeft, legRight, tool, route };
+        return { group: new THREE.Group(), route: [] };
       }
 
       function createRoundedBaseGeometry() {

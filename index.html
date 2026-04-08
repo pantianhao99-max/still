@@ -1622,6 +1622,30 @@
         metalness: 0,
         flatShading: true,
       });
+      const waxDripMaterial = new THREE.MeshStandardMaterial({
+        color: 0xefe2ca,
+        roughness: 0.94,
+        metalness: 0,
+        flatShading: true,
+      });
+      const caretakerBodyMaterial = new THREE.MeshStandardMaterial({
+        color: 0xf0dbc1,
+        roughness: 0.98,
+        metalness: 0,
+        flatShading: true,
+      });
+      const caretakerCloakMaterial = new THREE.MeshStandardMaterial({
+        color: 0x5d7387,
+        roughness: 1,
+        metalness: 0,
+        flatShading: true,
+      });
+      const caretakerToolMaterial = new THREE.MeshStandardMaterial({
+        color: 0xc39a74,
+        roughness: 0.98,
+        metalness: 0,
+        flatShading: true,
+      });
 
       const candleUnits = Array.from({ length: MAX_CANDLES }, (_, index) => createCandleUnit(index));
       candleUnits.forEach((unit) => altar.add(unit.group));
@@ -1871,10 +1895,15 @@
       flame.add(flamePlaneA, flamePlaneB);
       flame.scale.set(0.01, 0.01, 0.01);
 
+      const caretaker = createCaretaker();
+      caretaker.group.visible = false;
+      altar.add(caretaker.group);
+
       const clock = new THREE.Clock();
       const permutation = createPermutationTable(1337);
       const tempLightVector = new THREE.Vector3();
       const tempCameraVector = new THREE.Vector3();
+      const tempCaretakerVector = new THREE.Vector3();
 
       updateCamera();
       renderSceneCards();
@@ -1935,6 +1964,8 @@
         candleMaterial.uniforms.uGlow.value = glow;
         flameMaterial.uniforms.uTime.value = elapsed;
         flameMaterial.uniforms.uFlicker.value = 0.68 + flicker * 0.32;
+        updateWaxDrips(elapsed);
+        updateCaretaker(elapsed);
 
         if (appState.state === STATES.BURNING) {
           const elapsedBurn = (performance.now() - appState.burningStartedAt) / 1000;
@@ -2629,6 +2660,91 @@
         }
       }
 
+      function updateWaxDrips(elapsed) {
+        const burnRatio = appState.totalSeconds > 0
+          ? clamp(1 - appState.remainingSeconds / appState.totalSeconds, 0, 1)
+          : 0;
+        const shouldShow = appState.view === "experience" && (appState.state === STATES.BURNING || appState.state === STATES.FINISHED);
+
+        candleUnits.forEach((unit, index) => {
+          unit.drips.forEach((drip) => {
+            if (!shouldShow || !unit.group.visible) {
+              drip.group.visible = false;
+              return;
+            }
+
+            let intensity = 0;
+            if (appState.state === STATES.FINISHED) {
+              intensity = 0.64;
+            } else if (index === appState.activeCandleIndex) {
+              intensity = 0.16 + burnRatio * 1.05;
+            } else if (index < appState.activeCandleIndex) {
+              intensity = 0.42;
+            } else {
+              intensity = 0.08 + burnRatio * 0.08;
+            }
+
+            const extent = Math.max(0, intensity - drip.delay);
+            if (extent <= 0.015) {
+              drip.group.visible = false;
+              return;
+            }
+
+            const pulse = Math.sin(elapsed * drip.speed + drip.phase) * 0.04;
+            const length = 0.22 + extent * 0.62 + pulse;
+            const bead = 0.72 + extent * 0.54 + pulse * 0.4;
+            const bodyTop = unit.body.position.y + unit.body.scale.y * 0.5 - drip.topInset;
+
+            drip.group.visible = true;
+            drip.group.position.set(drip.x, bodyTop, drip.z);
+            drip.stem.scale.set(1, Math.max(0.08, length), 1);
+            drip.stem.position.y = -length * 0.2;
+            drip.drop.scale.setScalar(Math.max(0.4, bead));
+            drip.drop.position.y = -length * 0.42 - 0.05;
+          });
+        });
+      }
+
+      function updateCaretaker(elapsed) {
+        const active = appState.view === "experience" && appState.state === STATES.BURNING;
+        caretaker.group.visible = active;
+        if (!active) {
+          return;
+        }
+
+        const route = caretaker.route;
+        const totalSegments = route.length;
+        const scaled = ((elapsed * 0.058) % 1) * totalSegments;
+        const segmentIndex = Math.floor(scaled) % totalSegments;
+        const nextIndex = (segmentIndex + 1) % totalSegments;
+        const localT = scaled - segmentIndex;
+        const easedT = localT * localT * (3 - 2 * localT);
+        const current = route[segmentIndex];
+        const next = route[nextIndex];
+
+        caretaker.group.position.set(
+          THREE.MathUtils.lerp(current.x, next.x, easedT),
+          BASE_HEIGHT + 0.62 + Math.abs(Math.sin(elapsed * 5.8)) * 0.028,
+          THREE.MathUtils.lerp(current.z, next.z, easedT)
+        );
+
+        tempCaretakerVector.set(next.x - current.x, 0, next.z - current.z);
+        caretaker.group.rotation.y = Math.atan2(tempCaretakerVector.x, tempCaretakerVector.z);
+
+        const stride = Math.sin(elapsed * 5.6);
+        const choreBlend = Math.max(0, Math.sin(elapsed * 1.34 + 0.8)) * 0.72;
+
+        caretaker.body.rotation.z = stride * 0.04 + choreBlend * 0.08;
+        caretaker.head.rotation.y = Math.sin(elapsed * 1.6) * 0.18;
+        caretaker.armLeft.rotation.x = stride * 0.55;
+        caretaker.armRight.rotation.x = -stride * 0.3 + choreBlend * 0.9;
+        caretaker.armRight.rotation.z = -0.18 - choreBlend * 0.22;
+        caretaker.legLeft.rotation.x = -stride * 0.48;
+        caretaker.legRight.rotation.x = stride * 0.48;
+        caretaker.tool.rotation.z = 0.52 + choreBlend * 0.38;
+        caretaker.tool.rotation.x = Math.sin(elapsed * 3.2) * 0.08;
+      }
+
       function setPressProgress(progress) {
         const circumference = 339.292;
         pressRingProgressEl.style.strokeDashoffset = `${circumference * (1 - progress)}`;
@@ -2742,7 +2858,134 @@
         accent.rotation.y = Math.PI * 0.25;
         group.add(accent);
 
-        return { group, pool, body, cap, wick, accent };
+        const dripSeeds = [
+          { x: radius * 0.62, z: radius * 0.18, delay: 0.02, phase: 0.4, speed: 2.6, topInset: 0.12 },
+          { x: -radius * 0.56, z: -radius * 0.12, delay: 0.18, phase: 1.6, speed: 2.1, topInset: 0.24 },
+          { x: radius * 0.18, z: -radius * 0.6, delay: 0.3, phase: 2.4, speed: 2.8, topInset: 0.2 },
+        ];
+        const drips = dripSeeds.map((seed) => {
+          const dripGroup = new THREE.Group();
+          dripGroup.visible = false;
+
+          const stem = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.08, radius * 0.05, 0.32, 5), waxDripMaterial);
+          stem.castShadow = true;
+          stem.receiveShadow = true;
+          dripGroup.add(stem);
+
+          const drop = new THREE.Mesh(new THREE.OctahedronGeometry(radius * 0.13, 0), waxDripMaterial);
+          drop.castShadow = true;
+          drop.receiveShadow = true;
+          dripGroup.add(drop);
+
+          group.add(dripGroup);
+
+          return {
+            group: dripGroup,
+            stem,
+            drop,
+            x: seed.x,
+            z: seed.z,
+            delay: seed.delay,
+            phase: seed.phase,
+            speed: seed.speed,
+            topInset: seed.topInset,
+          };
+        });
+
+        return { group, pool, body, cap, wick, accent, drips };
+      }
+
+      function createCaretaker() {
+        const group = new THREE.Group();
+        group.scale.setScalar(0.46);
+
+        const body = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.58, 0.3), caretakerBodyMaterial);
+        body.position.y = 0.46;
+        body.castShadow = true;
+        body.receiveShadow = true;
+        group.add(body);
+
+        const cloak = new THREE.Mesh(new THREE.ConeGeometry(0.34, 0.78, 4), caretakerCloakMaterial);
+        cloak.position.y = 0.34;
+        cloak.rotation.y = Math.PI * 0.25;
+        cloak.castShadow = true;
+        cloak.receiveShadow = true;
+        group.add(cloak);
+
+        const head = new THREE.Mesh(new THREE.OctahedronGeometry(0.17, 0), caretakerBodyMaterial);
+        head.position.y = 0.88;
+        head.castShadow = true;
+        head.receiveShadow = true;
+        group.add(head);
+
+        const armLeft = new THREE.Group();
+        armLeft.position.set(-0.18, 0.6, 0);
+        const armLeftMesh = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.42, 0.1), caretakerBodyMaterial);
+        armLeftMesh.position.y = -0.18;
+        armLeftMesh.castShadow = true;
+        armLeftMesh.receiveShadow = true;
+        armLeft.add(armLeftMesh);
+        group.add(armLeft);
+
+        const armRight = new THREE.Group();
+        armRight.position.set(0.18, 0.6, 0);
+        const armRightMesh = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.42, 0.1), caretakerBodyMaterial);
+        armRightMesh.position.y = -0.18;
+        armRightMesh.castShadow = true;
+        armRightMesh.receiveShadow = true;
+        armRight.add(armRightMesh);
+        group.add(armRight);
+
+        const legLeft = new THREE.Group();
+        legLeft.position.set(-0.09, 0.22, 0);
+        const legLeftMesh = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.36, 0.11), caretakerCloakMaterial);
+        legLeftMesh.position.y = -0.14;
+        legLeftMesh.castShadow = true;
+        legLeftMesh.receiveShadow = true;
+        legLeft.add(legLeftMesh);
+        group.add(legLeft);
+
+        const legRight = new THREE.Group();
+        legRight.position.set(0.09, 0.22, 0);
+        const legRightMesh = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.36, 0.11), caretakerCloakMaterial);
+        legRightMesh.position.y = -0.14;
+        legRightMesh.castShadow = true;
+        legRightMesh.receiveShadow = true;
+        legRight.add(legRightMesh);
+        group.add(legRight);
+
+        const tool = new THREE.Group();
+        tool.position.set(0.22, 0.34, 0.02);
+        const toolPole = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.76, 0.05), caretakerToolMaterial);
+        toolPole.position.y = -0.18;
+        toolPole.castShadow = true;
+        toolPole.receiveShadow = true;
+        tool.add(toolPole);
+        const toolHead = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.08, 0.12), accentMaterial);
+        toolHead.position.set(0.06, -0.54, 0);
+        toolHead.castShadow = true;
+        toolHead.receiveShadow = true;
+        tool.add(toolHead);
+        group.add(tool);
+
+        const shadow = new THREE.Mesh(
+          new THREE.CircleGeometry(0.3, 10),
+          new THREE.MeshBasicMaterial({ color: 0x26384a, transparent: true, opacity: 0.18 })
+        );
+        shadow.rotation.x = -Math.PI / 2;
+        shadow.position.y = 0.01;
+        group.add(shadow);
+
+        const route = [
+          { x: -1.48, z: 1.12 },
+          { x: 1.22, z: 1.04 },
+          { x: 1.44, z: -0.18 },
+          { x: 0.64, z: -1.18 },
+          { x: -0.74, z: -1.12 },
+          { x: -1.36, z: -0.2 },
+        ];
+
+        return { group, body, head, armLeft, armRight, legLeft, legRight, tool, route };
       }
 
       function createRoundedBaseGeometry() {

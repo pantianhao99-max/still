@@ -1465,21 +1465,25 @@
         color: 0xe9a977,
         roughness: 0.98,
         metalness: 0,
+        flatShading: true,
       });
       const terraceMaterial = new THREE.MeshStandardMaterial({
         color: 0xf3ecdb,
         roughness: 1,
         metalness: 0,
+        flatShading: true,
       });
       const accentMaterial = new THREE.MeshStandardMaterial({
         color: 0x6f8aa8,
         roughness: 0.98,
         metalness: 0,
+        flatShading: true,
       });
       const bridgeMaterial = new THREE.MeshStandardMaterial({
         color: 0xbdd3cf,
         roughness: 1,
         metalness: 0,
+        flatShading: true,
       });
 
       const base = new THREE.Mesh(createRoundedBaseGeometry(), baseMaterial);
@@ -1546,7 +1550,7 @@
         },
         vertexShader: `
           varying vec3 vWorldPos;
-          varying vec3 vNormalW;
+          flat varying vec3 vNormalW;
           varying vec2 vUv;
 
           void main() {
@@ -1564,7 +1568,7 @@
           uniform float uTime;
 
           varying vec3 vWorldPos;
-          varying vec3 vNormalW;
+          flat varying vec3 vNormalW;
           varying vec2 vUv;
 
           float saturate(float x) {
@@ -1581,18 +1585,17 @@
             float rim = pow(1.0 - saturate(dot(N, V)), 2.4);
             float transmittance = pow(saturate(dot(-N, L)), 1.9) * pow(1.0 - saturate(dot(N, V)), 1.15);
 
-            float waxBands = sin(vWorldPos.y * 2.6 + uTime * 0.28) * 0.004;
             float edgeTint = smoothstep(0.48, 1.0, rim);
-            float heightTone = mix(0.88, 0.98, vUv.y);
+            float heightTone = mix(0.86, 0.98, vUv.y);
 
             vec3 warmScatter = vec3(0.99, 0.84, 0.64);
             vec3 coolEdge = vec3(0.77, 0.86, 0.95);
-            vec3 baseColor = uColor * heightTone + waxBands;
+            vec3 baseColor = uColor * heightTone;
 
-            vec3 lighting = baseColor * (0.32 + diffuse * 0.22 + wrap * 0.1);
-            lighting += warmScatter * transmittance * (0.14 + uGlow * 0.12);
-            lighting += coolEdge * edgeTint * 0.08 * (0.14 + uGlow * 0.18);
-            lighting += warmScatter * rim * 0.016;
+            vec3 lighting = baseColor * (0.28 + diffuse * 0.28 + wrap * 0.08);
+            lighting += warmScatter * transmittance * (0.1 + uGlow * 0.08);
+            lighting += coolEdge * edgeTint * 0.06 * (0.1 + uGlow * 0.12);
+            lighting += warmScatter * rim * 0.012;
 
             gl_FragColor = vec4(lighting, 1.0);
           }
@@ -1603,12 +1606,14 @@
         color: 0xfff2dd,
         roughness: 0.96,
         metalness: 0,
+        flatShading: true,
       });
 
       const wickMaterial = new THREE.MeshStandardMaterial({
         color: 0x4f6a87,
         roughness: 0.96,
         metalness: 0,
+        flatShading: true,
       });
 
       const candleUnits = Array.from({ length: MAX_CANDLES }, (_, index) => createCandleUnit(index));
@@ -1852,7 +1857,7 @@
       flame.visible = false;
       altar.add(flame);
 
-      const flameGeometry = new THREE.PlaneGeometry(0.68, 1.42, 20, 28);
+      const flameGeometry = new THREE.PlaneGeometry(0.62, 1.28, 8, 12);
       const flamePlaneA = new THREE.Mesh(flameGeometry, flameMaterial);
       const flamePlaneB = new THREE.Mesh(flameGeometry, flameMaterial);
       flamePlaneB.rotation.y = Math.PI / 2;
@@ -2741,7 +2746,7 @@
       }
 
       function createRoundedBaseGeometry() {
-        const radius = 0.86;
+        const radius = 0.42;
         const shape = new THREE.Shape();
         const x = -BASE_WIDTH / 2 + 0.4;
         const y = -BASE_DEPTH / 2 + 0.15;
@@ -2760,13 +2765,15 @@
         const geometry = new THREE.ExtrudeGeometry(shape, {
           depth: BASE_HEIGHT,
           bevelEnabled: true,
-          bevelSegments: 4,
+          bevelSegments: 2,
           steps: 1,
-          bevelSize: 0.22,
-          bevelThickness: 0.18,
-          curveSegments: 20,
+          bevelSize: 0.12,
+          bevelThickness: 0.1,
+          curveSegments: 6,
         });
 
+        geometry.deleteAttribute("normal");
+        geometry.computeVertexNormals();
         geometry.rotateX(-Math.PI / 2);
         geometry.translate(0, BASE_HEIGHT * 0.5, 0);
         return geometry;

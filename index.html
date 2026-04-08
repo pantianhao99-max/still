@@ -1737,19 +1737,19 @@
         flatShading: true,
       });
       const caretakerBodyMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf0dbc1,
+        color: 0xf7e7cf,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const caretakerCloakMaterial = new THREE.MeshStandardMaterial({
-        color: 0x5d7387,
+        color: 0xc87457,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const caretakerToolMaterial = new THREE.MeshStandardMaterial({
-        color: 0xc39a74,
+        color: 0xe2b485,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
@@ -2005,7 +2005,7 @@
 
       const caretaker = createCaretaker();
       caretaker.group.visible = false;
-      altar.add(caretaker.group);
+      candleWorld.add(caretaker.group);
 
       const clock = new THREE.Clock();
       const permutation = createPermutationTable(1337);
@@ -2842,7 +2842,9 @@
       }
 
       function updateCaretaker(elapsed) {
-        const active = appState.view === "experience" && appState.state === STATES.BURNING;
+        const active =
+          appState.view === "experience" &&
+          (appState.state === STATES.BURNING || appState.state === STATES.FINISHED);
         caretaker.group.visible = active;
         if (!active) {
           return;
@@ -2860,7 +2862,7 @@
 
         caretaker.group.position.set(
           THREE.MathUtils.lerp(current.x, next.x, easedT),
-          BASE_HEIGHT + 0.62 + Math.abs(Math.sin(elapsed * 5.8)) * 0.028,
+          0.08 + Math.abs(Math.sin(elapsed * 5.8)) * 0.028,
           THREE.MathUtils.lerp(current.z, next.z, easedT)
         );
 
@@ -3033,7 +3035,7 @@
 
       function createCaretaker() {
         const group = new THREE.Group();
-        group.scale.setScalar(0.46);
+        group.scale.setScalar(0.74);
 
         const body = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.58, 0.3), caretakerBodyMaterial);
         body.position.y = 0.46;
@@ -3105,20 +3107,21 @@
         group.add(tool);
 
         const shadow = new THREE.Mesh(
-          new THREE.CircleGeometry(0.3, 10),
-          new THREE.MeshBasicMaterial({ color: 0x26384a, transparent: true, opacity: 0.18 })
+          new THREE.CircleGeometry(0.36, 10),
+          new THREE.MeshBasicMaterial({ color: 0x183149, transparent: true, opacity: 0.22 })
         );
         shadow.rotation.x = -Math.PI / 2;
         shadow.position.y = 0.01;
         group.add(shadow);
 
         const route = [
-          { x: -1.48, z: 1.12 },
-          { x: 1.22, z: 1.04 },
-          { x: 1.44, z: -0.18 },
-          { x: 0.64, z: -1.18 },
-          { x: -0.74, z: -1.12 },
-          { x: -1.36, z: -0.2 },
+          { x: -2.68, z: 2.38 },
+          { x: -1.12, z: 2.72 },
+          { x: 1.08, z: 2.64 },
+          { x: 2.52, z: 2.14 },
+          { x: 1.84, z: 1.22 },
+          { x: -0.28, z: 1.06 },
+          { x: -2.12, z: 1.44 },
         ];
 
         return { group, body, head, armLeft, armRight, legLeft, legRight, tool, route };

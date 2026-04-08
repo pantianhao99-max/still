@@ -131,18 +131,18 @@
 
       .hud-shell {
         transform: translateY(0);
-        gap: 10px;
+        gap: 8px;
       }
 
       .timer {
         font-family: "Jost", "Noto Sans SC", sans-serif;
-        font-size: clamp(2rem, 5.4vw, 4.2rem);
+        font-size: clamp(1.84rem, 4.8vw, 3.8rem);
         font-weight: 500;
-        letter-spacing: 0.18em;
-        padding-left: 0.22em;
+        letter-spacing: 0.14em;
+        padding-left: 0.16em;
         line-height: 1;
         color: rgba(248, 251, 252, 0.92);
-        text-shadow: 0 12px 24px rgba(53, 78, 104, 0.2);
+        text-shadow: 0 10px 22px rgba(53, 78, 104, 0.18);
         font-variant-numeric: tabular-nums;
         transition:
           opacity 380ms ease,
@@ -190,7 +190,7 @@
       .status-chip {
         color: var(--ink-soft);
         min-height: 28px;
-        padding: 6px 14px;
+        padding: 5px 12px;
       }
 
       .hint-chip {
@@ -205,10 +205,10 @@
 
       body[data-view="experience"][data-scene="candle"] {
         background:
-          radial-gradient(circle at 50% 8%, rgba(255, 207, 148, 0.12), transparent 16%),
-          radial-gradient(circle at 24% 24%, rgba(132, 170, 189, 0.1), transparent 22%),
-          radial-gradient(circle at 84% 80%, rgba(64, 86, 120, 0.1), transparent 26%),
-          linear-gradient(180deg, #c8d2cd 0%, #7ea2b0 42%, #49667f 100%);
+          radial-gradient(circle at 50% 8%, rgba(255, 216, 162, 0.12), transparent 15%),
+          radial-gradient(circle at 22% 20%, rgba(150, 188, 197, 0.08), transparent 20%),
+          radial-gradient(circle at 84% 78%, rgba(62, 84, 118, 0.08), transparent 24%),
+          linear-gradient(180deg, #d0d4c9 0%, #89abb1 42%, #4d6d84 100%);
       }
 
       body[data-view="experience"][data-scene="candle"]::before {
@@ -232,7 +232,7 @@
       }
 
       body[data-view="experience"][data-scene="candle"] .timer {
-        text-shadow: 0 14px 28px rgba(37, 58, 84, 0.22);
+        text-shadow: 0 12px 24px rgba(37, 58, 84, 0.18);
       }
 
       body[data-view="experience"][data-scene="candle"] .altar-mark,
@@ -245,22 +245,22 @@
       body[data-view="experience"][data-scene="candle"] .status-chip,
       body[data-view="experience"][data-scene="candle"] .control-dock,
       body[data-view="experience"][data-scene="candle"] .text-button {
-        border-color: rgba(255, 243, 223, 0.14);
+        border-color: rgba(255, 243, 223, 0.12);
         box-shadow:
-          0 14px 30px rgba(74, 103, 132, 0.12),
+          0 12px 24px rgba(74, 103, 132, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.16);
       }
 
       body[data-view="experience"][data-scene="candle"] .status-chip {
         color: rgba(244, 248, 249, 0.94);
         background:
-          linear-gradient(180deg, rgba(104, 133, 159, 0.92), rgba(81, 104, 132, 0.86)),
+          linear-gradient(180deg, rgba(114, 140, 164, 0.78), rgba(86, 108, 134, 0.72)),
           linear-gradient(90deg, transparent 0%, rgba(255, 245, 223, 0.12) 52%, transparent 100%);
       }
 
       body[data-view="experience"][data-scene="candle"] .control-dock {
         background:
-          linear-gradient(180deg, rgba(110, 141, 164, 0.72), rgba(80, 104, 131, 0.7)),
+          linear-gradient(180deg, rgba(113, 140, 159, 0.54), rgba(80, 103, 124, 0.5)),
           linear-gradient(90deg, transparent 0%, rgba(255, 248, 232, 0.14) 52%, transparent 100%);
       }
 
@@ -588,10 +588,10 @@
 
       .text-button {
         min-width: 136px;
-        height: 48px;
+        height: 44px;
         padding: 0 18px;
-        border-radius: 14px;
-        font-size: 12px;
+        border-radius: 13px;
+        font-size: 11px;
         letter-spacing: 0.06em;
       }
 
@@ -607,11 +607,11 @@
       }
 
       .top-hud {
-        padding-top: max(18px, env(safe-area-inset-top));
+        padding-top: max(14px, env(safe-area-inset-top));
       }
 
       .bottom-dock {
-        padding-bottom: max(18px, env(safe-area-inset-bottom));
+        padding-bottom: max(14px, env(safe-area-inset-bottom));
       }
 
       body[data-view="setup"] .experience-ui {
@@ -628,14 +628,14 @@
 
       .control-dock {
         pointer-events: auto;
-        width: min(560px, calc(100vw - 28px));
+        width: min(520px, calc(100vw - 26px));
         border: 1px solid rgba(100, 127, 151, 0.14);
         background:
-          linear-gradient(180deg, rgba(239, 246, 247, 0.56), rgba(215, 229, 236, 0.42)),
+          linear-gradient(180deg, rgba(239, 246, 247, 0.48), rgba(215, 229, 236, 0.34)),
           linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.22) 52%, transparent 100%);
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(10px);
         box-shadow:
-          0 16px 30px rgba(81, 110, 138, 0.1),
+          0 12px 24px rgba(81, 110, 138, 0.08),
           inset 0 1px 0 rgba(255, 255, 255, 0.22);
       }
 
@@ -886,11 +886,11 @@
         }
 
         .top-hud {
-          padding-top: max(12px, env(safe-area-inset-top));
+          padding-top: max(10px, env(safe-area-inset-top));
         }
 
         .bottom-dock {
-          padding-bottom: max(12px, env(safe-area-inset-bottom));
+          padding-bottom: max(10px, env(safe-area-inset-bottom));
         }
 
         .hud-shell {
@@ -902,7 +902,7 @@
         }
 
         .status-chip {
-          padding: 5px 12px;
+          padding: 4px 10px;
           font-size: 10px;
         }
 
@@ -923,8 +923,8 @@
           justify-self: stretch;
           width: 100%;
           max-width: none;
-          height: 50px;
-          border-radius: 16px;
+          height: 46px;
+          border-radius: 14px;
         }
 
         .press-ring {
@@ -944,20 +944,20 @@
         .text-button {
           min-width: 0;
           width: 100%;
-          height: 50px;
+          height: 46px;
           padding: 0 14px;
-          font-size: 12px;
+          font-size: 11px;
         }
 
         .experience-ui .control-dock {
-          width: calc(100vw - 24px);
-          padding: 12px 14px;
+          width: calc(100vw - 20px);
+          padding: 10px 12px;
         }
 
         .timer {
-          font-size: clamp(1.6rem, 9vw, 2.4rem);
-          letter-spacing: 0.18em;
-          padding-left: 0.18em;
+          font-size: clamp(1.5rem, 8.2vw, 2.2rem);
+          letter-spacing: 0.14em;
+          padding-left: 0.14em;
         }
       }
     </style>
@@ -1152,28 +1152,28 @@
 
       const EXPERIENCE_ENVIRONMENTS = Object.freeze({
         candle: Object.freeze({
-          pageGradient: ["#2a4f67", "#6294a8", "#d9d8c8"],
-          topGlow: "rgba(255, 210, 156, 0.1)",
-          sideGlow: "rgba(155, 205, 214, 0.1)",
-          depthShadow: "rgba(47, 72, 103, 0.18)",
-          coreHalo: "rgba(255, 241, 213, 0.06)",
-          baseShadow: "rgba(40, 59, 88, 0.12)",
-          sheen: "rgba(255, 255, 255, 0.028)",
-          mist: "rgba(236, 244, 241, 0.02)",
-          sceneBackground: 0x78a0aa,
-          fogColor: 0xb5c8c4,
+          pageGradient: ["#355a72", "#79a4af", "#ddd7c4"],
+          topGlow: "rgba(255, 216, 164, 0.12)",
+          sideGlow: "rgba(167, 203, 208, 0.08)",
+          depthShadow: "rgba(43, 68, 96, 0.16)",
+          coreHalo: "rgba(255, 239, 205, 0.08)",
+          baseShadow: "rgba(37, 55, 80, 0.1)",
+          sheen: "rgba(255, 255, 255, 0.02)",
+          mist: "rgba(236, 244, 241, 0.018)",
+          sceneBackground: 0x80aab2,
+          fogColor: 0xbccfca,
           fogNear: 24,
-          fogFar: 60,
-          floorColor: 0x5b7f92,
-          hemiSky: 0xf0dfbc,
-          hemiGround: 0x4f677f,
-          hemiIntensity: 0.42,
-          keyColor: 0xf7c79d,
-          keyIntensity: 0.1,
+          fogFar: 64,
+          floorColor: 0x64849a,
+          hemiSky: 0xf3e4c4,
+          hemiGround: 0x536b7f,
+          hemiIntensity: 0.4,
+          keyColor: 0xf9caa1,
+          keyIntensity: 0.08,
           floorVisible: false,
-          exposure: 0.7,
-          stageBrightness: 0.86,
-          stageSaturation: 0.96,
+          exposure: 0.72,
+          stageBrightness: 0.88,
+          stageSaturation: 0.94,
         }),
         ice: Object.freeze({
           pageGradient: ["#72818f", "#a5b7c4", "#d9e4eb"],
@@ -1285,7 +1285,7 @@
       const BASE_WIDTH = 6.8;
       const BASE_DEPTH = 5.2;
       const BASE_HEIGHT = 1.08;
-      const MAX_CANDLE_HEIGHT = 4.48;
+      const MAX_CANDLE_HEIGHT = 4.08;
       const FINISHED_HEIGHT = 0.16;
       const HOLD_DURATION = 2;
 
@@ -1474,56 +1474,56 @@
       candleWorld.add(altar);
 
       const baseMaterial = new THREE.MeshStandardMaterial({
-        color: 0xd69272,
+        color: 0xd79473,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const terraceMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf0e1cb,
+        color: 0xeee0c8,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const accentMaterial = new THREE.MeshStandardMaterial({
-        color: 0x6f7da1,
+        color: 0x7184a8,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const bridgeMaterial = new THREE.MeshStandardMaterial({
-        color: 0xa8c0b6,
+        color: 0xa6c3ba,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const islandRockMaterial = new THREE.MeshStandardMaterial({
-        color: 0x8f8696,
+        color: 0x8f8798,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const islandTopMaterial = new THREE.MeshStandardMaterial({
-        color: 0xded6bd,
+        color: 0xe1d9c2,
         roughness: 1,
         metalness: 0,
         flatShading: true,
       });
       const oceanMaterial = new THREE.MeshStandardMaterial({
-        color: 0x6eb3ba,
+        color: 0x73b5ba,
         roughness: 0.92,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.84,
       });
       const oceanDeepMaterial = new THREE.MeshStandardMaterial({
-        color: 0x46788f,
+        color: 0x486f87,
         roughness: 1,
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.88,
+        opacity: 0.86,
       });
       const foamMaterial = new THREE.MeshStandardMaterial({
         color: 0xf5e5cf,
@@ -1539,50 +1539,62 @@
         metalness: 0,
         flatShading: true,
         transparent: true,
-        opacity: 0.34,
+        opacity: 0.24,
+      });
+      const focusHaloMaterial = new THREE.MeshBasicMaterial({
+        color: 0xf2caa0,
+        transparent: true,
+        opacity: 0.08,
       });
 
       const oceanGroup = new THREE.Group();
       candleWorld.add(oceanGroup);
 
-      const oceanBase = new THREE.Mesh(new THREE.CylinderGeometry(18.8, 20.2, 0.14, 6), oceanDeepMaterial);
-      oceanBase.position.y = -1.54;
+      const oceanBase = new THREE.Mesh(new THREE.CylinderGeometry(19.4, 20.8, 0.16, 6), oceanDeepMaterial);
+      oceanBase.position.y = -1.58;
       oceanBase.receiveShadow = true;
       oceanGroup.add(oceanBase);
 
-      const oceanSurfaceA = new THREE.Mesh(new THREE.CylinderGeometry(17.2, 18.2, 0.05, 6), oceanMaterial);
-      oceanSurfaceA.position.y = -1.38;
+      const oceanSurfaceA = new THREE.Mesh(new THREE.CylinderGeometry(17.6, 18.6, 0.05, 6), oceanMaterial);
+      oceanSurfaceA.position.y = -1.4;
       oceanSurfaceA.rotation.y = Math.PI * 0.08;
       oceanGroup.add(oceanSurfaceA);
 
-      const oceanSurfaceB = new THREE.Mesh(new THREE.CylinderGeometry(15.9, 16.9, 0.04, 6), oceanDeepMaterial);
-      oceanSurfaceB.position.y = -1.3;
+      const oceanSurfaceB = new THREE.Mesh(new THREE.CylinderGeometry(16.2, 17.2, 0.04, 6), oceanDeepMaterial);
+      oceanSurfaceB.position.y = -1.32;
       oceanSurfaceB.rotation.y = Math.PI * 0.14;
       oceanGroup.add(oceanSurfaceB);
 
-      const islandRock = new THREE.Mesh(new THREE.CylinderGeometry(5.24, 6.28, 1.26, 6), islandRockMaterial);
-      islandRock.position.set(0, -0.78, 0.18);
+      const islandRock = new THREE.Mesh(new THREE.CylinderGeometry(4.86, 6.08, 1.38, 6), islandRockMaterial);
+      islandRock.position.set(0, -0.82, 0.26);
       islandRock.castShadow = true;
       islandRock.receiveShadow = true;
       candleWorld.add(islandRock);
 
-      const islandTop = new THREE.Mesh(new THREE.CylinderGeometry(4.02, 4.46, 0.44, 6), islandTopMaterial);
-      islandTop.position.set(0, -0.3, 0.12);
+      const islandTop = new THREE.Mesh(new THREE.CylinderGeometry(3.56, 4.08, 0.52, 6), islandTopMaterial);
+      islandTop.position.set(0, -0.24, 0.16);
       islandTop.castShadow = true;
       islandTop.receiveShadow = true;
       candleWorld.add(islandTop);
 
-      const shoreline = new THREE.Mesh(new THREE.TorusGeometry(4.52, 0.08, 4, 6), foamMaterial.clone());
+      const islandSpur = new THREE.Mesh(new THREE.BoxGeometry(2.56, 0.22, 1.22), islandTopMaterial);
+      islandSpur.position.set(-1.12, -0.12, 2.04);
+      islandSpur.rotation.y = Math.PI * 0.14;
+      islandSpur.castShadow = true;
+      islandSpur.receiveShadow = true;
+      candleWorld.add(islandSpur);
+
+      const shoreline = new THREE.Mesh(new THREE.TorusGeometry(4.2, 0.07, 4, 6), foamMaterial.clone());
       shoreline.rotation.x = Math.PI / 2;
       shoreline.rotation.z = Math.PI * 0.06;
-      shoreline.position.set(0, -1.08, 0.08);
+      shoreline.position.set(0, -1.12, 0.18);
       candleWorld.add(shoreline);
 
-      const outerFoam = new THREE.Mesh(new THREE.TorusGeometry(6.02, 0.06, 4, 6), foamMaterial.clone());
+      const outerFoam = new THREE.Mesh(new THREE.TorusGeometry(5.72, 0.06, 4, 6), foamMaterial.clone());
       outerFoam.rotation.x = Math.PI / 2;
       outerFoam.rotation.z = -Math.PI * 0.03;
-      outerFoam.position.set(0, -1.22, -0.14);
-      outerFoam.scale.set(1.02, 0.96, 1);
+      outerFoam.position.set(0, -1.26, 0.04);
+      outerFoam.scale.set(1.04, 0.92, 1);
       candleWorld.add(outerFoam);
 
       const seaScene = {
@@ -1594,9 +1606,9 @@
       };
 
       const horizonIslands = [
-        { x: -11.8, y: -0.88, z: -8.4, scale: [4.8, 0.5, 2.2], rot: -0.1 },
-        { x: 12.6, y: -0.96, z: -7.2, scale: [5.6, 0.56, 2.6], rot: 0.08 },
-        { x: 2.4, y: -1.06, z: -11.2, scale: [7.8, 0.44, 2.8], rot: 0.02 },
+        { x: -15.4, y: -1.42, z: -18.8, scale: [4.8, 0.22, 2.1], rot: -0.06 },
+        { x: 15.8, y: -1.48, z: -17.6, scale: [5.6, 0.26, 2.5], rot: 0.05 },
+        { x: 0.8, y: -1.58, z: -22.8, scale: [8.8, 0.16, 3.1], rot: 0.02 },
       ];
 
       horizonIslands.forEach((pose) => {
@@ -1608,8 +1620,8 @@
       });
 
       const rockClusterPositions = [
-        { x: -2.84, y: -0.28, z: 1.7, scale: [0.28, 0.16, 0.24] },
-        { x: 2.74, y: -0.26, z: 1.34, scale: [0.24, 0.14, 0.22] },
+        { x: -2.94, y: -0.22, z: 1.86, scale: [0.26, 0.14, 0.2] },
+        { x: 2.84, y: -0.2, z: 1.52, scale: [0.22, 0.12, 0.18] },
       ];
 
       rockClusterPositions.forEach((pose) => {
@@ -1626,40 +1638,50 @@
       base.castShadow = true;
       base.receiveShadow = true;
       altar.add(base);
+      altar.position.set(0.12, 0, 0.18);
+      altar.rotation.y = -Math.PI * 0.08;
 
-      const lowerTerrace = new THREE.Mesh(new THREE.BoxGeometry(3.8, 0.22, 3.46), terraceMaterial);
-      lowerTerrace.position.y = BASE_HEIGHT + 0.12;
+      const lowerTerrace = new THREE.Mesh(new THREE.CylinderGeometry(2.18, 2.52, 0.22, 6), terraceMaterial);
+      lowerTerrace.position.set(0, BASE_HEIGHT + 0.12, 0.14);
+      lowerTerrace.rotation.y = Math.PI / 6;
       lowerTerrace.castShadow = true;
       lowerTerrace.receiveShadow = true;
       altar.add(lowerTerrace);
 
-      const upperTerrace = new THREE.Mesh(new THREE.BoxGeometry(1.92, 0.2, 2.18), bridgeMaterial);
-      upperTerrace.position.y = BASE_HEIGHT + 0.34;
+      const upperTerrace = new THREE.Mesh(new THREE.CylinderGeometry(1.18, 1.42, 0.2, 6), bridgeMaterial);
+      upperTerrace.position.set(0, BASE_HEIGHT + 0.34, 0.02);
+      upperTerrace.rotation.y = Math.PI / 6;
       upperTerrace.castShadow = true;
       upperTerrace.receiveShadow = true;
       altar.add(upperTerrace);
 
-      const bridgeDeck = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.12, 3.94), bridgeMaterial);
-      bridgeDeck.position.set(0, BASE_HEIGHT + 0.5, 1.02);
+      const focusHalo = new THREE.Mesh(new THREE.CircleGeometry(0.62, 6), focusHaloMaterial);
+      focusHalo.rotation.x = -Math.PI / 2;
+      focusHalo.position.set(0, BASE_HEIGHT + 0.45, 0);
+      altar.add(focusHalo);
+
+      const bridgeDeck = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 3.58), bridgeMaterial);
+      bridgeDeck.position.set(0, BASE_HEIGHT + 0.5, 1.08);
       bridgeDeck.castShadow = true;
       bridgeDeck.receiveShadow = true;
       altar.add(bridgeDeck);
 
-      const frontLanding = new THREE.Mesh(new THREE.BoxGeometry(1.24, 0.16, 0.88), terraceMaterial);
-      frontLanding.position.set(0, BASE_HEIGHT + 0.44, 2.86);
+      const frontLanding = new THREE.Mesh(new THREE.CylinderGeometry(0.82, 0.98, 0.14, 6), terraceMaterial);
+      frontLanding.position.set(0, BASE_HEIGHT + 0.44, 2.74);
+      frontLanding.rotation.y = Math.PI / 6;
       frontLanding.castShadow = true;
       frontLanding.receiveShadow = true;
       altar.add(frontLanding);
 
-      const stairLeft = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.14, 0.66), accentMaterial);
-      stairLeft.position.set(-0.78, BASE_HEIGHT + 0.18, 1.84);
+      const stairLeft = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.12, 0.54), accentMaterial);
+      stairLeft.position.set(-0.58, BASE_HEIGHT + 0.18, 1.98);
       stairLeft.rotation.y = Math.PI * 0.25;
       stairLeft.castShadow = true;
       stairLeft.receiveShadow = true;
       altar.add(stairLeft);
 
-      const stairRight = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.14, 0.66), accentMaterial);
-      stairRight.position.set(0.78, BASE_HEIGHT + 0.18, 1.84);
+      const stairRight = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.12, 0.54), accentMaterial);
+      stairRight.position.set(0.58, BASE_HEIGHT + 0.18, 1.98);
       stairRight.rotation.y = -Math.PI * 0.25;
       stairRight.castShadow = true;
       stairRight.receiveShadow = true;
@@ -1682,6 +1704,30 @@
       gateLintel.castShadow = true;
       gateLintel.receiveShadow = true;
       altar.add(gateLintel);
+
+      const sideTower = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.26, 0.42), accentMaterial);
+      sideTower.position.set(-1.16, BASE_HEIGHT + 0.86, 0.28);
+      sideTower.castShadow = true;
+      sideTower.receiveShadow = true;
+      altar.add(sideTower);
+
+      const sideTowerCap = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.14, 0.62), terraceMaterial);
+      sideTowerCap.position.set(-1.16, BASE_HEIGHT + 1.56, 0.28);
+      sideTowerCap.castShadow = true;
+      sideTowerCap.receiveShadow = true;
+      altar.add(sideTowerCap);
+
+      const cantileverBeam = new THREE.Mesh(new THREE.BoxGeometry(1.08, 0.1, 0.18), accentMaterial);
+      cantileverBeam.position.set(-0.64, BASE_HEIGHT + 1.38, 0.28);
+      cantileverBeam.castShadow = true;
+      cantileverBeam.receiveShadow = true;
+      altar.add(cantileverBeam);
+
+      const rearMarker = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.82, 0.18), bridgeMaterial);
+      rearMarker.position.set(1.04, BASE_HEIGHT + 0.68, -0.58);
+      rearMarker.castShadow = true;
+      rearMarker.receiveShadow = true;
+      altar.add(rearMarker);
 
       const candleMaterial = new THREE.ShaderMaterial({
         uniforms: {
@@ -1764,13 +1810,13 @@
         flatShading: true,
       });
       const caretakerBodyMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf4eadc,
+        color: 0xf6ebd2,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const caretakerCloakMaterial = new THREE.MeshStandardMaterial({
-        color: 0xd2655c,
+        color: 0xd45f57,
         roughness: 1,
         metalness: 0,
         flatShading: true,
@@ -2099,6 +2145,7 @@
         candleMaterial.uniforms.uGlow.value = glow;
         flameMaterial.uniforms.uTime.value = elapsed;
         flameMaterial.uniforms.uFlicker.value = 0.68 + flicker * 0.32;
+        focusHaloMaterial.opacity = appState.state === STATES.BURNING ? 0.12 + glow * 0.08 : 0.07;
         updateSeaScene(elapsed);
         updateWaxDrips(elapsed);
         updateCaretaker(elapsed);
@@ -2277,7 +2324,7 @@
         const aspect = window.innerWidth / window.innerHeight;
         const isMobile = window.innerWidth <= 640;
         const isTablet = window.innerWidth <= 900;
-        const frustum = isMobile ? 18.8 : isTablet ? 17.2 : FRUSTUM_SIZE;
+        const frustum = isMobile ? 15.4 : isTablet ? 14.8 : 14.4;
         let targetY = 3.9;
 
         camera.left = (-frustum * aspect) / 2;
@@ -2288,20 +2335,20 @@
         camera.far = 60;
 
         if (isMobile) {
-          root.position.set(0, -1.96, 0);
-          root.scale.setScalar(0.84);
-          camera.position.set(12.3, 9.8, 14.6);
-          targetY = 1.18;
+          root.position.set(0, -0.92, 0);
+          root.scale.setScalar(1.08);
+          camera.position.set(10.2, 8.2, 11.6);
+          targetY = 1.84;
         } else if (isTablet) {
-          root.position.set(0, -1.04, 0);
-          root.scale.setScalar(0.9);
-          camera.position.set(11.7, 9.9, 13.5);
-          targetY = 2.12;
+          root.position.set(0, -0.36, 0);
+          root.scale.setScalar(1.08);
+          camera.position.set(9.8, 8.7, 11.0);
+          targetY = 2.32;
         } else {
-          root.position.set(0, -0.18, 0);
-          root.scale.setScalar(0.98);
-          camera.position.set(11.1, 9.6, 12.6);
-          targetY = 2.88;
+          root.position.set(0, 0.08, 0);
+          root.scale.setScalar(1.1);
+          camera.position.set(9.2, 8.2, 10.0);
+          targetY = 2.58;
         }
 
         cameraRig.target.set(0, targetY, 0);
@@ -2848,7 +2895,7 @@
           return;
         }
 
-        seaScene.oceanSurfaceA.position.y = -1.38 + Math.sin(elapsed * 0.44) * 0.016;
+        seaScene.oceanSurfaceA.position.y = -1.4 + Math.sin(elapsed * 0.44) * 0.016;
         seaScene.oceanSurfaceA.rotation.y = Math.PI * 0.08 + Math.sin(elapsed * 0.14) * 0.025;
         seaScene.oceanSurfaceA.scale.set(
           1 + Math.sin(elapsed * 0.36) * 0.008,
@@ -2856,7 +2903,7 @@
           1 + Math.cos(elapsed * 0.28) * 0.012
         );
 
-        seaScene.oceanSurfaceB.position.y = -1.3 + Math.cos(elapsed * 0.48) * 0.012;
+        seaScene.oceanSurfaceB.position.y = -1.32 + Math.cos(elapsed * 0.48) * 0.012;
         seaScene.oceanSurfaceB.rotation.y = Math.PI * 0.14 - Math.sin(elapsed * 0.12) * 0.022;
         seaScene.oceanSurfaceB.scale.set(
           1 + Math.cos(elapsed * 0.26) * 0.008,
@@ -2864,8 +2911,8 @@
           1 + Math.sin(elapsed * 0.24) * 0.008
         );
 
-        seaScene.shoreline.material.opacity = 0.16 + Math.sin(elapsed * 0.6) * 0.02;
-        seaScene.outerFoam.material.opacity = 0.1 + Math.cos(elapsed * 0.54) * 0.014;
+        seaScene.shoreline.material.opacity = 0.14 + Math.sin(elapsed * 0.6) * 0.018;
+        seaScene.outerFoam.material.opacity = 0.08 + Math.cos(elapsed * 0.54) * 0.012;
       }
 
       function updateCaretaker(elapsed) {
@@ -2889,7 +2936,7 @@
 
         caretaker.group.position.set(
           THREE.MathUtils.lerp(current.x, next.x, easedT),
-          BASE_HEIGHT + 0.54 + Math.abs(Math.sin(elapsed * 5.8)) * 0.022,
+          BASE_HEIGHT + 0.58 + Math.abs(Math.sin(elapsed * 5.8)) * 0.022,
           THREE.MathUtils.lerp(current.z, next.z, easedT)
         );
 
@@ -2973,21 +3020,21 @@
 
       function getCandleClusterLayout(count) {
         const layouts = {
-          1: [{ x: 0, z: 0, scale: 0.9, rotation: 0 }],
+          1: [{ x: 0, z: 0.02, scale: 0.96, rotation: 0 }],
           2: [
-            { x: -0.58, z: 0.04, scale: 0.84, rotation: -0.03 },
-            { x: 0.58, z: -0.04, scale: 0.84, rotation: 0.03 },
+            { x: -0.52, z: 0.06, scale: 0.88, rotation: -0.03 },
+            { x: 0.52, z: -0.02, scale: 0.88, rotation: 0.03 },
           ],
           3: [
-            { x: -0.82, z: 0.06, scale: 0.8, rotation: -0.04 },
-            { x: 0, z: 0, scale: 0.9, rotation: 0 },
-            { x: 0.82, z: -0.06, scale: 0.8, rotation: 0.04 },
+            { x: -0.74, z: 0.08, scale: 0.82, rotation: -0.04 },
+            { x: 0, z: 0.02, scale: 0.92, rotation: 0 },
+            { x: 0.74, z: -0.04, scale: 0.82, rotation: 0.04 },
           ],
           4: [
-            { x: -1.04, z: 0.08, scale: 0.74, rotation: -0.05 },
-            { x: -0.34, z: -0.02, scale: 0.84, rotation: -0.02 },
-            { x: 0.34, z: -0.02, scale: 0.84, rotation: 0.02 },
-            { x: 1.04, z: 0.08, scale: 0.74, rotation: 0.05 },
+            { x: -0.94, z: 0.1, scale: 0.76, rotation: -0.05 },
+            { x: -0.3, z: 0, scale: 0.86, rotation: -0.02 },
+            { x: 0.3, z: 0, scale: 0.86, rotation: 0.02 },
+            { x: 0.94, z: 0.1, scale: 0.76, rotation: 0.05 },
           ],
         };
 
@@ -2996,24 +3043,27 @@
 
       function createCandleUnit(index) {
         const group = new THREE.Group();
-        const radius = 0.5 + (index % 2 === 0 ? 0.02 : -0.012);
+        const radius = 0.39 + (index % 2 === 0 ? 0.018 : -0.01);
 
-        const pool = new THREE.Mesh(new THREE.CylinderGeometry(radius * 1.18, radius * 1.34, 0.18, 6), waxPoolMaterial);
+        const pool = new THREE.Mesh(new THREE.CylinderGeometry(radius * 1.1, radius * 1.2, 0.14, 4), waxPoolMaterial);
+        pool.rotation.y = Math.PI * 0.25;
         pool.castShadow = true;
         pool.receiveShadow = true;
         group.add(pool);
 
-        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.72, radius * 0.84, 1, 6, 1, false), candleMaterial);
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.62, radius * 0.76, 1, 4, 1, false), candleMaterial);
+        body.rotation.y = Math.PI * 0.25;
         body.castShadow = true;
         body.receiveShadow = true;
         group.add(body);
 
-        const cap = new THREE.Mesh(new THREE.ConeGeometry(radius * 0.52, 0.28, 6), candleMaterial);
+        const cap = new THREE.Mesh(new THREE.ConeGeometry(radius * 0.44, 0.22, 4), candleMaterial);
+        cap.rotation.y = Math.PI * 0.25;
         cap.castShadow = true;
         cap.receiveShadow = true;
         group.add(cap);
 
-        const wick = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.18, 0.06), wickMaterial);
+        const wick = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.15, 0.04), wickMaterial);
         wick.castShadow = true;
         group.add(wick);
 
@@ -3062,7 +3112,7 @@
 
       function createCaretaker() {
         const group = new THREE.Group();
-        group.scale.setScalar(0.62);
+        group.scale.setScalar(0.78);
 
         const body = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.58, 0.3), caretakerBodyMaterial);
         body.position.y = 0.46;
@@ -3142,11 +3192,12 @@
         group.add(shadow);
 
         const route = [
-          { x: -0.36, z: 3.08 },
-          { x: 0.36, z: 3.08 },
-          { x: 0.44, z: 2.22 },
-          { x: 0, z: 1.52 },
-          { x: -0.44, z: 2.22 },
+          { x: -0.86, z: 3.28 },
+          { x: 0.82, z: 3.28 },
+          { x: 0.76, z: 2.56 },
+          { x: 0.22, z: 1.92 },
+          { x: -0.52, z: 1.98 },
+          { x: -0.9, z: 2.6 },
         ];
 
         return { group, body, head, armLeft, armRight, legLeft, legRight, tool, route };

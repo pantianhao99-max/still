@@ -33,6 +33,8 @@
         --experience-base-shadow: rgba(49, 36, 24, 0.12);
         --experience-sheen: rgba(255, 255, 255, 0.04);
         --experience-mist: rgba(255, 245, 230, 0.04);
+        --stage-brightness: 0.98;
+        --stage-saturation: 0.9;
         --paper: rgba(239, 231, 220, 0.62);
         --paper-strong: rgba(247, 241, 232, 0.8);
         --ink: #2d261f;
@@ -120,7 +122,7 @@
         width: 100%;
         height: 100%;
         display: block;
-        filter: contrast(1.01) saturate(0.9) brightness(0.98);
+        filter: contrast(1.01) saturate(var(--stage-saturation)) brightness(var(--stage-brightness));
       }
 
       #stage:active {
@@ -193,6 +195,73 @@
         border: 0;
         box-shadow: none;
         padding: 0 !important;
+      }
+
+      body[data-view="experience"][data-scene="candle"] {
+        background:
+          radial-gradient(circle at 50% 8%, rgba(255, 199, 122, 0.08), transparent 20%),
+          radial-gradient(circle at 22% 20%, rgba(98, 63, 36, 0.12), transparent 28%),
+          radial-gradient(circle at 80% 76%, rgba(11, 8, 6, 0.2), transparent 34%),
+          linear-gradient(180deg, #40332a 0%, #261d18 44%, #110d0a 100%);
+      }
+
+      body[data-view="experience"][data-scene="candle"]::before {
+        background:
+          radial-gradient(circle at 50% 40%, rgba(255, 209, 150, 0.08), transparent 28%),
+          radial-gradient(circle at 50% 84%, rgba(0, 0, 0, 0.22), transparent 28%);
+        opacity: 0.72;
+      }
+
+      body[data-view="experience"][data-scene="candle"]::after {
+        background:
+          linear-gradient(90deg, transparent 0%, rgba(255, 214, 170, 0.03) 48%, transparent 100%),
+          linear-gradient(180deg, rgba(255, 222, 186, 0.02), transparent 24%);
+        opacity: 0.12;
+      }
+
+      body[data-view="experience"][data-scene="candle"] .timer,
+      body[data-view="experience"][data-scene="candle"] .altar-mark strong,
+      body[data-view="experience"][data-scene="candle"] .text-button {
+        color: #f3e6d4;
+      }
+
+      body[data-view="experience"][data-scene="candle"] .timer {
+        text-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
+      }
+
+      body[data-view="experience"][data-scene="candle"] .altar-mark,
+      body[data-view="experience"][data-scene="candle"] .hint-chip,
+      body[data-view="experience"][data-scene="candle"] .range-meta,
+      body[data-view="experience"][data-scene="candle"] .ignite-label {
+        color: rgba(225, 208, 187, 0.7);
+      }
+
+      body[data-view="experience"][data-scene="candle"] .status-chip,
+      body[data-view="experience"][data-scene="candle"] .control-dock,
+      body[data-view="experience"][data-scene="candle"] .text-button {
+        border-color: rgba(230, 196, 155, 0.08);
+        box-shadow:
+          0 18px 40px rgba(0, 0, 0, 0.22),
+          inset 0 1px 0 rgba(255, 237, 213, 0.08);
+      }
+
+      body[data-view="experience"][data-scene="candle"] .status-chip {
+        color: rgba(243, 230, 212, 0.86);
+        background:
+          linear-gradient(180deg, rgba(66, 49, 37, 0.76), rgba(37, 28, 22, 0.84)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 219, 180, 0.06) 52%, transparent 100%);
+      }
+
+      body[data-view="experience"][data-scene="candle"] .control-dock {
+        background:
+          linear-gradient(180deg, rgba(44, 33, 26, 0.72), rgba(20, 15, 11, 0.84)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 221, 183, 0.05) 52%, transparent 100%);
+      }
+
+      body[data-view="experience"][data-scene="candle"] .text-button {
+        background:
+          linear-gradient(180deg, rgba(68, 51, 38, 0.88), rgba(38, 28, 21, 0.94)),
+          linear-gradient(90deg, transparent 0%, rgba(255, 227, 192, 0.06) 52%, transparent 100%);
       }
 
       .press-ring {
@@ -1015,6 +1084,9 @@
         keyColor: 0xf6ecdf,
         keyIntensity: 0.2,
         floorVisible: false,
+        exposure: 0.94,
+        stageBrightness: 0.98,
+        stageSaturation: 0.9,
       });
 
       const EXPERIENCE_ENVIRONMENTS = Object.freeze({
@@ -1038,6 +1110,9 @@
           keyColor: 0xf6ebde,
           keyIntensity: 0.21,
           floorVisible: true,
+          exposure: 0.72,
+          stageBrightness: 0.82,
+          stageSaturation: 0.94,
         }),
         ice: Object.freeze({
           pageGradient: ["#72818f", "#a5b7c4", "#d9e4eb"],
@@ -1059,6 +1134,9 @@
           keyColor: 0xf7fbff,
           keyIntensity: 0.19,
           floorVisible: true,
+          exposure: 0.9,
+          stageBrightness: 0.94,
+          stageSaturation: 0.94,
         }),
         incense: Object.freeze({
           pageGradient: ["#62584f", "#8b7b6d", "#b7aa9d"],
@@ -1080,6 +1158,9 @@
           keyColor: 0xf6ebdf,
           keyIntensity: 0.18,
           floorVisible: true,
+          exposure: 0.82,
+          stageBrightness: 0.88,
+          stageSaturation: 0.92,
         }),
         dew: Object.freeze({
           pageGradient: ["#7a8576", "#a8b29f", "#d8ddd0"],
@@ -1101,6 +1182,9 @@
           keyColor: 0xf8fbf6,
           keyIntensity: 0.2,
           floorVisible: true,
+          exposure: 0.92,
+          stageBrightness: 0.95,
+          stageSaturation: 0.92,
         }),
         sand: Object.freeze({
           pageGradient: ["#6a5a49", "#99836d", "#d5c1a7"],
@@ -1122,6 +1206,9 @@
           keyColor: 0xf8f0e3,
           keyIntensity: 0.19,
           floorVisible: true,
+          exposure: 0.86,
+          stageBrightness: 0.9,
+          stageSaturation: 0.94,
         }),
       });
 
@@ -1269,9 +1356,9 @@
       const renderPass = new RenderPass(scene, camera);
       const bloomPass = new UnrealBloomPass(
         new THREE.Vector2(window.innerWidth, window.innerHeight),
-        1.02,
-        0.8,
-        0.22
+        0.42,
+        0.56,
+        0.52
       );
 
       composer.addPass(renderPass);
@@ -1336,7 +1423,7 @@
 
       const candleMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          uColor: { value: new THREE.Color(0xe8d8c3) },
+          uColor: { value: new THREE.Color(0xc8b19a) },
           uLightPos: { value: new THREE.Vector3(0, BASE_HEIGHT + 8, 0) },
           uGlow: { value: 0 },
           uTime: { value: 0 },
@@ -1380,16 +1467,16 @@
 
             float waxBands = sin(vWorldPos.y * 3.8 + uTime * 0.45) * 0.009;
             float edgeTint = smoothstep(0.4, 1.0, rim);
-            float heightTone = mix(0.94, 1.04, vUv.y);
+            float heightTone = mix(0.8, 0.92, vUv.y);
 
-            vec3 warmScatter = vec3(0.98, 0.78, 0.66);
-            vec3 coolEdge = vec3(0.93, 0.82, 0.78);
+            vec3 warmScatter = vec3(0.82, 0.64, 0.52);
+            vec3 coolEdge = vec3(0.78, 0.69, 0.64);
             vec3 baseColor = uColor * heightTone + waxBands;
 
-            vec3 lighting = baseColor * (0.3 + diffuse * 0.34 + wrap * 0.18);
-            lighting += warmScatter * transmittance * (0.36 + uGlow * 0.28);
-            lighting += coolEdge * edgeTint * 0.09 * (0.25 + uGlow * 0.4);
-            lighting += warmScatter * rim * 0.045;
+            vec3 lighting = baseColor * (0.2 + diffuse * 0.24 + wrap * 0.12);
+            lighting += warmScatter * transmittance * (0.18 + uGlow * 0.14);
+            lighting += coolEdge * edgeTint * 0.05 * (0.18 + uGlow * 0.22);
+            lighting += warmScatter * rim * 0.026;
 
             gl_FragColor = vec4(lighting, 1.0);
           }
@@ -1452,7 +1539,7 @@
         },
         transparent: true,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        blending: THREE.NormalBlending,
         side: THREE.DoubleSide,
         vertexShader: `
           uniform float uTime;
@@ -1669,11 +1756,11 @@
             float core = (1.0 - smoothstep(0.0, 0.2, edge)) * smoothstep(0.08, 0.32, uv.y) * (1.0 - smoothstep(0.55, 0.88, uv.y));
             float halo = pow(1.0 - smoothstep(0.0, 1.1, length(vec2(p.x * 0.9, (uv.y - 0.42) * 1.45))), 2.0);
 
-            color += vec3(1.0, 0.95, 0.82) * core * 0.58;
-            color += vec3(1.0, 0.68, 0.28) * halo * 0.3;
-            color *= 1.05 + uFlicker * 0.18;
+            color += vec3(1.0, 0.94, 0.8) * core * 0.34;
+            color += vec3(1.0, 0.68, 0.28) * halo * 0.12;
+            color *= 0.88 + uFlicker * 0.08;
 
-            gl_FragColor = vec4(color, (alpha * 0.9 + halo * 0.16) * uOpacity);
+            gl_FragColor = vec4(color, (alpha * 0.76 + halo * 0.04) * uOpacity);
           }
         `,
       });
@@ -1682,7 +1769,7 @@
       flame.visible = false;
       altar.add(flame);
 
-      const flameGeometry = new THREE.PlaneGeometry(1.7, 3.5, 28, 40);
+      const flameGeometry = new THREE.PlaneGeometry(0.92, 1.9, 28, 40);
       const flamePlaneA = new THREE.Mesh(flameGeometry, flameMaterial);
       const flamePlaneB = new THREE.Mesh(flameGeometry, flameMaterial);
       flamePlaneB.rotation.y = Math.PI / 2;
@@ -1747,7 +1834,7 @@
       function render() {
         const elapsed = clock.getElapsedTime();
         const flicker = appState.state === STATES.BURNING ? perlin1D(permutation, elapsed * 1.9) : 0;
-        const glow = appState.state === STATES.BURNING ? 0.62 + flicker * 0.38 : 0.02;
+        const glow = appState.state === STATES.BURNING ? 0.34 + flicker * 0.16 : 0.01;
 
         candleMaterial.uniforms.uTime.value = elapsed;
         candleMaterial.uniforms.uGlow.value = glow;
@@ -1771,7 +1858,7 @@
           flame.getWorldPosition(tempLightVector);
           tempLightVector.y += 0.25;
           flameLight.position.copy(tempLightVector);
-          flameLight.intensity = 1.8 + flicker * 1.3;
+          flameLight.intensity = 0.56 + flicker * 0.28;
           candleMaterial.uniforms.uLightPos.value.copy(flameLight.position);
 
           if (appState.remainingSeconds <= 0) {
@@ -1829,6 +1916,8 @@
         document.documentElement.style.setProperty("--experience-base-shadow", environment.baseShadow);
         document.documentElement.style.setProperty("--experience-sheen", environment.sheen);
         document.documentElement.style.setProperty("--experience-mist", environment.mist);
+        document.documentElement.style.setProperty("--stage-brightness", String(environment.stageBrightness ?? 0.98));
+        document.documentElement.style.setProperty("--stage-saturation", String(environment.stageSaturation ?? 0.9));
       }
 
       function applyEnvironment(environment) {
@@ -1843,11 +1932,13 @@
         hemiLight.intensity = environment.hemiIntensity;
         keyLight.color.set(environment.keyColor);
         keyLight.intensity = environment.keyIntensity;
+        renderer.toneMappingExposure = environment.exposure ?? 0.94;
       }
 
       function setView(nextView) {
         appState.view = nextView;
         document.body.dataset.view = nextView;
+        document.body.dataset.scene = nextView === "experience" ? appState.selectedSceneId : "setup";
         altar.visible = nextView === "experience";
 
         if (nextView === "experience") {
@@ -1855,6 +1946,8 @@
           applyExperiencePageTheme(sceneEnvironment);
           applyEnvironment(sceneEnvironment);
         } else {
+          document.documentElement.style.setProperty("--stage-brightness", String(SETUP_ENVIRONMENT.stageBrightness));
+          document.documentElement.style.setProperty("--stage-saturation", String(SETUP_ENVIRONMENT.stageSaturation));
           applyEnvironment(SETUP_ENVIRONMENT);
         }
 
@@ -1872,6 +1965,11 @@
         }
 
         clearReturnToIdle();
+        flame.visible = false;
+        flameLight.visible = false;
+        flameLight.intensity = 0;
+        flameMaterial.uniforms.uOpacity.value = 0;
+        flame.scale.set(0.01, 0.01, 0.01);
         updateCandleArrangement(appState.durationMinutes);
         resetView();
         updateCamera();

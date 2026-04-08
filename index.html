@@ -1152,19 +1152,19 @@
           baseShadow: "rgba(62, 84, 111, 0.14)",
           sheen: "rgba(255, 255, 255, 0.06)",
           mist: "rgba(242, 248, 249, 0.05)",
-          sceneBackground: 0x8fb8bf,
-          fogColor: 0xc6d8d1,
+          sceneBackground: 0x7f9db0,
+          fogColor: 0xaec7c7,
           fogNear: 12,
           fogFar: 28,
-          floorColor: 0x8babc0,
+          floorColor: 0x6f8ea0,
           hemiSky: 0xffefd2,
           hemiGround: 0x597190,
-          hemiIntensity: 0.62,
+          hemiIntensity: 0.42,
           keyColor: 0xffd9a6,
-          keyIntensity: 0.26,
-          floorVisible: true,
-          exposure: 0.82,
-          stageBrightness: 0.9,
+          keyIntensity: 0.14,
+          floorVisible: false,
+          exposure: 0.68,
+          stageBrightness: 0.82,
           stageSaturation: 1.02,
         }),
         ice: Object.freeze({
@@ -1409,9 +1409,9 @@
       const renderPass = new RenderPass(scene, camera);
       const bloomPass = new UnrealBloomPass(
         new THREE.Vector2(window.innerWidth, window.innerHeight),
-        0.42,
-        0.56,
-        0.52
+        0.16,
+        0.28,
+        0.84
       );
 
       composer.addPass(renderPass);
@@ -1462,13 +1462,13 @@
       root.add(altar);
 
       const baseMaterial = new THREE.MeshStandardMaterial({
-        color: 0xe9a977,
+        color: 0xd28d63,
         roughness: 0.98,
         metalness: 0,
         flatShading: true,
       });
       const terraceMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf3ecdb,
+        color: 0xd9dfd7,
         roughness: 1,
         metalness: 0,
         flatShading: true,
@@ -1480,7 +1480,7 @@
         flatShading: true,
       });
       const bridgeMaterial = new THREE.MeshStandardMaterial({
-        color: 0xbdd3cf,
+        color: 0x8ea9b4,
         roughness: 1,
         metalness: 0,
         flatShading: true,
@@ -1946,7 +1946,7 @@
           flame.getWorldPosition(tempLightVector);
           tempLightVector.y += 0.25;
           flameLight.position.copy(tempLightVector);
-          flameLight.intensity = 0.56 + flicker * 0.28;
+          flameLight.intensity = 0.38 + flicker * 0.16;
           candleMaterial.uniforms.uLightPos.value.copy(flameLight.position);
 
           if (appState.remainingSeconds <= 0) {
